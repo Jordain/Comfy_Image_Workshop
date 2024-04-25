@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Generation{% endblock %}
+
+
+{% block content %}
+    <h1>Generation Page</h1>
+    <a href="{{ url_for('txt_gen.index') }}">Text Generation</a> 
+    <a href="{{ url_for('fantasy_character_creator.index') }}">Fantasy Character Creator</a>
+{% endblock %}

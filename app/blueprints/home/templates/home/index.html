@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+    <h1>Home Page</h1>
+    <h2>Display Latest 5 outputs</h2>
+    <h2>"your workflows" Display title and descriptions of saved workflows</h2>
+    <a href="{{ url_for('generation.index') }}">Generation</a> 
+{% endblock %}

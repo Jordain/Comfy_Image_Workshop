@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Text Generation{% endblock %}
+
+
+{% block content %}
+    <h1>Text Generation</h1>
+    
+    <textarea value="" id="prompt"></textarea>
+
+    <img src="" width="512" height="512" alt="fastgen" id="maingen" />
+    <br>
+    <label for="cfgrescale">CFG Rescale<input id="cfgrescale" type="checkbox" /></label>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}
