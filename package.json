@@ -3,6 +3,7 @@
     "daisyui": "^4.10.2"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.12",
     "tailwindcss": "^3.4.3"
   }
 }
