@@ -1,13 +1,4 @@
-# Comfy Character Creator
-
-[Comfy Character Creator](https://gligen.github.io/) is a tool that allows you to easily generate images of characters for games like pathfinder and dungeon and dragons. add more later...
-
-[N.B. If you want more control over your workflow check out the ComfyUI node to accompany this GUI](https://github.com/mut-ex/comfyui-gligengui-node)
-
-![GLIGEN GUI screenshot](latest.png)
-
-![GLIGEN Example Image](example_boxes.png)
-![GLIGEN Example Image](example.png)
+# Comfy Image Workshop
 
 ## Newest Features:
 * To fill in later
@@ -48,4 +39,3 @@ Finally, open http://127.0.0.1:5001/port/8188 in your browser to start using the
 ## How To Use
 
 Update this later
-# Comfy_Image_Workshop
