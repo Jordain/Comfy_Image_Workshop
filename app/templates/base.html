@@ -7,6 +7,12 @@
 
     </head>
     <body>
-        {% block content %} {% endblock %}
+        {% include "nav.html" %}
+        <div class="flex justify-center">
+            <div class="p-6 rounded-lg shadow-lg">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+        {% include "footer.html" %}
     </body>
 </html>

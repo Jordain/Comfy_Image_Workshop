@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Generation{% endblock %}
+{% block title %}Workflows{% endblock %}
 
 
 {% block content %}
-    <h1>Generation Page</h1>
-    <a href="{{ url_for('txt_gen.index') }}">Text Generation</a> 
-    <a href="{{ url_for('fantasy_character_creator.index') }}">Fantasy Character Creator</a>
+    <h1 class="text-4xl font-bold items-center">Workflows</h1><br>
+        <a class="btn btn-primary btn-wide" href="{{ url_for('txt_gen.index') }}">Text Generation</a>
+        <a class="btn btn-primary btn-wide" href="{{ url_for('fantasy_character_creator.index') }}">Fantasy Character Creator</a>
+
 {% endblock %}

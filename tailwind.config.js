@@ -2,8 +2,11 @@ module.exports = {
   content: ['./app/templates/**/*.html', './app/static/js/*.js'],
   theme: {
     extend: {},
+    daisyui: {
+      themes: ["light", "dark"],
+    },
   },
   plugins: [
-    require('daisyui'),
+    require("@tailwindcss/typography"), require('daisyui'),
   ],
 }

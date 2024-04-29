@@ -6,7 +6,7 @@
     console.log("c ", client_id);
     // Load the workflow
     async function loadWorkflow() {
-        const response = await fetch('workflow.json'); 
+        const response = await fetch('static/js/workflow.json'); 
         return await response.json();
     }
     const workflow = await loadWorkflow();
@@ -34,7 +34,7 @@
                 const subfolder = image['subfolder']
                 const rand = Math.random();
 
-                _maingen.src = '/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand
+                _maingen.src = 'http://localhost:8188/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand
             }
         }
     });
@@ -43,6 +43,8 @@
     console.log("maingen ", _maingen);
 
     async function queue_prompt(endpoint, payload, handler) {
+        console.log("payload ", payload);
+        console.log("payload JSON ",JSON.stringify(payload));
         fetch(endpoint, {
             method: "POST",
             headers: {
@@ -83,7 +85,7 @@
         }
 
         if ( lastExecutedPrompt !== currentPrompt ) {
-            await queue_prompt('/prompt', { prompt: workflow, client_id: client_id }, (endpoint, response) => {
+            await queue_prompt('/generation/txt_gen/prompt', { prompt: workflow, client_id: client_id }, (endpoint, response) => {
                 if (response.error) {
                     addToast(
                       "<u>Oops</u>",
