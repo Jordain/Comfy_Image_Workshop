@@ -3,5 +3,17 @@
 
 
 {% block content %}
+<article class="prose lg:prose">
     <h1>Profile</h1>
+    <p>Profile information:</p>
+    <ul>
+        <li>id: {{ current_user.id }}
+        <li>username: {{ current_user.username }}
+        <li>email: {{ current_user.email }} 
+    </ul>
+    <button class="btn btn-sm btn-primary" onclick="window.location.href='/profile/update'" type="button">Change Password</button><br><br>
+    <button class="btn btn-sm btn-error" onclick="window.location.href='/profile/delete'" type="button">Delete Account</button><br><br>
+    <button class="btn btn-sm" onclick="window.location.href='/auth/logout'" type="button">Logout</button><br><br>
+</article>
+    
 {% endblock %}

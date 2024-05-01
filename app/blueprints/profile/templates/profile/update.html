@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Update Password{% endblock %}
+
+
+{% block content %}
+<article class="prose lg:prose">
+    <h1>{{ msg | default('Update Password') }}</h1>
+
+    <form action="/profile/update" method="post">
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="oldPassword" placeholder="Old Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="New Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="New Confirm Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Change Password</button>
+    </form>
+
+</article>
+    
+{% endblock %}

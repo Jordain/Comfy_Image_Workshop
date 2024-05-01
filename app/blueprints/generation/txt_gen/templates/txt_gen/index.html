@@ -3,13 +3,12 @@
 
 
 {% block content %}
+<article class="prose lg:prose">
     <h1>Text Generation</h1>
-    
-    <textarea value="" id="prompt"></textarea>
+    <label for="cfgrescale">CFG Rescale <input id="cfgrescale" type="checkbox" /></label>
+    <textarea rows="1" cols="50" style="width: 512px;" value="" id="prompt"></textarea>
 
-    <img src="" width="512" height="512" alt="fastgen" id="maingen" />
-    <br>
-    <label for="cfgrescale">CFG Rescale<input id="cfgrescale" type="checkbox" /></label>
-
+    <img src="" width="512" height="512" title="Text Generated Image" id="maingen" />
+</article>
     <script src="{{ url_for('txt_gen.static', filename='js/app.js') }}"></script>
 {% endblock %}
