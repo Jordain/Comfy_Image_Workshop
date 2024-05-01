@@ -4,10 +4,15 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1 text-3xl">
-      <li><a href="{{ url_for('output.index') }}">Output</a></li>
-      <li><a href="{{ url_for('generation.index') }}">Workflows</a></li>
-      <li><a href="{{ url_for('auth.index') }}">Login</a></li>
-      <li><a href="{{ url_for('profile.index') }}">Profile</a></li>
+      {% if session["_user_id"] %}
+        <li><a href="{{ url_for('output.index') }}">Output</a></li>
+        <li><a href="{{ url_for('generation.index') }}">Workflows</a></li>
+        <li><a href="{{ url_for('profile.index') }}">Profile</a></li>
+        <li><a href="/auth/logout">Log Out</a></li>
+      {% else %}
+        <li><a href="/auth/register">Register</a></li>
+        <li><a href="/auth">Log In</a></li>
+      {% endif %}
       <li><label class="swap swap-rotate">
   
         <!-- this hidden checkbox controls the state -->

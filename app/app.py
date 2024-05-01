@@ -1,15 +1,26 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='../static')
-
+    app.secret_key = "3240fd4f86daf0656709a1f971f05a03e79"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./project.db"
 
     db.init_app(app)
+
+    #login manager
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    from app.models import User
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+    
 
     #import and register all blueprints
     from app.blueprints.home.routes import home

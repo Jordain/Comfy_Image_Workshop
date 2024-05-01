@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./app/templates/**/*.html', './app/static/js/*.js'],
+  content: ['./app/**/*.html', './app/**/*.js'],
   theme: {
     extend: {},
     daisyui: {
@@ -7,6 +7,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"), require('daisyui'),
+    require('@tailwindcss/typography'), require('daisyui'),
   ],
 }

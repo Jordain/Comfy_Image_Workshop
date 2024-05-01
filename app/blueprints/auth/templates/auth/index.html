@@ -3,5 +3,17 @@
 
 
 {% block content %}
-    <h1>Auth Page</h1>
+<article class="prose lg:prose">
+    <h1>Log in</h1>
+
+    <form action="/auth/login" method="post">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text"><br>
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password"><br>
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <button class="btn btn-secondary" onclick="window.location.href='/auth/register'" type="button">Register</button>
+    </form>
+    
+</article>
+    
+
 {% endblock %}

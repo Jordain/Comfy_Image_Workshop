@@ -3,16 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Default{% endblock %}</title>
+        <!-- <link rel="shortcut icon" href="/static/images/favicon.ico" /> Update this! -->
         <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
-
+        <link href="{{url_for('static',filename='css/toast.css')}}" rel="stylesheet">
     </head>
     <body>
         {% include "nav.html" %}
         <div class="flex justify-center">
+          <div id="toast-container"></div>
             <div class="p-6 rounded-lg shadow-lg">
                 {% block content %} {% endblock %}
             </div>
         </div>
         {% include "footer.html" %}
     </body>
+    <script src="{{url_for('static',filename='js/toast.js') }}" ></script>
+    <script src="{{url_for('static',filename='js/utils.js') }}" ></script>
 </html>

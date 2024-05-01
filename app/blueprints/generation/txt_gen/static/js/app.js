@@ -116,8 +116,8 @@
                   }
                   if (response.prompt_id) {
                     addToast("Success!", "The prompt was queued succesfully.");
-                    globalState.promptID = response.prompt_id;
-                    console.log("prompt_id = ", globalState.promptID);
+                    // globalState.promptID = response.prompt_id;
+                    // console.log("prompt_id = ", globalState.promptID);
                   }
                 }
               );

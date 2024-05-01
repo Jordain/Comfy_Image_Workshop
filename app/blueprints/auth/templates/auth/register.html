@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<article class="prose lg:prose">
+    <h1>Register</h1>
+
+    <form action="/auth/register" method="post">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="email" placeholder="Email" type="text"><br>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text"><br>
+        <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password"><br>
+        <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm Password" type="password"><br>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</article>
+    
+
+{% endblock %}
