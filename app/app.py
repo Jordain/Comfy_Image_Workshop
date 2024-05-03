@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -11,6 +11,13 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./project.db"
 
     db.init_app(app)
+
+    #loading in the javascript files with correct mimetype
+    @app.route('/static/js/<path:filename>')
+    def serve_js(filename):
+        print(filename)
+        #since I created that app in the app directory the root static directory is one up. Look at my app = Flask(__name__, template_folder='templates', static_folder='../static')
+        return send_from_directory('../static/js/', filename, mimetype='application/javascript')
 
     #login manager
     login_manager = LoginManager()

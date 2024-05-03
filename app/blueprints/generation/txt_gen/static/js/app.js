@@ -3,7 +3,9 @@
     // UUID generator
     function uuidv4() { return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)); }
     const client_id = uuidv4();
+    debugger;
     console.log("c ", client_id);
+    
     // Load the workflow
     async function loadWorkflow() {
         const response = await fetch('static/js/workflow.json'); 
@@ -35,6 +37,7 @@
                 const rand = Math.random();
 
                 _maingen.src = 'http://localhost:8188/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand
+                console.log("maingen src ", _maingen.src);
             }
         }
     });

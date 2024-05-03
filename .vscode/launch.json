@@ -12,14 +12,15 @@
             "env": {
                 "FLASK_APP": "run.py",
                 "FLASK_ENV": "development",
-                "Flash_DEBUG": "1"
+                "FLASK_DEBUG": "1"
             },
             "args": [
                 "run",
                 "--debug",
                 "--no-reload"
             ],
-            "jinja": true
+            "jinja": true,
+            "preLaunchTask": "PrintWorkspaceFolder"
         },
         {
             "type": "firefox",
@@ -28,6 +29,7 @@
             "url": "http://localhost:5000",
             "webRoot": "${workspaceFolder}"
         }
+        
     ],
     "compounds": [
         {
@@ -35,4 +37,6 @@
             "configurations": ["Python: Flask", "Launch Firefox against localhost"]
         }
     ]
+
+    
 }
