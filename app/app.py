@@ -15,7 +15,7 @@ def create_app():
     #loading in the javascript files with correct mimetype
     @app.route('/static/js/<path:filename>')
     def serve_js(filename):
-        print(filename)
+        #print(filename)
         #since I created that app in the app directory the root static directory is one up. Look at my app = Flask(__name__, template_folder='templates', static_folder='../static')
         return send_from_directory('../static/js/', filename, mimetype='application/javascript')
 

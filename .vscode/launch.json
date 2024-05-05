@@ -28,6 +28,13 @@
             "name": "Launch Firefox against localhost",
             "url": "http://localhost:5000",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:5000",
+            "webRoot": "${workspaceFolder}"
         }
         
     ],
@@ -35,6 +42,10 @@
         {
             "name": "Flask + Firefox Debug",
             "configurations": ["Python: Flask", "Launch Firefox against localhost"]
+        },
+        {
+            "name": "Flask + Chrome Debug",
+            "configurations": ["Python: Flask", "Launch Chrome against localhost"]
         }
     ]
 

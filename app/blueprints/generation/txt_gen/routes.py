@@ -8,9 +8,13 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
-from flask import redirect, request, render_template, url_for, Blueprint, send_from_directory, current_app
+from flask import redirect, request, render_template, url_for, Blueprint, send_from_directory, current_app, session
 from flask_login import login_required
 from app.app import db
+
+from app.models import Generation
+
+from app.blueprints.generation.helper import update_db
 
 txt_gen = Blueprint("txt_gen", __name__, template_folder='templates', static_folder='static')
 
@@ -19,9 +23,10 @@ txt_gen = Blueprint("txt_gen", __name__, template_folder='templates', static_fol
 def index():
     return render_template('txt_gen/index.html')
 
+#this is to serve the javascript files to the browser in the html files
 @txt_gen.route('/static/js/<path:filename>')
 def serve_js(filename):
-    print("text", txt_gen.static_folder+'/js/'+filename)
+    # print("text", txt_gen.static_folder+'/js/'+filename)
     return send_from_directory(txt_gen.static_folder+'/js/', filename, mimetype='application/javascript')
 
 
@@ -35,6 +40,15 @@ def get_endpoint(endpoint=None):
         try:
             res = urllib.request.urlopen(
                 f"http://127.0.0.1:8188/{endpoint}?{queries}")
+            print(res.url)
+            generation = Generation(
+                user_id=session['_user_id'],
+                path=res.url,
+                blueprint_id=1
+            )
+            db.session.add(generation)
+            db.session.commit()
+            # update_db(res.url)
             return res
         except urllib.error.HTTPError as e:
             return e.read()

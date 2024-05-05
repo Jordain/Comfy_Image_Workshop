@@ -36,7 +36,7 @@
                 const subfolder = image['subfolder']
                 const rand = Math.random();
 
-                _maingen.src = 'http://localhost:8188/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand
+                _maingen.src = '/generation/txt_gen/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand
                 console.log("maingen src ", _maingen.src);
             }
         }
