@@ -34,17 +34,26 @@ def create_app():
     from app.blueprints.auth.routes import auth
     from app.blueprints.profile.routes import profile
     from app.blueprints.generation.routes import generation
+
     from app.blueprints.generation.txt_gen.routes import txt_gen
     from app.blueprints.generation.fantasy_character_creator.routes import fantasy_character_creator
+    from app.blueprints.generation.ip_adapter_headshot.routes import ip_adapter_headshot
+
     from app.blueprints.output.routes import output
+    from app.blueprints.help.routes import help
+    
 
     app.register_blueprint(home, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(profile, url_prefix="/profile")
     app.register_blueprint(generation, url_prefix="/generation")
+
     app.register_blueprint(txt_gen, url_prefix="/generation/txt_gen")
     app.register_blueprint(fantasy_character_creator, url_prefix="/generation/fantasy_character_creator")
+    app.register_blueprint(ip_adapter_headshot, url_prefix="/generation/ip_adapter_headshot")
+
     app.register_blueprint(output, url_prefix="/output")
+    app.register_blueprint(help, url_prefix="/help")
 
     migrate = Migrate(app, db)
 

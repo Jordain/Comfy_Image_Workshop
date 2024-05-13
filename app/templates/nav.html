@@ -7,6 +7,7 @@
       {% if session["_user_id"] %}
         <li><a href="{{ url_for('output.index') }}">Output</a></li>
         <li><a href="{{ url_for('generation.index') }}">Workflows</a></li>
+        <li><a href="{{ url_for('help.index') }}">Help</a></li>
         <li><a href="{{ url_for('profile.index') }}">Profile</a></li>
         <li><a href="/auth/logout">Log Out</a></li>
       {% else %}

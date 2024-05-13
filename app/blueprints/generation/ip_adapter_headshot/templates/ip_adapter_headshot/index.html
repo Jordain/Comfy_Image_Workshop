@@ -7,7 +7,7 @@
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
     <article class="prose lg:prose">
-      <h1>Fantasy Character Creator</h1><br>
+      <h1>Ip Adapter Headshot</h1><br>
     </article>
       <div class="grid grid-cols-3 gap-4">    
           <!-- LEFT BAR -->
@@ -311,12 +311,12 @@
                       Save Workflow
                     </div>
                     <div class="collapse-content">
-                        <form id="save-form" method="POST">
+                        <form action="{{ base_url }}/save" method="POST">
                             <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs" type="text" placeholder="Title" aria-label="title">
                             <div class="mb-3"></div>
                             <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs" type="text" placeholder="Description" aria-label="discription">
                             <div class="mb-3"></div>
-                            <button id="save" class="btn btn-primary" type="button">Save</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
                         </form>
                     </div>
                 </div>

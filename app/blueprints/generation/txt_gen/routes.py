@@ -14,13 +14,18 @@ from app.app import db
 
 from app.models import Generation
 
-from app.blueprints.generation.helper import update_db
+from app.blueprints.generation.helper import blueprint_add, generation_add
 
 txt_gen = Blueprint("txt_gen", __name__, template_folder='templates', static_folder='static')
+
+# Need to import Blueprint after creating blueprint since that's the name of my model. Bad name need to fix later.
+from app.models import Blueprint
 
 @txt_gen.route('/')
 @login_required
 def index():
+    if(not Blueprint.query.filter_by(id=1).first() or Blueprint.query.filter_by(id=1).first().title != 'txt_gen'):
+        blueprint_add('txt_gen', 1)
     return render_template('txt_gen/index.html')
 
 #this is to serve the javascript files to the browser in the html files
@@ -41,13 +46,7 @@ def get_endpoint(endpoint=None):
             res = urllib.request.urlopen(
                 f"http://127.0.0.1:8188/{endpoint}?{queries}")
             print(res.url)
-            generation = Generation(
-                user_id=session['_user_id'],
-                path=res.url,
-                blueprint_id=1
-            )
-            db.session.add(generation)
-            db.session.commit()
+            generation_add(res.url, Blueprint.query.filter_by(id=1).first().id)
             # update_db(res.url)
             return res
         except urllib.error.HTTPError as e:
@@ -75,6 +74,3 @@ def post_endpoint(endpoint=None):
         return response
     except urllib.error.HTTPError as e:
         return e.read()
-
-
-

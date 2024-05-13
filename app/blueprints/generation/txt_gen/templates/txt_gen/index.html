@@ -5,6 +5,14 @@
 {% block content %}
 <article class="prose lg:prose">
     <h1>Text Generation</h1>
+    <div tabindex="0" class="collapse bg-base-200"> 
+        <div class="collapse-title text-xl font-medium">
+            ComfyUI Requirements:
+        </div>
+        <div class="collapse-content"> 
+            <ul><a href="https://civitai.com/api/download/models/343109">Proteus V0.3.safetensors</a></ul>
+        </div>
+    </div>
     <label for="cfgrescale">CFG Rescale <input id="cfgrescale" type="checkbox" /></label>
     <textarea rows="1" cols="50" style="width: 512px;" value="" id="prompt"></textarea>
 
