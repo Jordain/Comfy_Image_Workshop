@@ -35,3 +35,8 @@ def save_workflow(id, title, desc, json):
     db.session.commit()
     db.session.close()
     
+def delete_workflow(id):
+    delete_workflow = db.session.query(Workflow).filter_by(id = id).first()
+    db.session.delete(delete_workflow)
+    db.session.commit()
+    db.session.close()

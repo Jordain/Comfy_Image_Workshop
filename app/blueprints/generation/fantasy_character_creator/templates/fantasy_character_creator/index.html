@@ -146,10 +146,10 @@
                   <div class="collapse-content"> 
                     <div class="grid grid-cols-2">
                       <div class="gap-4">
-                        <label class="form-label" for="gender-input">Male</label>
-                        <input class="radio radio-primary" value="1" type="radio" name="gender" id="gender-input" checked/>
-                        <label class="form-label" for="gender-input">Female</label>
-                        <input class="radio radio-primary" value="0" type="radio" name="gender" id="gender-input" />
+                        <label class="form-label" for="genders">Male</label>
+                        <input class="radio radio-primary" value="1" type="radio" name="gender" id="male" checked/>
+                        <label class="form-label" for="genders">Female</label>
+                        <input class="radio radio-primary" value="0" type="radio" name="gender" id="female" />
                       </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -306,19 +306,19 @@
                 </div>
                 
                 <div class="collapse collapse-arrow join-item border border-base-300">
-                    <input type="radio" name="my-accordion-4" /> 
-                    <div class="collapse-title text-xl font-medium">
-                      Save Workflow
-                    </div>
-                    <div class="collapse-content">
-                        <form id="save-form" method="POST">
-                            <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs" type="text" placeholder="Title" aria-label="title">
-                            <div class="mb-3"></div>
-                            <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs" type="text" placeholder="Description" aria-label="discription">
-                            <div class="mb-3"></div>
-                            <button id="save" class="btn btn-primary" type="button">Save</button>
-                        </form>
-                    </div>
+                  <input type="radio" name="my-accordion-4" /> 
+                  <div class="collapse-title text-xl font-medium">
+                    Save Workflow
+                  </div>
+                  <div class="collapse-content">
+                      <form id="save-form" method="POST">
+                          <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs" type="text" placeholder="Title" aria-label="title">
+                          <div class="mb-3"></div>
+                          <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs" type="text" placeholder="Description" aria-label="discription">
+                          <div class="mb-3"></div>
+                          <button id="save" class="btn btn-primary" type="button">Save</button>
+                      </form>
+                  </div>
                 </div>
 
                 <div class="collapse collapse-arrow join-item border border-base-300">
@@ -327,15 +327,16 @@
                       Load Workflow
                     </div>
                     <div class="collapse-content"> 
-                    <label class="form-label grid" for="load-workflows">Workflows</label>
-                    <select class="select select-primary" id="load-workflows" aria-label="Select">
-                        <option value="">-- undefined --</option>
-                        <option value="blond">Workflow2</option>
-                        <option value="dark blond">Workflow3</option>
-                        </select>
-                      <div class="mb-3"></div>
-                      <button class="btn btn-primary">Load</button>
-                    </div>
+                    <label class="form-label grid" for="load-wf">Workflows</label>
+                    <select class="select select-primary" id="load-select" name="load-select" aria-label="Select">
+                        {% for workflow in workflow_display %}
+                          <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="mb-3"></div>
+                    <button id="load-wf" class="btn btn-primary">Load</button>
+                    <button id="delete-wf" class="btn btn-secondary">Delete</button>
+                  </div>
                 </div>
 
               </div>

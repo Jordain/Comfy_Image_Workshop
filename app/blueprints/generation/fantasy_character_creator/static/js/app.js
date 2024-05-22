@@ -148,6 +148,9 @@
     // HTML elements
     const roll = _('#roll');
     const save = _('#save');
+    const delete_wf = _('#delete-wf');
+    const load_wf = _('#load-wf');
+
     const roll_icon = _('#roll-icon');
     const progressbar = _('#main-progress');
     const seed_input = _('#main-seed');
@@ -162,6 +165,7 @@
     const setting_input = _('#setting-input'); 
     const body_structure_input = _('#body-structure-input');
     const race_input = _('#race-input');
+    let gender_input = document.querySelector('input[name="gender"]:checked').value;
     const age_input = _('#age-input');
     const class_input = _('#class-input');
     const gear_input = _('#gear-input');
@@ -175,6 +179,8 @@
     
     function updateProgress(max=0, value=0) { progressbar.max = max; progressbar.value = value; }
 
+    //fetch('/generation/fantasy_character_creator/load')
+    
     // Event listeners
     roll.addEventListener('click', async (event) => {
         if (IS_GENERATING) {
@@ -196,8 +202,7 @@
             let race_helper = '';
             let negative_race = '';
             let age = age_input.value;
-            let gender = _('#gender-input:checked').value;
-            console.log("gender ", gender);
+            let gender = document.querySelector('input[name="gender"]:checked').value; 
             let negative_gender = '';
             let dndclass = class_input.options[class_input.selectedIndex].value;
             let gear = gear_input.options[gear_input.selectedIndex].value;
@@ -801,10 +806,38 @@
             wf['5']['inputs']['text'] = negative;
             
             document.getElementById('save').addEventListener('click', () => {
+
+                // Organize variables into an object
+                const data = {
+                    quality_input: quality_input.value,
+                    batch_size_input: batch_size_input.value,
+                    style_input: style_input.options[style_input.selectedIndex].value,
+                    setting_input: setting_input.options[setting_input.selectedIndex].value,
+                    body_structure_input: body_structure_input.value,
+                    race_input: race_input.options[race_input.selectedIndex].value,
+                    gender_input: _('#gender-input:checked').value,
+                    age_input: age_input.value,
+                    class_input: class_input.options[class_input.selectedIndex].value,
+                    gear_input: gear_input.options[gear_input.selectedIndex].value,
+                    hairstyle_input: hairstyle_input.options[hairstyle_input.selectedIndex].value,
+                    haircolor_input: haircolor_input.options[haircolor_input.selectedIndex].value,
+                    background_input: background_input.options[background_input.selectedIndex].value,
+                    mood_input: mood_input.options[mood_input.selectedIndex].value,
+                    atmosphere_input: atmosphere_input.options[atmosphere_input.selectedIndex].value,
+                    ethnicity_input: ethnicity_input.options[ethnicity_input.selectedIndex].value,
+                    custom_input: custom_input.value
+                }
+                // Convert object to JSON string
+                const jsonData = JSON.stringify(data);
+                console.log("json" + jsonData);
                 var formData = new FormData(document.getElementById('save-form'));
 
                 // Add JSON data to form data
-                formData.append('workflow', JSON.stringify({wf: wf}));
+                formData.append('workflow', JSON.stringify({wf: jsonData}));
+
+                formData.forEach(function(value, key){
+                    console.log(key + ": " + value);
+                });
 
                 fetch('/generation/fantasy_character_creator/save', { 
                     method: 'POST', 
@@ -812,7 +845,7 @@
                     }) 
                     .then(response => response.text()) 
                     .then(result => { 
-                    console.log(result); 
+                    //console.log(result); 
                     }) 
                     .catch(error => { 
                     console.error('Error:', error); 
@@ -821,6 +854,54 @@
         }
     );
 
+    // Load workflow
+    document.getElementById('load-wf').addEventListener('click', () => {
+        try {
+            var genderRadioButtons = document.getElementsByName('gender');
+
+            // Fetch JSON data from the server
+            const selectElement = document.getElementById('load-select');
+            const selectedValue = selectElement.value;
+            
+            console.log("Selected value:", selectedValue);
+
+            const dataObject = JSON.parse(selectedValue);
+            console.log("data object", dataObject);
+
+            // Populate form fields with data from JSON
+            document.getElementById('quality-input').value = dataObject.quality_input;
+            document.getElementById('batch-size-input').value = dataObject.batch_size_input;
+            document.getElementById('style-input').value = dataObject.style_input;
+            document.getElementById('setting-input').value = dataObject.setting_input;
+            document.getElementById('body-structure-input').value = dataObject.body_structure_input;
+            document.getElementById('race-input').value = dataObject.race_input;
+            gender_input = document.getElementsByName('gender').value = dataObject.gender_input;
+            document.getElementById('age-input').value = dataObject.age_input;
+            document.getElementById('class-input').value = dataObject.class_input;
+            document.getElementById('gear-input').value = dataObject.gear_input;
+            document.getElementById('hairstyle-input').value = dataObject.hairstyle_input;
+            document.getElementById('haircolor-input').value = dataObject.haircolor_input;
+            document.getElementById('background-input').value = dataObject.background_input;
+            document.getElementById('mood-input').value = dataObject.mood_input;
+            document.getElementById('atmosphere-input').value = dataObject.atmosphere_input;
+            document.getElementById('ethnicity-input').value = dataObject.ethnicity_input;
+            document.getElementById('custom-input').value = dataObject.custom_input;
+
+            for (var i = 0; i < genderRadioButtons.length; i++) {
+                console.log(i);
+                console.log("outer", genderRadioButtons[i].value);
+                if (genderRadioButtons[i].value === gender_input) {
+                    console.log("inner",genderRadioButtons[i].value);
+                    genderRadioButtons[i].checked = true;
+                    break; // Exit the loop once the correct radio button is found and checked
+                }
+            }
+
+
+        } catch (error) {
+            console.error('Error loading JSON data:', error);
+        }
+    });
 
     is_random_input.addEventListener('change', (event) => {
         if (is_random_input.checked) {
@@ -828,6 +909,32 @@
         } else {
             seed_input.disabled = false;
         }
+    });
+
+    // Delete workflow
+    document.getElementById('delete-wf').addEventListener('click', () => {
+        var selectElement = document.getElementById('load-select');
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var workflow_Id = selectedOption.id;
+        console.log(workflow_Id);
+        fetch('/generation/fantasy_character_creator/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ workflowID: workflow_Id })
+        })
+        .then(response => response.text())
+        .then(result => {
+            console.log(result);
+            for (var i=0; i<selectElement.length; i++) {
+                if (selectElement.options[i].value == selectedOption.value)
+                    selectElement.remove(i);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
     // WebSocket
