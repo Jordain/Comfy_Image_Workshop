@@ -10,7 +10,7 @@ def create_app():
     app.secret_key = "3240fd4f86daf0656709a1f971f05a03e79"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./project.db"
     #You will need to change the path to your comfy folder
-    app.config['UPLOAD_FOLDER'] = r'C:\Users\jorda\ComfyUI_windows_portable_2\ComfyUI\input'
+    app.config['UPLOAD_FOLDER'] = r'C:\Users\jorda\ComfyUI_windows_portable_3\ComfyUI\input'
 
     db.init_app(app)
 

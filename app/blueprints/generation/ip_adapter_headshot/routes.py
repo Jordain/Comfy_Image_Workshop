@@ -8,7 +8,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
-from flask import redirect, request, render_template, url_for, Blueprint, send_from_directory, current_app, session, current_app
+from flask import redirect, request, render_template, url_for, jsonify, Blueprint, send_from_directory, current_app, session, current_app
 from flask_login import login_required
 from app.app import db
 
@@ -18,6 +18,7 @@ ip_adapter_headshot = Blueprint("ip_adapter_headshot", __name__, template_folder
 
 # Need to import Blueprint after creating blueprint since that's the name of my model. Bad name need to fix later.
 from app.models import Generation, Blueprint, Workflow
+
 
 @ip_adapter_headshot.route('/')
 @login_required
@@ -82,7 +83,8 @@ def upload_image():
             image.save(file_path)
             print(file_path)
             print(image_filename)
-            return render_template('ip_adapter_headshot/index.html', image_filename=image_filename)
+            return {"image_filename": image_filename}
+            # return render_template('ip_adapter_headshot/index.html', image_filename=image_filename)
         else:
             return 'No image found in request.', 400
     else:
@@ -96,6 +98,7 @@ def save():
         desc = request.form['save-desc']
         wf_json_str = request.form['workflow']
         wf_json = json.loads(wf_json_str)['wf']
+        print("saved to db")
         save_workflow(Blueprint.query.filter_by(title="ip_adapter_headshot").first().id, title, desc, wf_json)
         return redirect(url_for("ip_adapter_headshot.index"))
     except KeyError as e:

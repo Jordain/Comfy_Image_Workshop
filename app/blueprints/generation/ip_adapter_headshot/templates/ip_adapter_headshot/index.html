@@ -73,7 +73,7 @@
                   </div>
                   <div class="collapse-content">
                     <form id="uploadForm" enctype="multipart/form-data" >
-                      <input type="file" id="imageInput" name="image">
+                      <input type="file" id="imageInput" name="image" accept="image/*">
                       <div class="mb-3"></div>
                       <button type="button" id="upload_image_button" class="btn btn-primary">Upload Image</button>
                     </form>
@@ -420,7 +420,7 @@
                     Load Workflow
                   </div>
                   <div class="collapse-content"> 
-                  <label class="form-label grid" for="load-wf">Workflows</label>
+                  <label class="form-label grid" for="load-wf"></label>
                   <select class="select select-primary" id="load-select" name="load-select" aria-label="Select">
                       {% for workflow in workflow_display %}
                         <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
@@ -479,4 +479,5 @@
 </div>
 
     <script src="{{url_for('ip_adapter_headshot.static',filename='js/app.js') }}"></script>
+    <script src="{{url_for('generation.serve_static',filename='js/helpers.js') }}"></script>
 {% endblock %}

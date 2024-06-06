@@ -44,10 +44,15 @@
         return wf;
     }
     const workflows = await load_api_workflows();
-    
+
+
+
+    // Define local_ip as a global variable
+    const local_ip = await get_local_ip();
+
     // Get the the installed Checkpoints    
     async function get_checkpoints() {
-        let response = await fetch('http://127.0.0.1:8188/object_info/CheckpointLoaderSimple', {
+        let response = await fetch('http://' + local_ip + ':8188/object_info/CheckpointLoaderSimple', {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -116,7 +121,7 @@
     let IS_GENERATING = false;
 
     // Image Load
-    var imageFilename = '';
+    var imageFilename = (imageFilename === '') ? '' : imageFilename;
     // HTML elements
     const roll = _('#roll');
     const roll_icon = _('#roll-icon');
@@ -226,7 +231,7 @@
             // wf['7']['inputs']['cfg'] = CFG;
             // wf['5']['inputs']['text'] = negative;
 
-            //console.log("image_filename:", imageFilename);
+            console.log("image_filename:", imageFilename);
 
             // update wf
             wf['3']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
@@ -276,7 +281,6 @@
 
             wf = null;
 
-            console.log(response);
             if ('error' in response) {
                 IS_GENERATING = false;
                 toggleDisplay(spinner, IS_GENERATING)
@@ -290,143 +294,134 @@
     });
 
     // Save prompt
-    save.addEventListener('click', async (event) => {
-        if (IS_GENERATING) {
-            await interrupt();
-        } else {      
-            let wf = structuredClone(workflows['ipadapter_ideal_faceid']);
-            let base_steps = 14;        // minimum number of steps
-            let step_increment = 14;    // number of steps multiplied by the quality factor
-            // let sampler_name = 'dpmpp_2m';
-            // let scheduler = 'exponential';
-            // let CFG = 6.5;
+    document.getElementById('save').addEventListener('click', async (event) => {
+        
+        let wf = structuredClone(workflows['ipadapter_ideal_faceid']);
+        let base_steps = 14;        // minimum number of steps
+        let step_increment = 14;    // number of steps multiplied by the quality factor
+        // let sampler_name = 'dpmpp_2m';
+        // let scheduler = 'exponential';
+        // let CFG = 6.5;
 
-            let positive = positive_template;
-            let gender = _('#gender-input:checked').value;
-            let clothes_description = clothes_description_input.options[clothes_description_input.selectedIndex].value;
-            let pattern = pattern_input.options[pattern_input.selectedIndex].value;
-            let color = color_input.options[color_input.selectedIndex].value;
-            let material = material_input.options[material_input.selectedIndex].value;
-            let clothes = clothes_input.options[clothes_input.selectedIndex].value;
-            let background = background_input.options[background_input.selectedIndex].value;
-            let mood = mood_input.options[mood_input.selectedIndex].value;
-            let time = time_input.options[time_input.selectedIndex].value;
-            let season = season_input.options[season_input.selectedIndex].value;
-            let light = light_input.options[light_input.selectedIndex].value;
-            let custom_prompt = custom_input.value;
+        let positive = positive_template;
+        let gender = _('#gender-input:checked').value;
+        let clothes_description = clothes_description_input.options[clothes_description_input.selectedIndex].value;
+        let pattern = pattern_input.options[pattern_input.selectedIndex].value;
+        let color = color_input.options[color_input.selectedIndex].value;
+        let material = material_input.options[material_input.selectedIndex].value;
+        let clothes = clothes_input.options[clothes_input.selectedIndex].value;
+        let background = background_input.options[background_input.selectedIndex].value;
+        let mood = mood_input.options[mood_input.selectedIndex].value;
+        let time = time_input.options[time_input.selectedIndex].value;
+        let season = season_input.options[season_input.selectedIndex].value;
+        let light = light_input.options[light_input.selectedIndex].value;
+        let custom_prompt = custom_input.value;
 
-            // seed number
-            let rndseed = seed_input.value
-            if ( is_random_input.checked ) {
-                rndseed = seed();
-                seed_input.value = rndseed;
-            }
-            let localrand = seededRandom(rndseed);
-            
-            // Gender
-            if ( gender == '0') { gender = 'beautiful woman'; }
-            else if ( gender == '1' ) { gender = 'handsome man'; }
-            positive = positive.replace('{{GENDER}}', gender);    
-
-            //Clothes description
-            positive = positive.replace('{{CLOTHES_DESCRIPTION}}', clothes_description);
-
-            //Pattern
-            positive = positive.replace('{{PATTERN}}', pattern);
-
-            // Color
-            positive = positive.replace('{{COLOR}}', color);
-
-            // Material
-            positive = positive.replace('{{MATERIAL}}', material);
-
-            // Clothes
-            positive = positive.replace('{{CLOTHES}}', clothes);
-
-            // Background
-            positive = positive.replace('{{BACKGROUND}}', background);
-
-            //Mood
-            positive = positive.replace('{{MOOD}}', mood);
-
-            //Time
-            positive = positive.replace('{{TIME}}', time);
-
-            //Season
-            positive = positive.replace('{{SEASON}}', season);
-
-            // Light
-            positive = positive.replace('{{LIGHT}}', light);     
-
-            // custom prompt
-            if ( custom_prompt !== '' ) {
-                positive = custom_prompt
-            }
-
-            // // update the workflow with the selected parameters
-            // wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
-            // wf['7']['inputs']["sampler_name"] = sampler_name;
-            // wf['7']['inputs']["scheduler"] = scheduler;    
-            // wf['7']['inputs']['seed'] = rndseed;
-            // wf['7']['inputs']['cfg'] = CFG;
-            // wf['5']['inputs']['text'] = negative;
-
-            //console.log("image_filename:", imageFilename);
-
-            // update wf
-            wf['3']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
-            wf['5']['inputs']['batch_size'] = batch_size_input.value;
-            wf['12']['inputs']['image'] = imageFilename;
-            wf['3']['inputs']['seed'] = rndseed;
-            wf['6']['inputs']['text'] = positive;
-            
-            // Save prompt
-            document.getElementById('save').addEventListener('click', () => {
-
-                // Organize variables into an object
-                const data = {
-                    quality_input: quality_input.value,
-                    batch_size_input: batch_size_input.value,
-                    seed_input: seed_input.value,
-                    imageFilename: imageFilename,
-                    clothes_description_input: clothes_description_input.options[clothes_description_input.selectedIndex].value,
-                    pattern_input: pattern_input.options[pattern_input.selectedIndex].value,
-                    color_input: color_input.options[color_input.selectedIndex].value,
-                    material_input: material_input.options[material_input.selectedIndex].value,
-                    clothes_input: clothes_input.options[clothes_input.selectedIndex].value,
-                    background_input: background_input.options[background_input.selectedIndex].value,
-                    mood_input: mood_input.options[mood_input.selectedIndex].value,
-                    time_input: time_input.options[time_input.selectedIndex].value,
-                    season_input: season_input.options[season_input.selectedIndex].value,
-                    light_input: light_input.options[light_input.selectedIndex].value,
-                    gender_input: _('#gender-input:checked').value,
-                    custom_input: custom_input.value
-                }
-                // Convert object to JSON string
-                const jsonData = JSON.stringify(data);
-                console.log("json" + jsonData);
-                var formData = new FormData(document.getElementById('save-form'));
-
-                // Add JSON data to form data
-                formData.append('workflow', JSON.stringify({wf: jsonData}));
-
-                formData.forEach(function(value, key){
-                    console.log(key + ": " + value);
-                });
-
-                fetch('/generation/ip_adapter_headshot/save', { 
-                    method: 'POST', 
-                    body: formData
-                    }) 
-                    .then(response => response.text()) 
-                    .then(result => { 
-                    //console.log(result); 
-                    }) 
-                    .catch(error => { 
-                    console.error('Error:', error); 
-                    }); 
-            })
+        // seed number
+        let rndseed = seed_input.value
+        if ( is_random_input.checked ) {
+            rndseed = seed();
+            seed_input.value = rndseed;
         }
+        let localrand = seededRandom(rndseed);
+        
+        // Gender
+        if ( gender == '0') { gender = 'beautiful woman'; }
+        else if ( gender == '1' ) { gender = 'handsome man'; }
+        positive = positive.replace('{{GENDER}}', gender);    
+
+        //Clothes description
+        positive = positive.replace('{{CLOTHES_DESCRIPTION}}', clothes_description);
+
+        //Pattern
+        positive = positive.replace('{{PATTERN}}', pattern);
+
+        // Color
+        positive = positive.replace('{{COLOR}}', color);
+
+        // Material
+        positive = positive.replace('{{MATERIAL}}', material);
+
+        // Clothes
+        positive = positive.replace('{{CLOTHES}}', clothes);
+
+        // Background
+        positive = positive.replace('{{BACKGROUND}}', background);
+
+        //Mood
+        positive = positive.replace('{{MOOD}}', mood);
+
+        //Time
+        positive = positive.replace('{{TIME}}', time);
+
+        //Season
+        positive = positive.replace('{{SEASON}}', season);
+
+        // Light
+        positive = positive.replace('{{LIGHT}}', light);     
+
+        // custom prompt
+        if ( custom_prompt !== '' ) {
+            positive = custom_prompt
+        }
+
+        // // update the workflow with the selected parameters
+        // wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
+        // wf['7']['inputs']["sampler_name"] = sampler_name;
+        // wf['7']['inputs']["scheduler"] = scheduler;    
+        // wf['7']['inputs']['seed'] = rndseed;
+        // wf['7']['inputs']['cfg'] = CFG;
+        // wf['5']['inputs']['text'] = negative;
+
+        // update wf
+        wf['3']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
+        wf['5']['inputs']['batch_size'] = batch_size_input.value;
+        wf['12']['inputs']['image'] = imageFilename;
+        wf['3']['inputs']['seed'] = rndseed;
+        wf['6']['inputs']['text'] = positive;
+
+        // Organize variables into an object
+        const data = {
+            quality_input: quality_input.value,
+            batch_size_input: batch_size_input.value,
+            seed_input: seed_input.value,
+            imageFilename: imageFilename,
+            clothes_description_input: clothes_description_input.options[clothes_description_input.selectedIndex].value,
+            pattern_input: pattern_input.options[pattern_input.selectedIndex].value,
+            color_input: color_input.options[color_input.selectedIndex].value,
+            material_input: material_input.options[material_input.selectedIndex].value,
+            clothes_input: clothes_input.options[clothes_input.selectedIndex].value,
+            background_input: background_input.options[background_input.selectedIndex].value,
+            mood_input: mood_input.options[mood_input.selectedIndex].value,
+            time_input: time_input.options[time_input.selectedIndex].value,
+            season_input: season_input.options[season_input.selectedIndex].value,
+            light_input: light_input.options[light_input.selectedIndex].value,
+            gender_input: _('#gender-input:checked').value,
+            custom_input: custom_input.value
+        }
+        // Convert object to JSON string
+        const jsonData = JSON.stringify(data);
+        console.log("json" + jsonData);
+        var formData = new FormData(document.getElementById('save-form'));
+
+        // Add JSON data to form data
+        formData.append('workflow', JSON.stringify({wf: jsonData}));
+
+        formData.forEach(function(value, key){
+            console.log(key + ": " + value);
+        });
+
+        fetch('/generation/ip_adapter_headshot/save', { 
+            method: 'POST', 
+            body: formData
+            }) 
+            .then(response => response.text()) 
+            .then(result => { 
+            //console.log(result); 
+            }) 
+            .catch(error => { 
+            console.error('Error:', error); 
+            }); 
     });
 
     // Load workflow
@@ -447,7 +442,7 @@
             document.getElementById('quality-input').value = dataObject.quality_input;
             document.getElementById('batch-size-input').value = dataObject.batch_size_input;
             document.getElementById('main-seed').value = dataObject.seed_input;
-            document.getElementById('imageData').value = dataObject.imageFilename;
+            imageFilename = dataObject.imageFilename;
             document.getElementById('clothes-description-input').value = dataObject.clothes_description_input;
             document.getElementById('pattern-input').value = dataObject.pattern_input;
             document.getElementById('color-input').value = dataObject.color_input;
@@ -549,10 +544,23 @@
         }
     });
 
-    document.getElementById('upload_image_button').addEventListener('click', function() {
+    function handleUploadImage(event) {
+        event.preventDefault();
         uploadImage();
-    });
+    }
 
+    document.addEventListener("touchstart", e => {
+        console.log(e);
+    })
+    
+    // Get the button element
+    const uploadButton = document.getElementById('upload_image_button');
+    
+    // Add event listeners for click and touch events
+    uploadButton.addEventListener('click', handleUploadImage);
+    //uploadButton.addEventListener('touchend', handleUploadImage); 
+
+    
     document.getElementById('imageInput').addEventListener('change', function() {
         console.log("imageInput changed");
         var fileInput = document.getElementById('imageInput').files[0];
@@ -562,32 +570,27 @@
     });
 
     
-    function uploadImage() {
+    async function uploadImage() {
         var formData = new FormData();
         var fileInput = document.getElementById('imageInput').files[0];
         formData.append('image', fileInput);
-
-        fetch('upload_image', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Error uploading image.');
+    
+        try {
+            const response = await fetch('upload_image', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if(!response.ok) {
+                throw new Error("Error uploading image.")
             }
-        })
-        .then(responseText => {
-            console.log('Image uploaded successfully.');
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(responseText, 'text/html');
-            imageFilename = doc.getElementById('imageData').getAttribute('data-image-filename');
-            console.log(imageFilename);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    
+            const data = await response.json()
+            console.log(data.image_filename)
+            imageFilename = data.image_filename
+        } catch(err) {
+            console.error(reportError)
+        }
     }
 
     function displayImage(file) {

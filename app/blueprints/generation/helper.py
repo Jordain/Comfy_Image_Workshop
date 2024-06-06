@@ -1,5 +1,7 @@
 from app.models import Generation, Blueprint, Workflow
 
+import socket
+
 from app.app import db
 from flask import session
 
@@ -40,3 +42,21 @@ def delete_workflow(id):
     db.session.delete(delete_workflow)
     db.session.commit()
     db.session.close()
+
+
+# Getting the local ip address
+def get_local_ip():
+    try:
+        # Create a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        
+        # Connect to a remote server
+        s.connect(("8.8.8.8", 80))
+        
+        # Get the local IP address
+        local_ip = s.getsockname()[0]
+        
+        return local_ip
+    except Exception as e:
+        print("Error:", e)
+        return None
