@@ -45,9 +45,12 @@
     }
     const workflows = await load_api_workflows();
 
+    // Define local_ip as a global variable
+    const local_ip = await get_local_ip();
+    
     // Get the the installed Checkpoints    
     async function get_checkpoints() {
-        let response = await fetch('http://127.0.0.1:8188/object_info/CheckpointLoaderSimple', {
+        let response = await fetch('http://' + local_ip + ':8188/object_info/CheckpointLoaderSimple', {
             method: 'GET',
             cache: 'no-cache',
             headers: {
@@ -146,12 +149,12 @@
     let IS_GENERATING = false;
 
     // HTML elements
-    const roll = _('#roll');
+    const generate = _('#generate');
     const save = _('#save');
     const delete_wf = _('#delete-wf');
     const load_wf = _('#load-wf');
 
-    const roll_icon = _('#roll-icon');
+    const generate_icon = _('#generate-icon');
     const progressbar = _('#main-progress');
     const seed_input = _('#main-seed');
     const is_random_input = _('#is-random');
@@ -182,7 +185,7 @@
     //fetch('/generation/fantasy_character_creator/load')
     
     // Event listeners
-    roll.addEventListener('click', async (event) => {
+    generate.addEventListener('click', async (event) => {
         if (IS_GENERATING) {
             await interrupt();
         } else {      
@@ -513,7 +516,7 @@
             if ('error' in response) {
                 IS_GENERATING = false;
                 toggleDisplay(spinner, IS_GENERATING)
-                toggleDisplay(roll_icon, !IS_GENERATING)
+                toggleDisplay(generate_icon, !IS_GENERATING)
                 updateProgress();
                 _('#modal-message').innerHTML = response['error']['message'];
                 UIkit.modal(modal).show();
@@ -970,7 +973,7 @@
             IS_GENERATING = (data['data']['status']['exec_info']['queue_remaining'] > 0) ? true : false;
 
             toggleDisplay(spinner, IS_GENERATING)
-            toggleDisplay(roll_icon, !IS_GENERATING)
+            toggleDisplay(generate_icon, !IS_GENERATING)
             updateProgress();
         }
     });

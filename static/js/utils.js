@@ -21,3 +21,7 @@ const animateCSS = (element_id, animation, prefix = "animate__") =>
       once: true,
     });
   });
+  function toggleMenu() {
+    var menu = document.querySelector('.menu');
+    menu.classList.toggle('hidden');
+  }

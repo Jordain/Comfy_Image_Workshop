@@ -123,8 +123,8 @@
     // Image Load
     var imageFilename = (imageFilename === '') ? '' : imageFilename;
     // HTML elements
-    const roll = _('#roll');
-    const roll_icon = _('#roll-icon');
+    const generate = _('#generate');
+    const generate_icon = _('#generate-icon');
     const progressbar = _('#main-progress');
     const seed_input = _('#main-seed');
     const is_random_input = _('#is-random');
@@ -150,7 +150,7 @@
     function updateProgress(max=0, value=0) { progressbar.max = max; progressbar.value = value; }
 
     // Event listeners
-    roll.addEventListener('click', async (event) => {
+    generate.addEventListener('click', async (event) => {
         if (IS_GENERATING) {
             await interrupt();
         } else {      
@@ -278,18 +278,7 @@
                   }
                 }
               );
-
             wf = null;
-
-            if ('error' in response) {
-                IS_GENERATING = false;
-                toggleDisplay(spinner, IS_GENERATING)
-                toggleDisplay(roll_icon, !IS_GENERATING)
-                updateProgress();
-                _('#modal-message').innerHTML = response['error']['message'];
-                UIkit.modal(modal).show();
-                console.log('Error: ' + response['error']['message']);
-            }
         }
     });
 
@@ -539,7 +528,7 @@
             IS_GENERATING = (data['data']['status']['exec_info']['queue_remaining'] > 0) ? true : false;
 
             toggleDisplay(spinner, IS_GENERATING)
-            toggleDisplay(roll_icon, !IS_GENERATING)
+            toggleDisplay(generate_icon, !IS_GENERATING)
             updateProgress();
         }
     });

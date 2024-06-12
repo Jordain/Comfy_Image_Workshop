@@ -3,9 +3,12 @@
 
 
 {% block content %}
-    <h1 class="text-4xl font-bold items-center">Workflows</h1><br>
-        <a class="btn btn-primary btn-wide" href="{{ url_for('txt_gen.index') }}">Text Generation</a>
-        <a class="btn btn-primary btn-wide" href="{{ url_for('fantasy_character_creator.index') }}">Fantasy Character Creator</a>
-        <a class="btn btn-primary btn-wide" href="{{ url_for('ip_adapter_headshot.index') }}">Dress U Up</a>
-
+<div class="flex flex-col items-center">
+    <h1 class="font-bold text-9xl mb-20 lg:text-5xl lg:mb-10">Workflows</h1>
+    <div class="menu menu-vertical">
+        <a href="{{ url_for('txt_gen.index') }}"><button class="btn btn-primary bg-primary rounded-lg w-full pt-8 pb-32 lg:pb-16 mb-20 lg:mb-5 text-8xl lg:text-4xl" type="button">Text Gen SD3</button></a>
+        <a href="{{ url_for('fantasy_character_creator.index') }}"><button class="btn btn-primary bg-primary rounded-lg w-full pt-8 pb-60 lg:pb-16 mb-20 lg:mb-5 text-8xl lg:text-4xl" type="button">Fantasy Character Creator</button></a>
+        <a href="{{ url_for('ip_adapter_headshot.index') }}"><button class="btn btn-primary bg-primary rounded-lg w-full pt-8 pb-32 lg:pb-16 mb-20 lg:mb-5 text-8xl lg:text-4xl" type="button">Dress U Up</button></a>
+    </div>
+</div>
 {% endblock %}

@@ -3,8 +3,14 @@
 
 
 {% block content %}
-    <h1>Home Page</h1>
-    <h2>Display Latest 5 outputs</h2>
-    <h2>"your workflows" Display title and descriptions of saved workflows</h2>
-    <a href="{{ url_for('generation.index') }}">Generation</a> 
+<div class="flex justify-center">    
+    <div class="text-center lg:hidden">
+        <h1 class="text-9xl font-bold mb-20">Home</h1>
+        <p class="text-4xl mb-20">Welcome to Comfy Image Workshop</p>
+    </div>
+    <div class="hidden lg:flex flex-col items-center">
+        <h1 class="text-5xl font-bold mb-10">Home</h1>
+        <p class="text-4xl mb-10">Welcome to Comfy Image Workshop</p>
+    </div>
+</div>
 {% endblock %}

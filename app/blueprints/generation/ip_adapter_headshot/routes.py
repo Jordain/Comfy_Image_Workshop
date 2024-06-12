@@ -12,7 +12,7 @@ from flask import redirect, request, render_template, url_for, jsonify, Blueprin
 from flask_login import login_required
 from app.app import db
 
-from app.blueprints.generation.helper import blueprint_add, generation_add, save_workflow, delete_workflow
+from app.blueprints.generation.helper import blueprint_add, generation_add, save_workflow, delete_workflow, get_local_ip
 
 ip_adapter_headshot = Blueprint("ip_adapter_headshot", __name__, template_folder='templates', static_folder='static')
 
@@ -39,7 +39,7 @@ def get_endpoint(endpoint=None):
         queries = urllib.parse.urlencode(dict(args))
         try:
             res = urllib.request.urlopen(
-                f"http://127.0.0.1:8188/{endpoint}?{queries}")
+                f"http://{get_local_ip()}:8188/{endpoint}?{queries}")
             print(res.url)
             generation_add(res.url, Blueprint.query.filter_by(title="ip_adapter_headshot").first().id)
             return res
@@ -47,7 +47,7 @@ def get_endpoint(endpoint=None):
             return e.read()
 
     req = urllib.request.Request(
-        f"http://127.0.0.1:8188/{endpoint}")
+        f"http://{get_local_ip()}:8188/{endpoint}")
     try:
         response = urllib.request.urlopen(req)
         return response
@@ -62,7 +62,7 @@ def post_endpoint(endpoint=None):
     payload = flask.request.get_json()
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
-        f"http://127.0.0.1:8188/{endpoint}", data=data)
+        f"http://{get_local_ip()}:8188/{endpoint}", data=data)
     try:
         response = urllib.request.urlopen(req)
         return response

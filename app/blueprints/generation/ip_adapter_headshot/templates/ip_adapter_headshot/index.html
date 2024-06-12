@@ -1,30 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Fantasy Character Creator{% endblock %}
+{% block title %}Dress U Up{% endblock %}
 
 
 {% block content %}
-<div class="flex w-screen h-screen">
+<div class="flex flex-col lg:flex w-screen h-screen">
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
-    <article class="prose lg:prose">
-      <h1>Dress U Up</h1><br>
+    <article class="prose">
+      <span class="flex items-center">
+        <span><h1>Dress U Up</h1></span>
+        <div class="tooltip tooltip-primary tooltip-right ml-2" style="margin-bottom: 29px;" data-tip="This is a workflow that lets you upload a picture of a person and dress them up with their likeness. If you are the server admin and there are errors go to the help page.">
+          <button class="btn btn-sm btn-circle btn-outline">?</button>
+        </div>
+      </span>
     </article>
       <div class="grid grid-cols-3 gap-4">    
           <!-- LEFT BAR -->
           <div class="grid grid-cols-1 gap-4">
-              <div tabindex="0" class="collapse collapse-arrow bg-base-300 "> 
-                  <div class="collapse-title text-xl font-medium ">
-                      ComfyUI Requirements:
-                  </div>
-                  <div class="collapse-content"> 
-                      <ul><a href="https://civitai.com/api/download/models/343109">Proteus V0.3.safetensors</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343110">ProteusV0.3-LCM</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343111">ProteusV0.3-LCM-Anime</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343112">ProteusV0.3-Anime</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343113">DreamShaperXLTurboV2-Cinematic</a></ul>
-                  </div>
-              </div>
-
               <div class="join join-vertical w-full">
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" checked="checked" /> 
@@ -53,16 +45,6 @@
                           <span value="100" label="4">4</span>
                         </div>
                       </div>
-                      <!-- <div>
-                        <label class="form-label" for="style-input">Style &amp; Model</label>
-                        <select class="select select-primary" id="style-input" aria-label="Select">
-                          <option value="ProteusV0.3-LCM">Illustration - Fast</option>
-                          <option value="ProteusV0.3" selected>Illustration - Accurate</option>
-                          <option value="ProteusV0.3-LCM-Anime">Anime - Fast</option>
-                          <option value="ProteusV0.3-Anime">Anime - Accurate</option>
-                          <option value="DreamShaperXLTurboV2-Cinematic">Cinematic</option>
-                        </select>
-                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -87,13 +69,11 @@
                     Clothes
                   </div>
                   <div class="collapse-content"> 
-                    <div class="grid grid-cols-2">
-                      <div class="gap-4">
-                        <label class="form-label" for="gender-input">Male</label>
+                    <div class="grid grid-cols-4 mb-3">
+                        <label class="form-label grid place-items-center" for="gender-input">Male</label>
                         <input class="radio radio-primary" value="1" type="radio" name="gender" id="gender-input" checked/>
-                        <label class="form-label" for="gender-input">Female</label>
+                        <label class="form-label grid place-items-center" for="gender-input">Female</label>
                         <input class="radio radio-primary" value="0" type="radio" name="gender" id="gender-input" />
-                      </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                       <div class="grid grid-cols-2">
@@ -444,16 +424,16 @@
   
               <div class="container container-expand flex items-center justify-center">
                   <form class="flex items-center">
-                    <button id="roll" class="btn btn-primary text-center" type="button">
+                    <button id="generate" class="btn btn-primary text-center" type="button">
                       <span class="loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
-                      <span id="roll-icon">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <span id="generate-icon">
+                        <svg class="w-6 h-6 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.872 9.687 20 6.56 17.44 4 4 17.44 6.56 20 16.873 9.687Zm0 0-2.56-2.56M6 7v2m0 0v2m0-2H4m2 0h2m7 7v2m0 0v2m0-2h-2m2 0h2M8 4h.01v.01H8V4Zm2 2h.01v.01H10V6Zm2-2h.01v.01H12V4Zm8 8h.01v.01H20V12Zm-2 2h.01v.01H18V14Zm2 2h.01v.01H20V16Z"/>
                         </svg>                        
                       </span>
                       &nbsp;Generate
                     </button>
-                  <input id="main-seed" class="input input-bordered w-full max-w-xs" type="text" placeholder="Seed" aria-label="Seed" value="0">
+                  <input id="main-seed" class="input input-bordered w-full max-w-xs mx-[3px]" type="text" placeholder="Seed" aria-label="Seed" value="0">
                   <label>Random <input id="is-random" class="checkbox" type="checkbox" checked></label>
                 </form>
               </div>

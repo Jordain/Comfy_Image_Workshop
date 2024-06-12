@@ -3,37 +3,22 @@
 
 
 {% block content %}
-<div class="flex w-screen h-screen">
+<div class="flex justify-center">
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
-    <article class="prose lg:prose">
-      <h1>Fantasy Character Creator</h1><br>
-    </article>
-      <div class="grid grid-cols-3 gap-4">    
+    <h1 class="mb-20 text-9xl font-bold lg:mb-10 lg:text-5xl">Fantasy Character Creator</h1>
+      <div class="text-5xl lg:grid lg:grid-cols-3 lg:gap-4 lg:text-xl">    
           <!-- LEFT BAR -->
           <div class="grid grid-cols-1 gap-4">
-              <div tabindex="0" class="collapse collapse-arrow bg-base-300 "> 
-                  <div class="collapse-title text-xl font-medium ">
-                      ComfyUI Requirements:
-                  </div>
-                  <div class="collapse-content"> 
-                      <ul><a href="https://civitai.com/api/download/models/343109">Proteus V0.3.safetensors</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343110">ProteusV0.3-LCM</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343111">ProteusV0.3-LCM-Anime</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343112">ProteusV0.3-Anime</a></ul>
-                      <ul><a href="https://civitai.com/api/download/models/343113">DreamShaperXLTurboV2-Cinematic</a></ul>
-                  </div>
-              </div>
-
               <div class="join join-vertical w-full">
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" checked="checked" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold mb-10 lg:mb-1">
                     Generation Parameters
                   </div>
-                  <div class="collapse-content"> 
-                    <div class="grid grid-cols-2 gap-4">
-                      <div>
+                  <div class="collapse-content mb-10 lg:mb-1"> 
+                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="quality-input">Quality</label>
                         <input class="range range-primary" id="quality-input" type="range" value="1" min="0.0" max="1.0" step="0.25" aria-label="Range">
                         <div class="form-label text-muted">
@@ -43,7 +28,7 @@
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="batch-size-input">Results per generation</label>
                         <input class="range range-primary" id="batch-size-input" type="range" value="1" min="1" max="4" step="1" aria-label="Range" list="batch-size-values">
                         <div class="w-full flex justify-between px-2" id="batch-size-values">
@@ -53,9 +38,9 @@
                           <span value="100" label="4">4</span>
                         </div>
                       </div>
-                      <div>
+                      <div class="">
                         <label class="form-label" for="style-input">Style &amp; Model</label>
-                        <select class="select select-primary" id="style-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="style-input" aria-label="Select">
                           <option value="ProteusV0.3-LCM">Illustration - Fast</option>
                           <option value="ProteusV0.3" selected>Illustration - Accurate</option>
                           <option value="ProteusV0.3-LCM-Anime">Anime - Fast</option>
@@ -68,20 +53,20 @@
                 </div>
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold mb-10 lg:mb-1">
                     Setting
                   </div>
-                  <div class="collapse-content">
-                    <div class="grid grid-cols-2 gap-4">
-                      <div class="grid grid-cols-2">
+                  <div class="collapse-content mb-10 lg:mb-1">
+                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="setting-select">Setting</label>
-                        <select class="select select-primary" id="setting-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="setting-input" aria-label="Select">
                           <option value="fantasy">Fantasy</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="background-input">Background</label>
-                        <select class="select select-primary" id="background-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="background-input" aria-label="Select">
                           <option value="" selected>-- undefined --</option>
                           <option value="inside a cave">Cave</option>
                           <option value="in the desert">Desert</option>
@@ -92,14 +77,14 @@
                           <option value="magical aura in background">Magical aura</option>
                           <option value="mountains in background">Mountains</option>
                           <option value="flat plain background">Plain background</option>
-                          <option value="in the study, scrolls and potions">Study</option>
+                          <option value="in the study, scgenerates and potions">Study</option>
                           <option value="inside a temple">Temple</option>
                           <option value="on the streets of an old town">Town</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="mood-input">Mood</label>
-                        <select class="select select-primary" id="mood-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="mood-input" aria-label="Select">
                           <option value="angry evil">Angry</option>
                           <option value="wise thoughtful serious mood">Somber</option>
                           <option value="" selected>Neutral</option>
@@ -108,9 +93,9 @@
                           <option value="happy jovial (smiling:0.85)">Happy</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="atmosphere-input">Color Hint</label>
-                        <select class="select select-primary" id="atmosphere-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="atmosphere-input" aria-label="Select">
                           <option value="">-- undefined --</option>
                           <option value="burgundy">Burgundy</option>
                           <option value="scarlet red">Scarlet</option>
@@ -140,11 +125,11 @@
                 </div>
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold mb-10 lg:mb-1">
                     Character
                   </div>
-                  <div class="collapse-content"> 
-                    <div class="grid grid-cols-2">
+                  <div class="collapse-content mb-10 lg:mb-1"> 
+                    <div class="grid grid-cols-2 mb-20">
                       <div class="gap-4">
                         <label class="form-label" for="genders">Male</label>
                         <input class="radio radio-primary" value="1" type="radio" name="gender" id="male" checked/>
@@ -152,8 +137,8 @@
                         <input class="radio radio-primary" value="0" type="radio" name="gender" id="female" />
                       </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                      <div>
+                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="mb-20">
                         <label class="form-label" for="age-input">Age</label>
                         <input class="range range-primary" id="age-input" type="range" value="1" min="0" max="3" step="1" aria-label="Range">
                         <div class="form-label text-muted">
@@ -163,7 +148,7 @@
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div class="mb-20">
                         <label class="form-label" for="body-structure-input">Body structure</label>
                         <input class="range range-primary" id="body-structure-input" type="range" value="1" min="0" max="3" step="1" aria-label="Range" list="batch-size-values">
                         <div class="grid grid-cols-2">
@@ -172,8 +157,8 @@
                         </div>
                       </div>
                       <div class="grid grid-cols-2">
-                        <label class="form-label grid place-items-center" for="race-input">Race</label>
-                        <select class="select select-primary" id="race-input" aria-label="Select">
+                        <label class="form-label grid place-items-center mb-20 lg:mb-0" for="race-input">Race</label>
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="race-input" aria-label="Select">
                             <option value="dwarf">Dwarf</option>
                             <option value="elven">Elf</option>
                             <option value="gnome">Gnome</option>
@@ -183,11 +168,11 @@
                             <option value="tiefling">Tiefling</option>
                           </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="ethnicity-input">
                             Ethnic bias <button class="btn btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-left" data-tip="Adds a random ethnicity to the character based on the area selected. It's a light conditioning that helps making the generations more interesting; it doesn't guarantee an exact nationality.">?</button>
                         </label>
-                        <select class="select select-primary" id="ethnicity-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="ethnicity-input" aria-label="Select">
                             <option value="">-- undefined --</option>
                             <option value="0">Completely Random</option>
             
@@ -219,9 +204,9 @@
                             <option value="21">Mela/Micro/Poly-nesia</option>
                           </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="class-input">Class</label>
-                        <select class="select select-primary" id="class-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="class-input" aria-label="Select">
                             <option value="cleric">Cleric</option>
                             <option value="fighter" selected>Fighter</option>
                             <option value="mage">Mage</option>
@@ -233,9 +218,9 @@
                             <option vlaue="thief">Thief</option>
                           </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="gear-input">Clothing/Armor</label>
-                        <select class="select select-primary" id="gear-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="gear-input" aria-label="Select">
                             <option value="">-- undefined --</option>
                             <option value="casual clothing">Casual clothing</option>
                             <option value="elegant garments">Elegant clothing</option>
@@ -248,11 +233,11 @@
                             <option value="a robe">Robe</option>
                           </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="hairstyle-input">
                             Hairstyle <button class="btn btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-right" data-tip="Please note that some hairstyles work better (or at all) with a specific gender and/or ethnicity.">?</button>
                         </label>
-                        <select class="select select-primary" id="hairstyle-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="hairstyle-input" aria-label="Select">
                             <option value="" selected>-- undefined --</option>
                             <option value="bald">Bald</option>
                             <option value="simple braid hairstyle">Braids</option>
@@ -272,9 +257,9 @@
                             <option value="short {{COLOR}}straight hair">Short straight</option>
                           </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="haircolor-input">Hair color</label>
-                        <select class="select select-primary" id="haircolor-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="haircolor-input" aria-label="Select">
                             <option value="">-- undefined --</option>
                             <option value="blond">Blond</option>
                             <option value="dark blond">Dark Blond</option>
@@ -293,49 +278,49 @@
                 </div>
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold mb-10 lg:mb-1">
                     Custom prompt
                   </div>
-                  <div class="collapse-content"> 
+                  <div class="collapse-content mb-10 lg:mb-1"> 
                     <div class="tooltip tooltip-primary tooltip-right" data-tip="Keep it simple. Don't be too descriptive, write the element that you want to add. Eg: 'red scarf' or 'silver tiara'. You might need to add strength with the syntax '(silver tiara:1.2)'. If the element is generic and could be misinterpreted try to give context. Eg: instead of 'crown' try with 'wearing a silver crown on his head.">
                       <button class="btn btn-xs btn-circle btn-outline">?</button>
                     </div>
                     <div class="mb-3"></div>
-                    <textarea name="custom-input" class="textarea textarea-primary w-full" id="custom-input" rows="4" placeholder="Add a custom element." aria-label="Textarea"></textarea>
+                    <textarea name="custom-input" class="textarea textarea-primary w-full text-4xl lg:text-base" id="custom-input" rows="4" placeholder="Add a custom element." aria-label="Textarea"></textarea>
                   </div>
                 </div>
                 
                 <div class="collapse collapse-arrow join-item border border-base-300">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold mb-10 lg:mb-1">
                     Save Workflow
                   </div>
-                  <div class="collapse-content">
+                  <div class="collapse-content mb-10 lg:mb-1">
                       <form id="save-form" method="POST">
-                          <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs" type="text" placeholder="Title" aria-label="title">
+                          <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs text-4xl mb-20 lg:mb-0 lg:text-base" type="text" placeholder="Title" aria-label="title">
                           <div class="mb-3"></div>
-                          <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs" type="text" placeholder="Description" aria-label="discription">
+                          <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs text-4xl mb-20 lg:mb-0 lg:text-base" type="text" placeholder="Description" aria-label="discription">
                           <div class="mb-3"></div>
-                          <button id="save" class="btn btn-primary" type="button">Save</button>
+                          <button id="save" class="btn btn-lg px-24 py-12 text-4xl btn-primary" type="button">Save</button>
                       </form>
                   </div>
                 </div>
 
                 <div class="collapse collapse-arrow join-item border border-base-300">
                     <input type="radio" name="my-accordion-4" /> 
-                    <div class="collapse-title text-xl font-medium">
+                    <div class="collapse-title font-bold mb-10 lg:mb-1">
                       Load Workflow
                     </div>
-                    <div class="collapse-content"> 
-                    <label class="form-label grid" for="load-wf">Workflows</label>
-                    <select class="select select-primary" id="load-select" name="load-select" aria-label="Select">
+                    <div class="collapse-content mb-10 lg:mb-1"> 
+                    <label class="form-label grid mb-20 lg:mb-0" for="load-wf">Workflows</label>
+                    <select class="select select-primary text-4xl mb-20 lg:mb-0 lg:text-base lg:mx-0" id="load-select" name="load-select" aria-label="Select">
                         {% for workflow in workflow_display %}
                           <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
                         {% endfor %}
                     </select>
                     <div class="mb-3"></div>
-                    <button id="load-wf" class="btn btn-primary">Load</button>
-                    <button id="delete-wf" class="btn btn-secondary">Delete</button>
+                    <button id="load-wf" class="btn btn-lg px-24 py-12 text-4xl btn-primary ">Load</button>
+                    <button id="delete-wf" class="btn btn-lg px-24 py-12 text-4xl btn-secondary">Delete</button>
                   </div>
                 </div>
 
@@ -350,16 +335,16 @@
   
               <div class="container container-expand flex items-center justify-center">
                   <form class="flex items-center">
-                    <button id="roll" class="btn btn-primary text-center" type="button">
+                    <button id="generate" class="btn btn-primary text-center btn-lg px-24 py-12" type="button">
                       <span class="loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
-                      <span id="roll-icon">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <span id="generate-icon">
+                        <svg class="w-6 h-6 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.872 9.687 20 6.56 17.44 4 4 17.44 6.56 20 16.873 9.687Zm0 0-2.56-2.56M6 7v2m0 0v2m0-2H4m2 0h2m7 7v2m0 0v2m0-2h-2m2 0h2M8 4h.01v.01H8V4Zm2 2h.01v.01H10V6Zm2-2h.01v.01H12V4Zm8 8h.01v.01H20V12Zm-2 2h.01v.01H18V14Zm2 2h.01v.01H20V16Z"/>
-                        </svg>                        
+                        </svg>                    
                       </span>
-                      &nbsp;Roll
+                      &nbsp;Generate
                     </button>
-                  <input id="main-seed" class="input input-bordered w-full max-w-xs" type="text" placeholder="Seed" aria-label="Seed" value="0">
+                  <input id="main-seed" class="input input-bordered w-full max-w-xs mx-[3px] text-4xl lg:text-base" type="text" placeholder="Seed" aria-label="Seed" value="0">
                   <label>Random <input id="is-random" class="checkbox" type="checkbox" checked></label>
                 </form>
               </div>
@@ -385,4 +370,5 @@
 </div>
 
     <script src="{{url_for('fantasy_character_creator.static',filename='js/app.js') }}"></script>
+    <script src="{{url_for('generation.serve_static',filename='js/helpers.js') }}"></script>
 {% endblock %}

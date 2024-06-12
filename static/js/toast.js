@@ -6,12 +6,18 @@ function addToast(header, body, is_error = false, timeout = 5000) {
   let new_toast = document.createElement("div");
   new_toast.id = `toast-${toast_id}`;
   new_toast.classList.add("toast");
+
+  toast_container.classList.add("bg-success");
   if (is_error) {
     new_toast.classList.add("toast--error");
+    toast_container.classList.add("bg-error");
   }
 
   let toast_header_row = document.createElement("div");
   toast_header_row.classList.add("toast-header-row");
+  toast_header_row.classList.add("text-4xl");
+  toast_header_row.classList.add("text-black");
+
 
   let toast_header = document.createElement("div");
   toast_header.classList.add("toast-header");
@@ -22,7 +28,7 @@ function addToast(header, body, is_error = false, timeout = 5000) {
   toast_close_button.innerHTML = "🗙";
   toast_close_button.addEventListener("click", (event) => {
     // new_toast.classList.add('toast-leave-animation');
-    new_toast.style.marginBottom = `-${new_toast.offsetHeight + 12}px`;
+    new_toast.style.marginBottom = `-${new_toast.offsetHeight + 24}px`;
     new_toast.style.opacity = `0`;
     new_toast.style.transform = `translateX(512px)`;
 

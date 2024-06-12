@@ -9,14 +9,12 @@
     </head>
     <body>
         {% include "nav.html" %}
-        <div class="flex flex-col min-h-screen">
-            <div class="flex-grow flex flex-col justify-between">
-                <div id="toast-container"></div>
-                  <div class="p-6 rounded-lg shadow-lg">
-                      {% block content %} {% endblock %}
-                  </div>
-              </div>
-              {% include "footer.html" %}
+        <div class="flex flex-col h-screen">
+            <div class="toast-container" id="toast-container"></div>
+            <div class="flex-1 p-6">
+                {% block content %} {% endblock %}
+            </div>
+            {% include "footer.html" %}
         </div>
         <script src="{{url_for('static',filename='js/toast.js') }}"></script>
         <script src="{{url_for('static',filename='js/utils.js') }}" ></script>

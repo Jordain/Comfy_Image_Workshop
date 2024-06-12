@@ -3,12 +3,11 @@
     // UUID generator
     function uuidv4() { return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)); }
     const client_id = uuidv4();
-    debugger;
     console.log("c ", client_id);
     
     // Load the workflow
     async function loadWorkflow() {
-        const response = await fetch('static/js/workflow.json'); 
+        const response = await fetch('static/js/sd3_base_workflow.json'); 
         return await response.json();
     }
     const workflow = await loadWorkflow();
@@ -62,7 +61,6 @@
     }
 
     const _prompt = document.getElementById('prompt');
-    const _cfgrescale = document.getElementById('cfgrescale');
     let cachedPrompt = _prompt.value;
     let lastExecutedPrompt = null;
 
@@ -76,16 +74,8 @@
             return;
         }
 
-        workflow["6"]["inputs"]["text"] = currentPrompt.replace(/(\r\n|\n|\r)/gm, " ");
+        workflow["16"]["inputs"]["text"] = currentPrompt.replace(/(\r\n|\n|\r)/gm, " ");
         workflow["3"]["inputs"]["seed"] = Math.floor(Math.random() * 9999999999);
-
-        if ( _cfgrescale.checked ) {
-            workflow["3"]["inputs"]["model"][0] = "11";
-            workflow["3"]["inputs"]["cfg"] = 2.8;
-        } else {
-            workflow["3"]["inputs"]["model"][0] = "10";
-            workflow["3"]["inputs"]["cfg"] = 2.1;
-        }
 
         if ( lastExecutedPrompt !== currentPrompt ) {
             await queue_prompt('/generation/txt_gen/prompt', { prompt: workflow, client_id: client_id }, (endpoint, response) => {
@@ -127,7 +117,7 @@
             lastExecutedPrompt = currentPrompt;
         }
 
-        promptTimeout = setTimeout(checkPrompt, 360);
+        promptTimeout = setTimeout(checkPrompt, 3000);
     }
-    let promptTimeout = setTimeout(checkPrompt, 1);
+    let promptTimeout = setTimeout(checkPrompt, 3000);
 })(window, document, undefined);

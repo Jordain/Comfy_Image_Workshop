@@ -3,17 +3,13 @@
 
 
 {% block content %}
-<article class="prose lg:prose">
-    <h1>Log in</h1>
-
+<div class="flex flex-col items-center">
+    <h1 class="font-bold mb-20 lg:mb-10 text-9xl lg:text-5xl">Login</h1>
     <form action="/auth/login" method="post">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text"><br>
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password"><br>
-        <button class="btn btn-primary" type="submit">Log In</button>
-        <button class="btn btn-secondary" onclick="window.location.href='/auth/register'" type="button">Register</button>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto mb-20 lg:mb-5 py-8 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="username" placeholder="Username" type="text"><br>
+        <input class="form-control mx-auto w-auto mb-20 lg:mb-5 py-8 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="password" placeholder="Password" type="password"><br>
+    <button class="btn bg-primary btn-primary rounded-lg w-full mb-20 lg:mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl " type="submit">Log In</button>
+    <button class="btn bg-secondary btn-secondary rounded-lg w-full mb-20 lg:mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl" onclick="window.location.href='/auth/register'" type="button">Register</button>
     </form>
-    
-</article>
-    
-
+</div>
 {% endblock %}
