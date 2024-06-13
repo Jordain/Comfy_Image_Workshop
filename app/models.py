@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     tokens: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
-    Workflow = db.relationship("Workflow", backref="user")
-    Generation = db.relationship("Generation", backref="user")
+    Workflow = db.relationship("Workflow", backref="user", cascade='all, delete-orphan')
+    Generation = db.relationship("Generation", backref="user", cascade='all, delete-orphan')
 
 def __repr__(self):
     return f"User with name {self.id} and email {self.email}"

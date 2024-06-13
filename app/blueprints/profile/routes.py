@@ -1,4 +1,4 @@
-from flask import redirect, request, render_template, url_for, Blueprint, session
+from flask import redirect, request, render_template, url_for, Blueprint, session, jsonify
 
 from app.helpers import apology
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,7 +15,11 @@ def index():
 
 @profile.route('/delete')
 def delete():
-    id = db.session.query(User).first().id
+    # if you want to view the session data.
+    # sessionView = jsonify(dict(session))
+    # return sessionView
+
+    id = session.get("_user_id")
     user = db.session.query(User).filter(User.id==id).first()
     try:
         db.session.delete(user)
