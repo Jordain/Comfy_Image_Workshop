@@ -525,337 +525,336 @@
         }
     });
 
-    save.addEventListener('click', async (event) => {    
-            let wf = structuredClone(workflows['basic_portrait']);
-            let base_steps = 14;        // minimum number of steps
-            let step_increment = 14;    // number of steps multiplied by the quality factor
-            let sampler_name = 'dpmpp_2m';
-            let scheduler = 'exponential';
-            let CFG = 6.5;
+    document.getElementById('save').addEventListener('click', async (event) => {
 
-            let model = style_input.options[style_input.selectedIndex].value;
-            let positive = positive_template;
-            let negative = negative_template;
-            let setting = setting_input.options[setting_input.selectedIndex].value;
-            let body_structure = body_structure_input.value;
-            let race = race_input.options[race_input.selectedIndex].value;
-            let race_helper = '';
-            let negative_race = '';
-            let age = age_input.value;
-            let gender = _('#gender-input:checked').value;
-            let negative_gender = '';
-            let dndclass = class_input.options[class_input.selectedIndex].value;
-            let gear = gear_input.options[gear_input.selectedIndex].value;
-            let haircolor = haircolor_input.options[haircolor_input.selectedIndex].value;
-            let hairstyle = hairstyle_input.options[hairstyle_input.selectedIndex].value;
-            let background = background_input.options[background_input.selectedIndex].value;
-            let mood = mood_input.options[mood_input.selectedIndex].value;
-            let atmosphere = atmosphere_input.options[atmosphere_input.selectedIndex].value;
-            let ethnicity_id = ethnicity_input.options[ethnicity_input.selectedIndex].value;
-            let custom_prompt = custom_input.value;
-            let ethnic_bias = '';
-            let negative_background = '';
-            let style = '';
-            let nagative_style = '';
-            let is_cinematic = false;
+        let wf = structuredClone(workflows['basic_portrait']);
+        let base_steps = 14;        // minimum number of steps
+        let step_increment = 14;    // number of steps multiplied by the quality factor
+        let sampler_name = 'dpmpp_2m';
+        let scheduler = 'exponential';
+        let CFG = 6.5;
 
-            // seed number
-            let rndseed = seed_input.value
-            if ( is_random_input.checked ) {
-                rndseed = seed();
-                seed_input.value = rndseed;
-            }
-            let localrand = seededRandom(rndseed);
+        let model = style_input.options[style_input.selectedIndex].value;
+        let positive = positive_template;
+        let negative = negative_template;
+        let setting = setting_input.options[setting_input.selectedIndex].value;
+        let body_structure = body_structure_input.value;
+        let race = race_input.options[race_input.selectedIndex].value;
+        let race_helper = '';
+        let negative_race = '';
+        let age = age_input.value;
+        let gender = _('#gender-input:checked').value;
+        let negative_gender = '';
+        let dndclass = class_input.options[class_input.selectedIndex].value;
+        let gear = gear_input.options[gear_input.selectedIndex].value;
+        let haircolor = haircolor_input.options[haircolor_input.selectedIndex].value;
+        let hairstyle = hairstyle_input.options[hairstyle_input.selectedIndex].value;
+        let background = background_input.options[background_input.selectedIndex].value;
+        let mood = mood_input.options[mood_input.selectedIndex].value;
+        let atmosphere = atmosphere_input.options[atmosphere_input.selectedIndex].value;
+        let ethnicity_id = ethnicity_input.options[ethnicity_input.selectedIndex].value;
+        let custom_prompt = custom_input.value;
+        let ethnic_bias = '';
+        let negative_background = '';
+        let style = '';
+        let nagative_style = '';
+        let is_cinematic = false;
 
-            // Style
-            if ( model.includes('-Cinematic') ) {
-                style = 'film still cinematic photo'
-                nagative_style = 'illustration, anime, cosplay, ';
-                is_cinematic = true;
-            } else if ( model.includes('-Anime') ) {
-                style = 'anime illustration'
-                nagative_style = 'photo, fanart, ';
-            } else {
-                style = 'illustration digital painting'
-                nagative_style = 'photo, anime, ';
-            }
-            positive = positive.replace('{{STYLE}}', style);
-            negative = negative.replace('{{STYLE}}', nagative_style);
-
-            // Setting
-            if ( setting === 'fantasy' ) {
-                positive = positive.replace('{{SETTING}}', 'fantasy');
-                if ( is_cinematic ) {
-                    positive = positive.replace('{{SETTING_HELPER}}', ', (D&D:1.1), Lord of the rings');
-                } else {
-                    positive = positive.replace('{{SETTING_HELPER}}', ', (D&D:1.1), (Lord of the rings:0.8)');
-                }
-            }
-
-            // Body structure
-            if ( body_structure == '0' ) {
-                body_structure = 'slender ';
-            } else if ( body_structure == '1' ) {
-                body_structure = '';
-                if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky '; }
-            } else if ( body_structure == '2' ) {
-                if ( gender == '0' || gender == '1' ) { body_structure = 'strong muscular '; }
-                else { body_structure = 'strong ';}
-                if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky ' + body_structure; }
-            } else if ( body_structure == '3' ) {
-                body_structure = 'chubby ';
-                if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky ' + body_structure; }
-            }
-            positive = positive.replace('{{BODY}}', body_structure);
-
-            // Race
-            if ( race === 'human') { negative_race = '(elf, long pointy ears:1.2), ' }
-            else if ( race === 'half-elf' || race === 'halfling' ) { race_helper = ' pointy ears.'; }
-            else if ( race === 'elven' ) {
-                // have to use Elven instead of Elf to avoid Christmas contamination
-                negative_race = 'green, beard, ';
-            }
-            positive = positive.replace('{{RACE}}', race);
-            positive = positive.replace('{{RACE_HELPER}}', race_helper);
-            negative = negative.replace('{{RACE}}', negative_race);
-
-            // Age
-            if ( age == '0' ) { age = 'young'; }
-            else if ( age == '1' ) { age = '30yo'; }
-            else if ( age == '2' ) { age = '45yo'; }
-            else if ( age == '3' ) { age = '60yo'; }
-            positive = positive.replace('{{AGE}}', age);
-
-            // Gender
-            if ( gender == '0') { gender = 'female'; negative_gender = 'horror, ' }
-            else if ( gender == '1' ) { gender = 'male'; if ( race !== 'elven' ) { negative_gender = 'beard, '}}
-            positive = positive.replace('{{GENDER}}', gender);
-            negative = negative.replace('{{GENDER}}', negative_gender);
-
-            // Class
-            positive = positive.replace('{{CLASS}}', dndclass);
-
-            // Gear
-            if ( gear !== '' ) {
-                gear = ' wearing ' + gear;
-            }
-            positive = positive.replace('{{GEAR}}', gear);
-
-            // Hair color and hairstyle
-            if ( hairstyle === 'bald' ) {
-                haircolor = '';
-            }
-
-            if ( hairstyle === 'simple braid hairstyle' ) {
-                if ( gender.includes('female') ) {
-                    hairstyle = '(simple braid hairstyle:0.7)';
-                } else {
-                    hairstyle = 'simple braid hairstyle';
-                }
-            }
-
-            if ( haircolor !== '' ) {
-                if ( hairstyle.includes('{{COLOR}}') ) {
-                    haircolor = ' with ' + hairstyle.replace('{{COLOR}}', haircolor + ' ');
-                    hairstyle = '';
-                } else {
-                    haircolor = ' with ' + haircolor + ' hair';
-                }
-            }
-            positive = positive.replace('{{HAIR_COLOR}}', haircolor);
-
-            hairstyle = hairstyle.replace('{{COLOR}}', '');
-            if ( hairstyle !== '' ) {
-                if ( haircolor !== '' ) {
-                    hairstyle = ' and ' + hairstyle;
-                } else {
-                    hairstyle = ' with ' + hairstyle;
-                }
-            }
-            positive = positive.replace('{{HAIRSTYLE}}', hairstyle);
-
-            // Background
-            if ( background !== '' ) {
-                background = ' ' + background + '.'
-                negative_background = 'flat background, ';
-            }
-            positive = positive.replace('{{BACKGROUND}}', background);
-            negative = negative.replace('{{BACKGROUND}}', negative_background);
-
-            // select checkpoint and main workflow
-            let is_LCM = (model.includes('-LCM')) ? true : false;
-            let is_Turbo = (model.includes('Turbo')) ? true : false;
-            model = model.replace('-LCM', '');
-            model = model.replace('-Anime', '');
-            model = model.replace('-Cinematic', '');
-            // lower the number of steps for LCM and Turbo models
-            if ( is_LCM || is_Turbo ) {
-                base_steps = 4;
-                step_increment = 4;
-            }
-            if ( is_LCM ) {
-                wf = structuredClone(workflows['basic_portrait_lcm']);
-                CFG = 2.5;
-                sampler_name = 'lcm';
-                scheduler = 'normal';
-            }
-            if ( is_Turbo ) {
-                CFG = 2;
-            }
-
-            // Atmospere and mood
-            if ( mood !== '' ) {
-                mood = ' ' + mood;
-                atmosphere = ', ' + atmosphere;
-            }
-            positive = positive.replace('{{MOOD}}', mood);
-            positive = positive.replace('{{ATMOSPHERE}}', atmosphere);
-
-            // Ethnicity
-            if ( ethnicity_id !== '' ) {
-                let ethnic1, ethnic2, mainArea1, mainArea2;
-
-                if ( ethnicity_id === '0' ) {
-                    let keys = Object.keys(ethnicities);
-                    mainArea1 = ethnicities[keys[Math.floor(localrand() * keys.length)]];
-                    mainArea2 = ethnicities[keys[Math.floor(localrand() * keys.length)]];
-                } else {
-                    mainArea1 = ethnicities[ethnicity_id];
-                    mainArea2 = ethnicities[ethnicity_id];
-                }
-
-                ethnic1 = mainArea1[Math.floor(localrand()*mainArea1.length)];
-                ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
-
-                while ( ethnic1 === ethnic2 ) {
-                    ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
-                }
-
-                console.log('Ethnicity: ' + ethnic1 + ', ' + ethnic2);
-                ethnic_bias = '(' + ethnic1 + ', ' + ethnic2 + ':0.7) ';
-            }
-            positive = positive.replace('{{ETHNICITY}}', ethnic_bias);
-
-            // model specific settings
-            if ( model === 'DreamShaperXLTurboV2' ) {
-                sampler_name = 'dpmpp_sde';
-
-                // Activate CFGRescale for DreamShaperXLTurboV2 that really doesn't want to listen otherwise
-                wf['14'] = {
-                    "inputs": {
-                      "multiplier": 0.7,
-                      "model": [
-                        "1",
-                        0
-                      ]
-                    },
-                    "class_type": "RescaleCFG",
-                    "_meta": {
-                      "title": "RescaleCFG"
-                    }
-                  };
-                wf['7']['inputs']['model'] = ["14", 0];
-                CFG = 4;
-                base_steps = 6;
-                scheduler = 'karras';
-            }
-
-            // custom input
-            if ( custom_prompt !== '' ) {
-                wf["20"] = {
-                    "inputs": {
-                      "width": 1024,
-                      "height": 1024,
-                      "size_cond_factor": 4,
-                      "text": custom_prompt.replace(/(\r\n|\n|\r)/gm, " "),
-                      "clip": [
-                        "1",
-                        1
-                      ]
-                    },
-                    "class_type": "CLIPTextEncodeSDXL+",
-                    "_meta": {
-                      "title": "🔧 SDXLCLIPTextEncode"
-                    }
-                  };
-                wf["21"] = {
-                    "inputs": {
-                      "conditioning_to": [
-                        "20",
-                        0
-                      ],
-                      "conditioning_from": [
-                        "4",
-                        0
-                      ]
-                    },
-                    "class_type": "ConditioningConcat",
-                    "_meta": {
-                      "title": "Conditioning (Concat)"
-                    }
-                  };
-                  wf['7']['inputs']['positive'] = ["21", 0];
-            }
-
-            // update the workflow with the selected parameters
-            wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
-            wf['7']['inputs']["sampler_name"] = sampler_name;
-            wf['7']['inputs']["scheduler"] = scheduler;    
-            wf['7']['inputs']['seed'] = rndseed;
-            wf['7']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
-            wf['7']['inputs']['cfg'] = CFG;
-            wf['6']['inputs']['batch_size'] = batch_size_input.value;
-            wf['4']['inputs']['text'] = positive;
-            wf['5']['inputs']['text'] = negative;
-            
-            document.getElementById('save').addEventListener('click', () => {
-
-                // Organize variables into an object
-                const data = {
-                    quality_input: quality_input.value,
-                    batch_size_input: batch_size_input.value,
-                    style_input: style_input.options[style_input.selectedIndex].value,
-                    setting_input: setting_input.options[setting_input.selectedIndex].value,
-                    body_structure_input: body_structure_input.value,
-                    race_input: race_input.options[race_input.selectedIndex].value,
-                    gender_input: _('#gender-input:checked').value,
-                    age_input: age_input.value,
-                    class_input: class_input.options[class_input.selectedIndex].value,
-                    gear_input: gear_input.options[gear_input.selectedIndex].value,
-                    hairstyle_input: hairstyle_input.options[hairstyle_input.selectedIndex].value,
-                    haircolor_input: haircolor_input.options[haircolor_input.selectedIndex].value,
-                    background_input: background_input.options[background_input.selectedIndex].value,
-                    mood_input: mood_input.options[mood_input.selectedIndex].value,
-                    atmosphere_input: atmosphere_input.options[atmosphere_input.selectedIndex].value,
-                    ethnicity_input: ethnicity_input.options[ethnicity_input.selectedIndex].value,
-                    custom_input: custom_input.value
-                }
-                // Convert object to JSON string
-                const jsonData = JSON.stringify(data);
-                console.log("json" + jsonData);
-                var formData = new FormData(document.getElementById('save-form'));
-
-                // Add JSON data to form data
-                formData.append('workflow', JSON.stringify({wf: jsonData}));
-
-                formData.forEach(function(value, key){
-                    console.log(key + ": " + value);
-                });
-
-                fetch('/generation/fantasy_character_creator/save', { 
-                    method: 'POST', 
-                    body: formData
-                    }) 
-                    .then(response => response.text()) 
-                    .then(result => { 
-                    //console.log(result); 
-                    }) 
-                    .catch(error => { 
-                    console.error('Error:', error); 
-                    }); 
-            })
+        // seed number
+        let rndseed = seed_input.value
+        if ( is_random_input.checked ) {
+            rndseed = seed();
+            seed_input.value = rndseed;
         }
-    );
+        let localrand = seededRandom(rndseed);
+
+        // Style
+        if ( model.includes('-Cinematic') ) {
+            style = 'film still cinematic photo'
+            nagative_style = 'illustration, anime, cosplay, ';
+            is_cinematic = true;
+        } else if ( model.includes('-Anime') ) {
+            style = 'anime illustration'
+            nagative_style = 'photo, fanart, ';
+        } else {
+            style = 'illustration digital painting'
+            nagative_style = 'photo, anime, ';
+        }
+        positive = positive.replace('{{STYLE}}', style);
+        negative = negative.replace('{{STYLE}}', nagative_style);
+
+        // Setting
+        if ( setting === 'fantasy' ) {
+            positive = positive.replace('{{SETTING}}', 'fantasy');
+            if ( is_cinematic ) {
+                positive = positive.replace('{{SETTING_HELPER}}', ', (D&D:1.1), Lord of the rings');
+            } else {
+                positive = positive.replace('{{SETTING_HELPER}}', ', (D&D:1.1), (Lord of the rings:0.8)');
+            }
+        }
+
+        // Body structure
+        if ( body_structure == '0' ) {
+            body_structure = 'slender ';
+        } else if ( body_structure == '1' ) {
+            body_structure = '';
+            if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky '; }
+        } else if ( body_structure == '2' ) {
+            if ( gender == '0' || gender == '1' ) { body_structure = 'strong muscular '; }
+            else { body_structure = 'strong ';}
+            if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky ' + body_structure; }
+        } else if ( body_structure == '3' ) {
+            body_structure = 'chubby ';
+            if ( race === 'halfling' || race === 'gnome' || race === 'dwarf' ) { body_structure = 'stocky ' + body_structure; }
+        }
+        positive = positive.replace('{{BODY}}', body_structure);
+
+        // Race
+        if ( race === 'human') { negative_race = '(elf, long pointy ears:1.2), ' }
+        else if ( race === 'half-elf' || race === 'halfling' ) { race_helper = ' pointy ears.'; }
+        else if ( race === 'elven' ) {
+            // have to use Elven instead of Elf to avoid Christmas contamination
+            negative_race = 'green, beard, ';
+        }
+        positive = positive.replace('{{RACE}}', race);
+        positive = positive.replace('{{RACE_HELPER}}', race_helper);
+        negative = negative.replace('{{RACE}}', negative_race);
+
+        // Age
+        if ( age == '0' ) { age = 'young'; }
+        else if ( age == '1' ) { age = '30yo'; }
+        else if ( age == '2' ) { age = '45yo'; }
+        else if ( age == '3' ) { age = '60yo'; }
+        positive = positive.replace('{{AGE}}', age);
+
+        // Gender
+        if ( gender == '0') { gender = 'female'; negative_gender = 'horror, ' }
+        else if ( gender == '1' ) { gender = 'male'; if ( race !== 'elven' ) { negative_gender = 'beard, '}}
+        positive = positive.replace('{{GENDER}}', gender);
+        negative = negative.replace('{{GENDER}}', negative_gender);
+
+        // Class
+        positive = positive.replace('{{CLASS}}', dndclass);
+
+        // Gear
+        if ( gear !== '' ) {
+            gear = ' wearing ' + gear;
+        }
+        positive = positive.replace('{{GEAR}}', gear);
+
+        // Hair color and hairstyle
+        if ( hairstyle === 'bald' ) {
+            haircolor = '';
+        }
+
+        if ( hairstyle === 'simple braid hairstyle' ) {
+            if ( gender.includes('female') ) {
+                hairstyle = '(simple braid hairstyle:0.7)';
+            } else {
+                hairstyle = 'simple braid hairstyle';
+            }
+        }
+
+        if ( haircolor !== '' ) {
+            if ( hairstyle.includes('{{COLOR}}') ) {
+                haircolor = ' with ' + hairstyle.replace('{{COLOR}}', haircolor + ' ');
+                hairstyle = '';
+            } else {
+                haircolor = ' with ' + haircolor + ' hair';
+            }
+        }
+        positive = positive.replace('{{HAIR_COLOR}}', haircolor);
+
+        hairstyle = hairstyle.replace('{{COLOR}}', '');
+        if ( hairstyle !== '' ) {
+            if ( haircolor !== '' ) {
+                hairstyle = ' and ' + hairstyle;
+            } else {
+                hairstyle = ' with ' + hairstyle;
+            }
+        }
+        positive = positive.replace('{{HAIRSTYLE}}', hairstyle);
+
+        // Background
+        if ( background !== '' ) {
+            background = ' ' + background + '.'
+            negative_background = 'flat background, ';
+        }
+        positive = positive.replace('{{BACKGROUND}}', background);
+        negative = negative.replace('{{BACKGROUND}}', negative_background);
+
+        // select checkpoint and main workflow
+        let is_LCM = (model.includes('-LCM')) ? true : false;
+        let is_Turbo = (model.includes('Turbo')) ? true : false;
+        model = model.replace('-LCM', '');
+        model = model.replace('-Anime', '');
+        model = model.replace('-Cinematic', '');
+        // lower the number of steps for LCM and Turbo models
+        if ( is_LCM || is_Turbo ) {
+            base_steps = 4;
+            step_increment = 4;
+        }
+        if ( is_LCM ) {
+            wf = structuredClone(workflows['basic_portrait_lcm']);
+            CFG = 2.5;
+            sampler_name = 'lcm';
+            scheduler = 'normal';
+        }
+        if ( is_Turbo ) {
+            CFG = 2;
+        }
+
+        // Atmospere and mood
+        if ( mood !== '' ) {
+            mood = ' ' + mood;
+            atmosphere = ', ' + atmosphere;
+        }
+        positive = positive.replace('{{MOOD}}', mood);
+        positive = positive.replace('{{ATMOSPHERE}}', atmosphere);
+
+        // Ethnicity
+        if ( ethnicity_id !== '' ) {
+            let ethnic1, ethnic2, mainArea1, mainArea2;
+
+            if ( ethnicity_id === '0' ) {
+                let keys = Object.keys(ethnicities);
+                mainArea1 = ethnicities[keys[Math.floor(localrand() * keys.length)]];
+                mainArea2 = ethnicities[keys[Math.floor(localrand() * keys.length)]];
+            } else {
+                mainArea1 = ethnicities[ethnicity_id];
+                mainArea2 = ethnicities[ethnicity_id];
+            }
+
+            ethnic1 = mainArea1[Math.floor(localrand()*mainArea1.length)];
+            ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
+
+            while ( ethnic1 === ethnic2 ) {
+                ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
+            }
+
+            console.log('Ethnicity: ' + ethnic1 + ', ' + ethnic2);
+            ethnic_bias = '(' + ethnic1 + ', ' + ethnic2 + ':0.7) ';
+        }
+        positive = positive.replace('{{ETHNICITY}}', ethnic_bias);
+
+        // model specific settings
+        if ( model === 'DreamShaperXLTurboV2' ) {
+            sampler_name = 'dpmpp_sde';
+
+            // Activate CFGRescale for DreamShaperXLTurboV2 that really doesn't want to listen otherwise
+            wf['14'] = {
+                "inputs": {
+                    "multiplier": 0.7,
+                    "model": [
+                    "1",
+                    0
+                    ]
+                },
+                "class_type": "RescaleCFG",
+                "_meta": {
+                    "title": "RescaleCFG"
+                }
+                };
+            wf['7']['inputs']['model'] = ["14", 0];
+            CFG = 4;
+            base_steps = 6;
+            scheduler = 'karras';
+        }
+
+        // custom input
+        if ( custom_prompt !== '' ) {
+            wf["20"] = {
+                "inputs": {
+                    "width": 1024,
+                    "height": 1024,
+                    "size_cond_factor": 4,
+                    "text": custom_prompt.replace(/(\r\n|\n|\r)/gm, " "),
+                    "clip": [
+                    "1",
+                    1
+                    ]
+                },
+                "class_type": "CLIPTextEncodeSDXL+",
+                "_meta": {
+                    "title": "🔧 SDXLCLIPTextEncode"
+                }
+                };
+            wf["21"] = {
+                "inputs": {
+                    "conditioning_to": [
+                    "20",
+                    0
+                    ],
+                    "conditioning_from": [
+                    "4",
+                    0
+                    ]
+                },
+                "class_type": "ConditioningConcat",
+                "_meta": {
+                    "title": "Conditioning (Concat)"
+                }
+                };
+                wf['7']['inputs']['positive'] = ["21", 0];
+        }
+
+        // update the workflow with the selected parameters
+        wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
+        wf['7']['inputs']["sampler_name"] = sampler_name;
+        wf['7']['inputs']["scheduler"] = scheduler;    
+        wf['7']['inputs']['seed'] = rndseed;
+        wf['7']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
+        wf['7']['inputs']['cfg'] = CFG;
+        wf['6']['inputs']['batch_size'] = batch_size_input.value;
+        wf['4']['inputs']['text'] = positive;
+        wf['5']['inputs']['text'] = negative;
+        
+        
+
+        // Organize variables into an object
+        const data = {
+            quality_input: quality_input.value,
+            batch_size_input: batch_size_input.value,
+            style_input: style_input.options[style_input.selectedIndex].value,
+            setting_input: setting_input.options[setting_input.selectedIndex].value,
+            body_structure_input: body_structure_input.value,
+            race_input: race_input.options[race_input.selectedIndex].value,
+            gender_input: _('#gender-input:checked').value,
+            age_input: age_input.value,
+            class_input: class_input.options[class_input.selectedIndex].value,
+            gear_input: gear_input.options[gear_input.selectedIndex].value,
+            hairstyle_input: hairstyle_input.options[hairstyle_input.selectedIndex].value,
+            haircolor_input: haircolor_input.options[haircolor_input.selectedIndex].value,
+            background_input: background_input.options[background_input.selectedIndex].value,
+            mood_input: mood_input.options[mood_input.selectedIndex].value,
+            atmosphere_input: atmosphere_input.options[atmosphere_input.selectedIndex].value,
+            ethnicity_input: ethnicity_input.options[ethnicity_input.selectedIndex].value,
+            custom_input: custom_input.value
+        }
+        // Convert object to JSON string
+        const jsonData = JSON.stringify(data);
+        console.log("json" + jsonData);
+        var formData = new FormData(document.getElementById('save-form'));
+
+        // Add JSON data to form data
+        formData.append('workflow', JSON.stringify({wf: jsonData}));
+
+        formData.forEach(function(value, key){
+            console.log(key + ": " + value);
+        });
+
+        fetch('/generation/fantasy_character_creator/save', { 
+            method: 'POST', 
+            body: formData
+            }) 
+            .then(response => response.text()) 
+            .then(result => { 
+            //console.log(result); 
+            }) 
+            .catch(error => { 
+            console.error('Error:', error); 
+            });    
+    });
 
     // Load workflow
     document.getElementById('load-wf').addEventListener('click', () => {
@@ -917,22 +916,39 @@
     // Delete workflow
     document.getElementById('delete-wf').addEventListener('click', () => {
         var selectElement = document.getElementById('load-select');
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var workflow_Id = selectedOption.id;
-        console.log(workflow_Id);
+        var selectedIndex = selectElement.selectedIndex;
+        var selectedOption = selectElement.options[selectedIndex];
+        var workflowId = selectedOption.id;
+        
+        console.log(workflowId);
+        
         fetch('/generation/fantasy_character_creator/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ workflowID: workflow_Id })
+            body: JSON.stringify({ workflowID: workflowId })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
-            console.log(result);
-            for (var i=0; i<selectElement.length; i++) {
-                if (selectElement.options[i].value == selectedOption.value)
-                    selectElement.remove(i);
+            if (result.success) {
+                // Determine the new selected index
+                let newSelectedIndex = selectedIndex;
+                if (selectedIndex === selectElement.options.length - 1) {
+                    newSelectedIndex = selectedIndex - 1;
+                }
+                
+                // Remove the option from the select element
+                selectElement.remove(selectedIndex);
+                
+                // Update the selected index
+                if (selectElement.options.length > 0) {
+                    selectElement.selectedIndex = newSelectedIndex;
+                }
+                
+                console.log(`Workflow with ID ${workflowId} deleted successfully.`);
+            } else {
+                console.error('Failed to delete workflow.');
             }
         })
         .catch(error => {

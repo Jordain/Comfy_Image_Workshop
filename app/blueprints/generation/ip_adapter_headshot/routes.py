@@ -122,12 +122,11 @@ def load():
 @ip_adapter_headshot.route("/delete", methods=['POST'])
 @login_required
 def delete():
-    try:
-        print("delete")
-        id = request.json['workflowID']
-        delete_workflow(id)
-        return redirect(url_for("ip_adapter_headshot.index"))
-    except KeyError as e:
-        print(f"Error: {e} is missing in the form data.")
-        # You can handle the error here, e.g., by returning an error response or redirecting to an error page
-        return redirect(url_for("ip_adapter_headshot.index"))
+    data = request.get_json()
+    workflow_id = data.get('workflowID')
+    workflow = Workflow.query.get(workflow_id)
+    if workflow:
+        db.session.delete(workflow)
+        db.session.commit()
+        return jsonify({'success': True, 'workflowID': workflow_id}), 200
+    return jsonify({'success': False}), 404

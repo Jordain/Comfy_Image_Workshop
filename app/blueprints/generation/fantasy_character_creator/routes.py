@@ -7,7 +7,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
-from flask import redirect, request, render_template, url_for, Blueprint, send_from_directory, current_app, session
+from flask import redirect, request, render_template, url_for, Blueprint, send_from_directory, current_app, session, jsonify
 from flask_login import login_required
 from app.app import db
 
@@ -98,12 +98,11 @@ def load():
 @fantasy_character_creator.route("/delete", methods=['POST'])
 @login_required
 def delete():
-    try:
-        print("delete")
-        id = request.json['workflowID']
-        delete_workflow(id)
-        return redirect(url_for("fantasy_character_creator.index"))
-    except KeyError as e:
-        print(f"Error: {e} is missing in the form data.")
-        # You can handle the error here, e.g., by returning an error response or redirecting to an error page
-        return redirect(url_for("fantasy_character_creator.index"))
+    data = request.get_json()
+    workflow_id = data.get('workflowID')
+    workflow = Workflow.query.get(workflow_id)
+    if workflow:
+        db.session.delete(workflow)
+        db.session.commit()
+        return jsonify({'success': True, 'workflowID': workflow_id}), 200
+    return jsonify({'success': False}), 404

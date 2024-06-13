@@ -3571,6 +3571,11 @@ details.collapse summary::-webkit-details-marker {
   position: relative;
 }
 
+[type="radio"].radio-lg {
+  height: 2rem;
+  width: 2rem;
+}
+
 .steps-horizontal .step {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -3864,8 +3869,24 @@ details.collapse summary::-webkit-details-marker {
   position: static;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .relative {
   position: relative;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
+.top-0 {
+  top: 0px;
 }
 
 .z-\[1\] {
@@ -3876,9 +3897,18 @@ details.collapse summary::-webkit-details-marker {
   grid-column: span 2 / span 2;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .mx-5 {
@@ -3896,9 +3926,34 @@ details.collapse summary::-webkit-details-marker {
   margin-right: auto;
 }
 
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
+}
+
+.mx-20 {
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mb-10 {
@@ -3929,6 +3984,22 @@ details.collapse summary::-webkit-details-marker {
   margin-top: 0.75rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-11 {
+  margin-bottom: 2.75rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
 .block {
   display: block;
 }
@@ -3953,6 +4024,10 @@ details.collapse summary::-webkit-details-marker {
   height: 5rem;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -3975,6 +4050,10 @@ details.collapse summary::-webkit-details-marker {
 
 .w-20 {
   width: 5rem;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-6 {
@@ -4150,11 +4229,6 @@ details.collapse summary::-webkit-details-marker {
   padding-right: 0.5rem;
 }
 
-.px-24 {
-  padding-left: 6rem;
-  padding-right: 6rem;
-}
-
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -4185,9 +4259,19 @@ details.collapse summary::-webkit-details-marker {
   padding-bottom: 1rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .pb-32 {
@@ -4220,6 +4304,14 @@ details.collapse summary::-webkit-details-marker {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-7 {
+  padding-top: 1.75rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-left {
@@ -4331,6 +4423,54 @@ details.collapse summary::-webkit-details-marker {
 }
 
 @media (min-width: 1024px) {
+  .lg\:radio {
+    flex-shrink: 0;
+    --chkbg: var(--bc);
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border-radius: 9999px;
+    border-width: 1px;
+    border-color: var(--fallback-bc,oklch(var(--bc)/var(--tw-border-opacity)));
+    --tw-border-opacity: 0.2;
+  }
+
+  .lg\:radio:focus {
+    box-shadow: none;
+  }
+
+  .lg\:radio:focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+    outline-color: var(--fallback-bc,oklch(var(--bc)/1));
+  }
+
+  .lg\:radio:checked,.lg\:radio[aria-checked="true"] {
+    --tw-bg-opacity: 1;
+    background-color: var(--fallback-bc,oklch(var(--bc)/var(--tw-bg-opacity)));
+    background-image: none;
+    animation: radiomark var(--animation-input, 0.2s) ease-out;
+    box-shadow: 0 0 0 4px var(--fallback-b1,oklch(var(--b1)/1)) inset,
+      0 0 0 4px var(--fallback-b1,oklch(var(--b1)/1)) inset;
+  }
+
+  .lg\:radio:disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  .lg\:btn-xs {
+    height: 1.5rem;
+    min-height: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+  }
+
   .lg\:btn-md {
     height: 3rem;
     min-height: 3rem;
@@ -4339,9 +4479,22 @@ details.collapse summary::-webkit-details-marker {
     font-size: 0.875rem;
   }
 
+  .btn-square:where(.lg\:btn-xs) {
+    height: 1.5rem;
+    width: 1.5rem;
+    padding: 0px;
+  }
+
   .btn-square:where(.lg\:btn-md) {
     height: 3rem;
     width: 3rem;
+    padding: 0px;
+  }
+
+  .btn-circle:where(.lg\:btn-xs) {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 9999px;
     padding: 0px;
   }
 
@@ -4352,11 +4505,33 @@ details.collapse summary::-webkit-details-marker {
     padding: 0px;
   }
 
+  .lg\:radio-md[type="radio"] {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .lg\:tooltip-left:before {
+    transform: translateY(-50%);
+    top: 50%;
+    left: auto;
+    right: var(--tooltip-offset);
+    bottom: auto;
+  }
+
   .lg\:tooltip-right:before {
     transform: translateY(-50%);
     top: 50%;
     left: var(--tooltip-offset);
     right: auto;
+    bottom: auto;
+  }
+
+  .lg\:tooltip-left:after {
+    transform: translateY(-50%);
+    border-color: transparent transparent transparent var(--tooltip-color);
+    top: 50%;
+    left: auto;
+    right: calc(var(--tooltip-tail-offset) + 0.0625rem);
     bottom: auto;
   }
 
@@ -4409,12 +4584,13 @@ details.collapse summary::-webkit-details-marker {
     margin-right: auto;
   }
 
-  .lg\:mb-0 {
+  .lg\:my-0 {
+    margin-top: 0px;
     margin-bottom: 0px;
   }
 
-  .lg\:mb-1 {
-    margin-bottom: 0.25rem;
+  .lg\:mb-0 {
+    margin-bottom: 0px;
   }
 
   .lg\:mb-10 {
@@ -4429,6 +4605,10 @@ details.collapse summary::-webkit-details-marker {
     margin-bottom: 1.25rem;
   }
 
+  .lg\:mb-1 {
+    margin-bottom: 0.25rem;
+  }
+
   .lg\:flex {
     display: flex;
   }
@@ -4441,12 +4621,20 @@ details.collapse summary::-webkit-details-marker {
     display: none;
   }
 
+  .lg\:h-12 {
+    height: 3rem;
+  }
+
   .lg\:h-auto {
     height: auto;
   }
 
   .lg\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .lg\:w-12 {
+    width: 3rem;
   }
 
   .lg\:w-auto {
@@ -4477,9 +4665,19 @@ details.collapse summary::-webkit-details-marker {
     gap: 1rem;
   }
 
+  .lg\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .lg\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .lg\:py-0 {
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
 
   .lg\:py-4 {
@@ -4487,8 +4685,30 @@ details.collapse summary::-webkit-details-marker {
     padding-bottom: 1rem;
   }
 
+  .lg\:py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .lg\:py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
   .lg\:pb-16 {
     padding-bottom: 4rem;
+  }
+
+  .lg\:pt-4 {
+    padding-top: 1rem;
+  }
+
+  .lg\:pt-1 {
+    padding-top: 0.25rem;
+  }
+
+  .lg\:pt-3 {
+    padding-top: 0.75rem;
   }
 
   .lg\:text-3xl {

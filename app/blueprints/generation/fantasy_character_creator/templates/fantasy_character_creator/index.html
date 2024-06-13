@@ -7,17 +7,18 @@
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
     <h1 class="mb-20 text-9xl font-bold lg:mb-10 lg:text-5xl">Fantasy Character Creator</h1>
-      <div class="text-5xl lg:grid lg:grid-cols-3 lg:gap-4 lg:text-xl">    
+      <div class="text-5xl lg:grid lg:grid-cols-3 lg:gap-4 lg:text-xl">
           <!-- LEFT BAR -->
           <div class="grid grid-cols-1 gap-4">
               <div class="join join-vertical w-full">
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- GENERATION PARAMETERS -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" checked="checked" /> 
-                  <div class="collapse-title font-bold mb-10 lg:mb-1">
+                  <div class="collapse-title font-bold">
                     Generation Parameters
                   </div>
-                  <div class="collapse-content mb-10 lg:mb-1"> 
-                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                  <div class="collapse-content"> 
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
                       <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="quality-input">Quality</label>
                         <input class="range range-primary" id="quality-input" type="range" value="1" min="0.0" max="1.0" step="0.25" aria-label="Range">
@@ -38,7 +39,7 @@
                           <span value="100" label="4">4</span>
                         </div>
                       </div>
-                      <div class="">
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="style-input">Style &amp; Model</label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="style-input" aria-label="Select">
                           <option value="ProteusV0.3-LCM">Illustration - Fast</option>
@@ -48,16 +49,24 @@
                           <option value="DreamShaperXLTurboV2-Cinematic">Cinematic</option>
                         </select>
                       </div>
+                      <div class="mb-20 lg:mb-0">
+                        <label class="form-label" for="main-seed">Seed</label>
+                        <input id="main-seed" class="input input-bordered w-full mx-[3px] text-4xl lg:text-base" type="text" placeholder="Seed" aria-label="Seed" value="0">
+                      </div>
+                      <div class="">
+                        <label>Random Seed<input id="is-random" class="checkbox mx-3" type="checkbox" checked></label>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- Setting -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title font-bold mb-10 lg:mb-1">
+                  <div class="collapse-title font-bold">
                     Setting
                   </div>
-                  <div class="collapse-content mb-10 lg:mb-1">
-                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+                  <div class="collapse-content">
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
                       <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="setting-select">Setting</label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="setting-input" aria-label="Select">
@@ -93,7 +102,7 @@
                           <option value="happy jovial (smiling:0.85)">Happy</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
+                      <div class="grid grid-cols-2">
                         <label class="form-label grid place-items-center" for="atmosphere-input">Color Hint</label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="atmosphere-input" aria-label="Select">
                           <option value="">-- undefined --</option>
@@ -123,22 +132,20 @@
                     </div>
                   </div>
                 </div>
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title font-bold mb-10 lg:mb-1">
+                  <div class="collapse-title font-bold">
                     Character
                   </div>
-                  <div class="collapse-content mb-10 lg:mb-1"> 
-                    <div class="grid grid-cols-2 mb-20">
-                      <div class="gap-4">
-                        <label class="form-label" for="genders">Male</label>
-                        <input class="radio radio-primary" value="1" type="radio" name="gender" id="male" checked/>
-                        <label class="form-label" for="genders">Female</label>
-                        <input class="radio radio-primary" value="0" type="radio" name="gender" id="female" />
-                      </div>
+                  <div class="collapse-content"> 
+                    <div class="my-10 lg:my-0">
+                      <input class="radio-lg lg:radio-md radio-primary" value="1" type="radio" name="gender" id="gender-input" checked/>
+                      <label class="form-label mx-3" for="gender-input">Male</label>
+                      <input class="radio-lg lg:radio-md radio-primary" value="0" type="radio" name="gender" id="gender-input" />
+                      <label class="form-label mx-3" for="gender-input">Female</label>
                     </div>
-                    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
-                      <div class="mb-20">
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="age-input">Age</label>
                         <input class="range range-primary" id="age-input" type="range" value="1" min="0" max="3" step="1" aria-label="Range">
                         <div class="form-label text-muted">
@@ -148,7 +155,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="mb-20">
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="body-structure-input">Body structure</label>
                         <input class="range range-primary" id="body-structure-input" type="range" value="1" min="0" max="3" step="1" aria-label="Range" list="batch-size-values">
                         <div class="grid grid-cols-2">
@@ -170,7 +177,9 @@
                       </div>
                       <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="ethnicity-input">
-                            Ethnic bias <button class="btn btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-left" data-tip="Adds a random ethnicity to the character based on the area selected. It's a light conditioning that helps making the generations more interesting; it doesn't guarantee an exact nationality.">?</button>
+                            Ethnicity <button class="btn btn-sm lg:btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-right lg:tooltip-left"
+                            data-tip="Adds a random ethnicity to the character based on the area selected. It's a light conditioning that helps making the generations more interesting; it doesn't guarantee an exact nationality.">
+                            ?</button>
                         </label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="ethnicity-input" aria-label="Select">
                             <option value="">-- undefined --</option>
@@ -219,7 +228,7 @@
                           </select>
                       </div>
                       <div class="grid grid-cols-2 mb-20 lg:mb-0">
-                        <label class="form-label grid place-items-center" for="gear-input">Clothing/Armor</label>
+                        <label class="form-label grid place-items-center" for="gear-input">Apparel</label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="gear-input" aria-label="Select">
                             <option value="">-- undefined --</option>
                             <option value="casual clothing">Casual clothing</option>
@@ -235,7 +244,7 @@
                       </div>
                       <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="hairstyle-input">
-                            Hairstyle <button class="btn btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-right" data-tip="Please note that some hairstyles work better (or at all) with a specific gender and/or ethnicity.">?</button>
+                            Hairstyle <button class="btn btn-sm lg:btn-xs btn-circle btn-outline tooltip tooltip-primary tooltip-right" data-tip="Please note that some hairstyles work better (or at all) with a specific gender and/or ethnicity.">?</button>
                         </label>
                         <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="hairstyle-input" aria-label="Select">
                             <option value="" selected>-- undefined --</option>
@@ -276,51 +285,47 @@
                     </div>
                   </div>
                 </div>
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title font-bold mb-10 lg:mb-1">
+                  <div class="collapse-title font-bold">
                     Custom prompt
                   </div>
-                  <div class="collapse-content mb-10 lg:mb-1"> 
+                  <div class="collapse-content"> 
                     <div class="tooltip tooltip-primary tooltip-right" data-tip="Keep it simple. Don't be too descriptive, write the element that you want to add. Eg: 'red scarf' or 'silver tiara'. You might need to add strength with the syntax '(silver tiara:1.2)'. If the element is generic and could be misinterpreted try to give context. Eg: instead of 'crown' try with 'wearing a silver crown on his head.">
-                      <button class="btn btn-xs btn-circle btn-outline">?</button>
+                      <button class="btn btn-sm lg:btn-xs btn-circle btn-outline mb-1">?</button>
                     </div>
-                    <div class="mb-3"></div>
                     <textarea name="custom-input" class="textarea textarea-primary w-full text-4xl lg:text-base" id="custom-input" rows="4" placeholder="Add a custom element." aria-label="Textarea"></textarea>
                   </div>
                 </div>
                 
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title font-bold mb-10 lg:mb-1">
+                  <div class="collapse-title font-bold">
                     Save Workflow
                   </div>
-                  <div class="collapse-content mb-10 lg:mb-1">
-                      <form id="save-form" method="POST">
-                          <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs text-4xl mb-20 lg:mb-0 lg:text-base" type="text" placeholder="Title" aria-label="title">
-                          <div class="mb-3"></div>
-                          <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs text-4xl mb-20 lg:mb-0 lg:text-base" type="text" placeholder="Description" aria-label="discription">
-                          <div class="mb-3"></div>
-                          <button id="save" class="btn btn-lg px-24 py-12 text-4xl btn-primary" type="button">Save</button>
+                  <div class="collapse-content">
+                      <form id="save-form" method="POST" class="my-10 lg:my-0">
+                          <input name="save-title" id="save-title" class="input input-bordered mx-auto w-full mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl" type="text" placeholder="Title" aria-label="title">
+                          <input name="save-desc" id="save-desc" class="input input-bordered mx-auto w-full mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl" type="text" placeholder="Description" aria-label="discription">
+                          <button id="save" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl" type="button">Save</button>
                       </form>
                   </div>
                 </div>
 
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                     <input type="radio" name="my-accordion-4" /> 
-                    <div class="collapse-title font-bold mb-10 lg:mb-1">
+                    <div class="collapse-title font-bold">
                       Load Workflow
                     </div>
-                    <div class="collapse-content mb-10 lg:mb-1"> 
-                    <label class="form-label grid mb-20 lg:mb-0" for="load-wf">Workflows</label>
-                    <select class="select select-primary text-4xl mb-20 lg:mb-0 lg:text-base lg:mx-0" id="load-select" name="load-select" aria-label="Select">
+                    <div class="collapse-content"> 
+                    <select class="select select-primary mx-auto w-full h-auto mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl my-10 lg:my-0" id="load-select" name="load-select" aria-label="Select">
                         {% for workflow in workflow_display %}
                           <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
                         {% endfor %}
                     </select>
                     <div class="mb-3"></div>
-                    <button id="load-wf" class="btn btn-lg px-24 py-12 text-4xl btn-primary ">Load</button>
-                    <button id="delete-wf" class="btn btn-lg px-24 py-12 text-4xl btn-secondary">Delete</button>
+                    <button id="load-wf" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Load</button>
+                    <button id="delete-wf" class="btn bg-error btn-error rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Delete</button>                
                   </div>
                 </div>
 
@@ -329,27 +334,23 @@
           <!-- /LEFT BAR -->
       
           <!-- CONTENT -->
-          <div class="border border-primary col-span-2 justify-center">
+          <div class="justify-center col-span-2 my-1 lg:my-0">
             <div id="content" class="text-center">
-              <progress id="main-progress" class="progress" value="0" max="0"></progress>
-  
-              <div class="container container-expand flex items-center justify-center">
-                  <form class="flex items-center">
-                    <button id="generate" class="btn btn-primary text-center btn-lg px-24 py-12" type="button">
-                      <span class="loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
+              <progress id="main-progress" class="flex progress" value="0" max="0"></progress>
+              <div class="w-full my-1">
+                  <form>
+                    <button id="generate" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-6 lg:pt-3 pb-32 lg:pb-16 text-8xl lg:text-5xl" type="button">
+                      <span class="w-24 h-24 lg:w-12 lg:h-12 loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
                       <span id="generate-icon">
-                        <svg class="w-6 h-6 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-24 h-24 lg:w-12 lg:h-12 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.872 9.687 20 6.56 17.44 4 4 17.44 6.56 20 16.873 9.687Zm0 0-2.56-2.56M6 7v2m0 0v2m0-2H4m2 0h2m7 7v2m0 0v2m0-2h-2m2 0h2M8 4h.01v.01H8V4Zm2 2h.01v.01H10V6Zm2-2h.01v.01H12V4Zm8 8h.01v.01H20V12Zm-2 2h.01v.01H18V14Zm2 2h.01v.01H20V16Z"/>
                         </svg>                    
                       </span>
                       &nbsp;Generate
                     </button>
-                  <input id="main-seed" class="input input-bordered w-full max-w-xs mx-[3px] text-4xl lg:text-base" type="text" placeholder="Seed" aria-label="Seed" value="0">
-                  <label>Random <input id="is-random" class="checkbox" type="checkbox" checked></label>
                 </form>
               </div>
-  
-              <div id="results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-4"></div>
+              <div id="results" class="grid grid-cols-1 gap-4 pt-4 lg:grid-cols-2 lg:w-auto lg:h-auto"></div>
               </div>
           </div>
         </div>

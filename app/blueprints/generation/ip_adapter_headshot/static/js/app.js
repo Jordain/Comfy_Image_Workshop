@@ -294,6 +294,7 @@
 
         let positive = positive_template;
         let gender = _('#gender-input:checked').value;
+        console.log("geg" +gender);
         let clothes_description = clothes_description_input.options[clothes_description_input.selectedIndex].value;
         let pattern = pattern_input.options[pattern_input.selectedIndex].value;
         let color = color_input.options[color_input.selectedIndex].value;
@@ -464,35 +465,44 @@
     // Delete workflow
     document.getElementById('delete-wf').addEventListener('click', () => {
         var selectElement = document.getElementById('load-select');
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var workflow_Id = selectedOption.id;
-        console.log(workflow_Id);
+        var selectedIndex = selectElement.selectedIndex;
+        var selectedOption = selectElement.options[selectedIndex];
+        var workflowId = selectedOption.id;
+        
+        console.log(workflowId);
+        
         fetch('/generation/ip_adapter_headshot/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ workflowID: workflow_Id })
+            body: JSON.stringify({ workflowID: workflowId })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
-            console.log(result);
-            for (var i=0; i<selectElement.length; i++) {
-                if (selectElement.options[i].value == selectedOption.value)
-                    selectElement.remove(i);
+            if (result.success) {
+                // Determine the new selected index
+                let newSelectedIndex = selectedIndex;
+                if (selectedIndex === selectElement.options.length - 1) {
+                    newSelectedIndex = selectedIndex - 1;
+                }
+                
+                // Remove the option from the select element
+                selectElement.remove(selectedIndex);
+                
+                // Update the selected index
+                if (selectElement.options.length > 0) {
+                    selectElement.selectedIndex = newSelectedIndex;
+                }
+                
+                console.log(`Workflow with ID ${workflowId} deleted successfully.`);
+            } else {
+                console.error('Failed to delete workflow.');
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    });
-
-    is_random_input.addEventListener('change', (event) => {
-        if (is_random_input.checked) {
-            seed_input.disabled = true;
-        } else {
-            seed_input.disabled = false;
-        }
     });
 
     // WebSocket
