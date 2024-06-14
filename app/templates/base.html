@@ -10,7 +10,7 @@
     <body>
         {% include "nav.html" %}
         <div class="flex flex-col h-screen">
-            <div class="toast-container" id="toast-container"></div>
+            <div id="toast-container" class="fixed top-0 right-0 m-4 space-y-4 rounded drop-shadow-2xl"></div>
             <div class="flex-1 p-6">
                 {% block content %} {% endblock %}
             </div>
