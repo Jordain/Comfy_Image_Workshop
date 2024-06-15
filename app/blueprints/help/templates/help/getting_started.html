@@ -1,15 +1,63 @@
 {% extends "base.html" %}
+<!-- {% block meta %}<meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endblock %} -->
 {% block title %}Help{% endblock %}
 
 
 {% block content %}
-<div class="flex justify-center w-screen">    
-    <div class="text-center">
-        <h1 class="text-4xl font-bold mb-5">Help</h1>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.getting_started') }}">Getting Started</a><br>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.txt_gen') }}">Text Generation</a><br>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.fantasy_character_creator') }}">Fantasy Character Creator</a><br>
-        <a class="btn btn-primary btn-wide" href="{{ url_for('help.ip_adapter_headshot') }}">Dress U Up</a>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+
+        <!-- Steps Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Steps to Follow</h2>
+
+            <!-- Step 1 -->
+            <div class="flex items-start mb-6">
+                <div class="flex-shrink-0">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg">1</div>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-xl font-bold mb-2">Setup Enviroment</h3>
+                    <p class="text-lg">Now that you have donwloaded the application, we will create a virtual environment and install the necessary dependencies.</p>
+                    <!-- Sub-steps -->
+                    <ol class="list-decimal ml-8 mt-2">
+                        <li>Sub-step 1 description.</li>
+                        <li>Sub-step 2 description.</li>
+                        <li>Sub-step 3 description.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex items-start mb-6">
+                <div class="flex-shrink-0">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg">2</div>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-xl font-bold mb-2">Step 2 Title</h3>
+                    <p class="text-lg">Step 2 instructions go here. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <!-- Sub-steps -->
+                    <ul class="list-disc ml-8 mt-2">
+                        <li>Sub-step 1 description.</li>
+                        <li>Sub-step 2 description.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Add more main steps as needed -->
+
+        </section>
+
+        <!-- Video Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Video Tutorial</h2>
+            <div class="video-container">
+                <!-- Replace with your video embed code (YouTube, Vimeo, etc.) -->
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/example_video_id" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
+
     </div>
-</div>
+</main>
 {% endblock %}
