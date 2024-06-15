@@ -1,10 +1,10 @@
-<div class="navbar bg-base-100">
+<div class="navbar bg-base-100 z-50">
   <div class="navbar-start">
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost h-20 w-20 lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost h-20 w-20 lg:hidden ">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 transform scale-150" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0" fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
       </div>
-      <ul tabindex="0" class="menu text-8xl dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-104">
+      <ul tabindex="0" class="menu text-8xl dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-104 ">
         {% if session["_user_id"] %}
           <li><a class= "mb-5" href="{{ url_for('home.index') }}">Home</a></li>
           <li><a class= "mb-5" href="{{ url_for('output.index') }}">Output</a></li>

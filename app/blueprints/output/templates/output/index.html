@@ -2,43 +2,52 @@
 {% block title %}Output{% endblock %}
 {% block content %}
 <div class="flex justify-center">
-    <div class="text-center lg:hidden">
-        <h1 class="text-9xl font-bold mb-20">Output</h1>
-            <div tabindex="0" class="collapse collapse-plus bg-base-300 pt-20 pr-20 mb-20"> 
-                <div class="collapse-title text-8xl font-bold pl-20 mb-20">Filter</div>
-                <div class="collapse-content ml-20"> 
-                    <ul>
-                        <li class="bg-primary btn-primary mb-20 py-8 px-8 rounded-lg text-8xl w-full"><a href="{{ url_for('output.sort_by_newest') }}">All</a><div class ="divider text-4xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="bg-primary btn-primary mb-20 py-8 px-8 rounded-lg text-8xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=1) }}">Text Generation</a><div class ="divider text-4xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="bg-primary btn-primary mb-20 py-8 px-8 rounded-lg text-8xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=2) }}">Fantasy Character Creator</a><div class ="divider text-4xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="bg-primary btn-primary mb-20 py-8 px-8 rounded-lg text-8xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=3) }}">Dress U Up</a><div class ="divider text-4xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                    </ul>
+    <div class="flex flex-col items-center w-full">
+        <h1 class="text-8xl lg:text-5xl font-bold mb-20 lg:mb-10 text-center">Output</h1>
+        <form action="{{ url_for('output.filter_generations') }}" method="GET" class="w-full lg:w-1/2">
+            <div class="collapse collapse-plus bg-base-300 mb-20 lg:mb-5 py-10 lg:py-0 px-10 lg:px-5"> <!-- Adjusted width -->
+                <!-- Input element for collapse control -->
+                <input type="checkbox" class="peer" />
+                <div class="collapse-title text-6xl lg:text-4xl font-bold peer-checked:collapse-open">
+                    Filter
+                </div>
+                <div class="collapse-content flex flex-wrap items-center justify-center lg:justify-start "> <!-- Flexbox for alignment -->
+                    <!-- Blueprint Filter Dropdown -->
+                    <div class="my-3 lg:my-0 lg:mb-3 lg:mr-3 w-full lg:w-auto">
+                        <select id="blueprintFilter" name="blueprint" class="select mb-3 w-full text-4xl lg:text-base lg:w-auto lg:mb-0"> <!-- Added margin -->
+                            <option selected disabled>Blueprint</option>
+                            <option value="0">All</option>
+                            <option value="1">Text Generation</option>
+                            <option value="2">Fantasy Character Creator</option>
+                            <option value="3">Dress U Up</option>
+                        </select>    
+                    </div>
+
+                    <!-- Sort By Dropdown -->
+                    <div class="mb-3 lg:mr-3 w-full lg:w-auto">
+                        <select id="sortByFilter" name="sort" class="select mb-3 w-full text-4xl lg:text-base lg:w-auto lg:mb-0"> <!-- Added margin -->
+                            <option selected disabled>Sort By</option>
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                        </select>    
+                    </div>
+                    
+                    <!-- Limit Dropdown -->
+                    <div class="mb-3 lg:mr-3 w-full lg:w-auto">
+                        <select id="limitFilter" name="limit" class="select mb-3 w-full text-4xl lg:text-base lg:w-auto lg:mb-0"> <!-- Added margin -->
+                            <option selected disabled>Limit</option>
+                            <option value="0">All</option>
+                            <option value="8">8</option>
+                            <option value="16">16</option>
+                            <option value="40">40</option>
+                        </select>
+                    </div>
+                    <!-- Filter Button -->
+                    <button type="submit" class="btn bg-primary btn-primary rounded-lg w-full pb-16 pt-5 text-4xl">Apply Filters</button> <!-- Added margin top and left margin for alignment -->
                 </div>
             </div>
-        <div class="grid grid-cols-2 gap-4">
-            {% set ns = namespace(counter=0) %}
-            {% for generation in generations %}
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="{{ generation.path }}" alt="">
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="flex justify-center">
-    <div class="hidden lg:flex flex-col items-center">
-        <h1 class="text-5xl font-bold mb-10 text-center">Output</h1>
-            <div tabindex="0" class="collapse collapse-plus bg-base-300 mb-10 px-5 w-1/4"> 
-                <div class="collapse-title text-4xl font-bold">Filter</div>
-                <div class="collapse-content"> 
-                    <ul>
-                        <li class="text-center bg-primary btn-primary my-5 py-2 rounded-lg text-4xl w-full"><a href="{{ url_for('output.sort_by_newest') }}">All</a><div class ="divider text-xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="text-center bg-primary btn-primary my-5 py-2 rounded-lg text-4xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=1) }}">Text Generation</a><div class ="divider text-xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="text-center bg-primary btn-primary my-5 py-2 rounded-lg text-4xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=2) }}">Fantasy Character Creator</a><div class ="divider text-xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                        <li class="text-center bg-primary btn-primary my-5 py-2 rounded-lg text-4xl w-full"><a href="{{ url_for('output.filter_by_worflows', blueprint_id=3) }}">Dress U Up</a><div class ="divider text-xl"><a href="{{ url_for('output.sort_by_newest') }}">Sort by Newest</a> | <a href="{{ url_for('output.sort_by_oldest') }}">Sort by Oldest</a></div></li>
-                    </ul>
-                </div>
-            </div>
+        </form>
+
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {% set ns = namespace(counter=0) %}
             {% for generation in generations %}
@@ -49,4 +58,5 @@
         </div>
     </div>
 </div>
+<!-- <script src="{{ url_for('output.static', filename='js/app.js') }}"></script> -->
 {% endblock %}

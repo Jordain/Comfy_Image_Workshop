@@ -3,29 +3,27 @@
 
 
 {% block content %}
-<div class="flex flex-col lg:flex w-screen h-screen">
+<div class="flex justify-center">
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
-    <article class="prose">
-      <span class="flex items-center">
-        <span><h1>Dress U Up</h1></span>
-        <div class="tooltip tooltip-primary tooltip-right ml-2" style="margin-bottom: 29px;" data-tip="This is a workflow that lets you upload a picture of a person and dress them up with their likeness. If you are the server admin and there are errors go to the help page.">
-          <button class="btn btn-sm btn-circle btn-outline">?</button>
-        </div>
-      </span>
-    </article>
-      <div class="grid grid-cols-3 gap-4">    
+    <h1 class="mb-20 text-9xl font-bold lg:mb-10 lg:text-5xl">Dress U Up
+      <div class="align-top tooltip tooltip-primary tooltip-bottom lg:tooltip-right " data-tip="This is a workflow that lets you upload a picture of a person and dress them up with their likeness. If you are the server admin and there are errors go to the help page.">
+        <button class="align-middle btn btn-sm btn-circle btn-outline">?</button>
+      </div>
+    </h1>
+      <div class="text-5xl lg:grid lg:grid-cols-3 lg:gap-4 lg:text-xl">   
           <!-- LEFT BAR -->
           <div class="grid grid-cols-1 gap-4">
               <div class="join join-vertical w-full">
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- GENERATION PARAMETERS -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" checked="checked" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Generation Parameters
                   </div>
                   <div class="collapse-content"> 
-                    <div class="grid grid-cols-2 gap-4">
-                      <div>
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="quality-input">Quality</label>
                         <input class="range range-primary" id="quality-input" type="range" value="1" min="0.0" max="1.0" step="0.25" aria-label="Range">
                         <div class="form-label text-muted">
@@ -35,7 +33,7 @@
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div class="mb-20 lg:mb-0">
                         <label class="form-label" for="batch-size-input">Results per generation</label>
                         <input class="range range-primary" id="batch-size-input" type="range" value="1" min="1" max="4" step="1" aria-label="Range" list="batch-size-values">
                         <div class="w-full flex justify-between px-2" id="batch-size-values">
@@ -45,40 +43,56 @@
                           <span value="100" label="4">4</span>
                         </div>
                       </div>
+                      <div class="mb-20 lg:mb-0">
+                        <label class="form-label" for="main-seed">Seed</label>
+                        <input id="main-seed" class="input input-bordered w-full mx-[3px] text-4xl lg:text-base" type="text" placeholder="Seed" aria-label="Seed" value="0">
+                      </div>
+                      <div class="">
+                        <label>Random Seed<input id="is-random" class="checkbox mx-3" type="checkbox" checked></label>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="collapse collapse-arrow join-item border border-base-300">
-                  <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                <!-- /GENERATION PARAMETERS -->
+
+                <!-- UPLOAD FACE PORTRAIT -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
+                  <input type="radio" name="my-accordion-4" />
+                  <div class="collapse-title font-bold">
                     Upload Face Portrait
                   </div>
                   <div class="collapse-content">
-                    <form id="uploadForm" enctype="multipart/form-data" >
-                      <input type="file" id="imageInput" name="image" accept="image/*">
-                      <div class="mb-3"></div>
-                      <button type="button" id="upload_image_button" class="btn btn-primary">Upload Image</button>
+                    <form id="uploadForm" enctype="multipart/form-data" class="my-10 lg:my-0">
+                      <input type="file" id="imageInput" name="image" accept="image/*" class="block w-full">
+                      
+                      <div class="flex justify-center items-center w-full my-5 lg:my-3">
+                        <canvas id="imageCanvas" class="w-full h-full object-contain">
+                      </div>
+                      
+                      <div id="imageData" data-image-filename="{{ image_filename }}"></div>
+                      <button type="button" id="upload_image_button" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Upload Image</button>
                     </form>
-                    <canvas id="imageCanvas" ></canvas>
-                    <div id="imageData" data-image-filename="{{ image_filename }}"></div>
                   </div>
                 </div>
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- / UPLOAD FACE PORTRAIT -->
+
+                <!-- CLOTHES -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Clothes
                   </div>
                   <div class="collapse-content"> 
-                    <div class="grid grid-cols-4 mb-3">
-                        <label class="form-label grid place-items-center" for="gender-input">Male</label>
-                        <input class="radio radio-primary" value="1" type="radio" name="gender" id="gender-input" checked/>
-                        <label class="form-label grid place-items-center" for="gender-input">Female</label>
-                        <input class="radio radio-primary" value="0" type="radio" name="gender" id="gender-input" />
+                    <div class="my-10 mb-5 lg:mb-3 lg:my-0">
+                      <input class="radio-lg lg:radio-md radio-primary" value="1" type="radio" name="gender" id="gender-input" checked/>
+                      <label class="form-label mx-3" for="gender-input">Male</label>
+                      <input class="radio-lg lg:radio-md radio-primary" value="0" type="radio" name="gender" id="gender-input" />
+                      <label class="form-label mx-3" for="gender-input">Female</label>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                      <div class="grid grid-cols-2">
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="clothes-description-input">Clothes Type</label>
-                        <select class="select select-primary" id="clothes-description-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="clothes-description-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="casual">Casual</option>
@@ -104,9 +118,9 @@
                           <option value="mini">Mini</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="pattern-input">Pattern</label>
-                        <select class="select select-primary" id="pattern-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="pattern-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="striped">Striped</option>
@@ -124,9 +138,9 @@
                           <option value="woven">Woven</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="color-input">Color</label>
-                        <select class="select select-primary" id="color-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="color-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="red">Red</option>
@@ -161,9 +175,9 @@
                           <option value="charcoal">Charcoal</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="material-input">Material</label>
-                        <select class="select select-primary" id="material-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="material-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="cotton">Cotton</option>
@@ -188,7 +202,7 @@
                       </div>
                       <div class="grid grid-cols-2">
                         <label class="form-label grid place-items-center" for="clothes-input">Clothes</label>
-                        <select class="select select-primary" id="clothes-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="clothes-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="">-- undefined --</option>
                           <option value="shirt">Shirt</option>
@@ -227,17 +241,19 @@
                     </div>
                   </div>
                 </div>
+                <!-- /Clothes -->
 
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- Setting -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Setting
                   </div>
                   <div class="collapse-content"> 
-                    <div class="grid grid-cols-2 gap-4">
-                      <div class="grid grid-cols-2">
+                    <div class="my-10 lg:my-0 lg:grid lg:grid-cols-2 lg:gap-4">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="background-input">Background</label>
-                        <select class="select select-primary" id="background-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="background-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="bustling cityscape">Bustling cityscape</option>
@@ -283,9 +299,9 @@
                           <option value="futuristic laboratory">Futuristic laboratory</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="mood-input">Mood</label>
-                        <select class="select select-primary" id="mood-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="mood-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="vibrant">Vibrant</option>
@@ -308,9 +324,9 @@
                           <option value="sombre">Sombre</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="time-input">Time</label>
-                        <select class="select select-primary" id="time-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="time-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="sunrise">Sunrise</option>
@@ -327,9 +343,9 @@
                           <option value="twilight">Twilight</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="season-input">Season</label>
-                        <select class="select select-primary" id="season-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" id="season-input" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="" selected>-- undefined --</option>
                           <option value="autumn">Autumn</option>
@@ -338,9 +354,9 @@
                           <option value="summer">Summer</option>
                         </select>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2 mb-20 lg:mb-0">
                         <label class="form-label grid place-items-center" for="light-input">Light</label>
-                        <select class="select select-primary" id="light-input" aria-label="Select">
+                        <select class="select select-primary text-4xl mx-5 lg:text-base lg:mx-0" aria-label="Select">
                           <!-- Add the options here -->
                           <option value="">-- undefined --</option>
                           <option value="ambient light">Ambient Light</option>
@@ -360,85 +376,81 @@
                     </div>
                   </div>
                 </div>
+                <!-- /Setting -->
 
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- Custom prompt -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Custom prompt
                   </div>
                   <div class="collapse-content"> 
-                    <div class="tooltip tooltip-primary tooltip-right" data-tip="This will replace all the settings you have already set apart from the upload image.">
-                      <button class="btn btn-xs btn-circle btn-outline">?</button>
+                    <div class="tooltip tooltip-primary tooltip-right" data-tip="This will replace all the settings you have already set apart from the uploaded image.">
+                      <button class="btn btn-sm lg:btn-xs btn-circle btn-outline mb-1">?</button>
                     </div>
-                    <div class="mb-3"></div>
-                    <p>Ex: Closeup of a beautiful woman wearing a red gown in a blooming garden. peaceful, sunrise, summer, high quality, detailed, soft light.</p>
-                    <p>Ex: Closeup of a handsome man wearing a tuxedo at a lavish ballroom. elegant, night, winter, high quality, detailed, soft spotlight.</p>
-                    <div class="mb-3"></div>
-                    <textarea name="custom-input" class="textarea textarea-primary w-full" id="custom-input" rows="4" placeholder="Add a custom element." aria-label="Textarea"></textarea>
+                    <p class="text-4xl lg:text-base my-3 lg:my-0">Ex: Closeup of a beautiful woman wearing a red gown in a blooming garden. peaceful, sunrise, summer, high quality, detailed, soft light.</p>
+                    <p class="text-4xl lg:text-base my-3 lg:my-0">Ex: Closeup of a handsome man wearing a tuxedo at a lavish ballroom. elegant, night, winter, high quality, detailed, soft spotlight.</p>
+                    <textarea name="custom-input" class="textarea textarea-primary w-full text-4xl lg:text-base" id="custom-input" rows="4" placeholder="Write your prompt here." aria-label="Textarea"></textarea>
                   </div>
                 </div>
-                
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- /Custom prompt -->
+
+                <!-- Save Workflow -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Save Workflow
                   </div>
                   <div class="collapse-content">
-                      <form id="save-form" method="POST">
-                          <input name="save-title" id="save-title" class="input input-bordered w-full max-w-xs" type="text" placeholder="Title" aria-label="title">
-                          <div class="mb-3"></div>
-                          <input name="save-desc" id="save-desc" class="input input-bordered w-full max-w-xs" type="text" placeholder="Description" aria-label="discription">
-                          <div class="mb-3"></div>
-                          <button id="save" class="btn btn-primary" type="button">Save</button>
+                      <form id="save-form" method="POST" class="my-10 lg:my-0">
+                          <input name="save-title" id="save-title" class="input input-bordered mx-auto w-full mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl" type="text" placeholder="Title" aria-label="title">
+                          <input name="save-desc" id="save-desc" class="input input-bordered mx-auto w-full mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl" type="text" placeholder="Description" aria-label="discription">
+                          <button id="save" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl" type="button">Save</button>
                       </form>
                   </div>
                 </div>
+                <!-- /Save Workflow -->
 
-                <div class="collapse collapse-arrow join-item border border-base-300">
+                <!-- Load workflow -->
+                <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
-                  <div class="collapse-title text-xl font-medium">
+                  <div class="collapse-title font-bold">
                     Load Workflow
                   </div>
                   <div class="collapse-content"> 
-                  <label class="form-label grid" for="load-wf"></label>
-                  <select class="select select-primary" id="load-select" name="load-select" aria-label="Select">
+                  <select class="select select-primary mx-auto w-full h-auto mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl my-10 lg:my-0" id="load-select" name="load-select" aria-label="Select">
                       {% for workflow in workflow_display %}
                         <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
                       {% endfor %}
                   </select>
                   <div class="mb-3"></div>
-                  <button id="load-wf" class="btn btn-primary">Load</button>
-                  <button id="delete-wf" class="btn btn-secondary">Delete</button>
+                  <button id="load-wf" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Load</button>
+                  <button id="delete-wf" class="btn bg-error btn-error rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Delete</button>                
                 </div>
+                <!-- /Load Workflow -->
               </div>
-
-
-              </div>
+            </div>
           </div>
           <!-- /LEFT BAR -->
       
           <!-- CONTENT -->
-          <div class="border border-primary col-span-2 justify-center">
+          <div class="justify-center col-span-2 my-1 lg:my-0">
             <div id="content" class="text-center">
-              <progress id="main-progress" class="progress" value="0" max="0"></progress>
-  
-              <div class="container container-expand flex items-center justify-center">
-                  <form class="flex items-center">
-                    <button id="generate" class="btn btn-primary text-center" type="button">
-                      <span class="loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
+              <progress id="main-progress" class="flex progress" value="0" max="0"></progress>
+              <div class="w-full my-1">
+                  <form>
+                    <button id="generate" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-6 lg:pt-3 pb-32 lg:pb-16 text-8xl lg:text-5xl" type="button">
+                      <span class="w-24 h-24 lg:w-12 lg:h-12 loading loading-spinner text-secondary" id="main-spinner" style="display: none;"></span>
                       <span id="generate-icon">
-                        <svg class="w-6 h-6 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-24 h-24 lg:w-12 lg:h-12 text-white dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.872 9.687 20 6.56 17.44 4 4 17.44 6.56 20 16.873 9.687Zm0 0-2.56-2.56M6 7v2m0 0v2m0-2H4m2 0h2m7 7v2m0 0v2m0-2h-2m2 0h2M8 4h.01v.01H8V4Zm2 2h.01v.01H10V6Zm2-2h.01v.01H12V4Zm8 8h.01v.01H20V12Zm-2 2h.01v.01H18V14Zm2 2h.01v.01H20V16Z"/>
-                        </svg>                        
+                        </svg>                    
                       </span>
                       &nbsp;Generate
                     </button>
-                  <input id="main-seed" class="input input-bordered w-full max-w-xs mx-[3px]" type="text" placeholder="Seed" aria-label="Seed" value="0">
-                  <label>Random <input id="is-random" class="checkbox" type="checkbox" checked></label>
                 </form>
               </div>
-  
-              <div id="results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-4"></div>
+              <div id="results" class="grid grid-cols-1 gap-4 pt-4 lg:grid-cols-2 lg:w-auto lg:h-auto"></div>
               </div>
           </div>
         </div>

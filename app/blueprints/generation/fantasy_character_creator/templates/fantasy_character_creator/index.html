@@ -6,7 +6,11 @@
 <div class="flex justify-center">
   <div id="toast-container"></div>
   <div class="relative rounded-xl overflow-auto p-8">
-    <h1 class="mb-20 text-9xl font-bold lg:mb-10 lg:text-5xl">Fantasy Character Creator</h1>
+    <h1 class="mb-20 text-9xl font-bold lg:mb-10 lg:text-5xl">Fantasy Character Creator
+      <div class="align-top tooltip tooltip-primary tooltip-bottom lg:tooltip-right " data-tip="You can create fantasy characters with this workflow. If you are the server admin and there are errors go to the help page.">
+        <button class="align-middle btn btn-sm btn-circle btn-outline">?</button>
+      </div>
+    </h1>
       <div class="text-5xl lg:grid lg:grid-cols-3 lg:gap-4 lg:text-xl">
           <!-- LEFT BAR -->
           <div class="grid grid-cols-1 gap-4">
@@ -59,6 +63,8 @@
                     </div>
                   </div>
                 </div>
+                <!-- /GENERATION PARAMETERS -->
+
                 <!-- Setting -->
                 <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
@@ -132,6 +138,9 @@
                     </div>
                   </div>
                 </div>
+                <!-- /Settings -->
+
+                <!-- Character -->
                 <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
                   <div class="collapse-title font-bold">
@@ -285,6 +294,9 @@
                     </div>
                   </div>
                 </div>
+                <!-- /Character -->
+                
+                <!-- Custom prompt -->
                 <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
                   <div class="collapse-title font-bold">
@@ -297,7 +309,9 @@
                     <textarea name="custom-input" class="textarea textarea-primary w-full text-4xl lg:text-base" id="custom-input" rows="4" placeholder="Add a custom element." aria-label="Textarea"></textarea>
                   </div>
                 </div>
-                
+                <!-- /Custom prompt -->
+
+                <!-- Save Workflow -->
                 <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
                   <input type="radio" name="my-accordion-4" /> 
                   <div class="collapse-title font-bold">
@@ -311,25 +325,28 @@
                       </form>
                   </div>
                 </div>
+                <!-- /Save Workflow -->
 
+                <!-- Load Workflow -->
                 <div class="collapse collapse-plus join-item border border-base-300 py-5 lg:py-0 px-5 lg:px-0">
-                    <input type="radio" name="my-accordion-4" /> 
-                    <div class="collapse-title font-bold">
-                      Load Workflow
-                    </div>
-                    <div class="collapse-content"> 
-                    <select class="select select-primary mx-auto w-full h-auto mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl my-10 lg:my-0" id="load-select" name="load-select" aria-label="Select">
-                        {% for workflow in workflow_display %}
-                          <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="mb-3"></div>
-                    <button id="load-wf" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Load</button>
-                    <button id="delete-wf" class="btn bg-error btn-error rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Delete</button>                
+                  <input type="radio" name="my-accordion-4" /> 
+                  <div class="collapse-title font-bold">
+                    Load Workflow
                   </div>
+                  <div class="collapse-content"> 
+                  <select class="select select-primary mx-auto w-full h-auto mb-5 py-12 lg:py-4 px-8 lg:px-4 text-4xl lg:text-xl my-10 lg:my-0" id="load-select" name="load-select" aria-label="Select">
+                      {% for workflow in workflow_display %}
+                        <option value="{{workflow.workflow}}" id="{{workflow.id}}"> {{workflow.title ~ ' - ' ~ workflow.description}}</option>
+                      {% endfor %}
+                  </select>
+                  <div class="mb-3"></div>
+                  <button id="load-wf" class="btn bg-primary btn-primary rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Load</button>
+                  <button id="delete-wf" class="btn bg-error btn-error rounded-lg w-full mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl">Delete</button>                
                 </div>
+                <!-- /Load Workflow -->
 
               </div>
+            </div>
           </div>
           <!-- /LEFT BAR -->
       
