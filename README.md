@@ -5,52 +5,70 @@
 
 ## Getting Started
 
-First you need to install [ComfyUI](https://github.com/comfyanonymous/ComfyUI). Follow the installation instructions on their github page. 
+If you don't already have ComfyUI installed then perform the following. If you have it installed then skip to Comfy Image Workshop Installation. 
 
-If you are on Windows and have an Nvidia GPU then download this.
+### ComfyUI Installation
+
+1. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI). Follow the installation instructions.
+
+If you are on Windows and have an Nvidia GPU then you can just install the portable version
 
 ### [Direct link to download](https://github.com/comfyanonymous/ComfyUI/releases/download/latest/ComfyUI_windows_portable_nvidia_cu121_or_cpu.7z)
 
-Next, download my github repository in your root user directory. Open git bash
+2. Install [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager). Follow the installation method 2 of their instructions.
+
+If you already have git installed then download and place into `"ComfyUI_windows_portable"` directory:
+
+### [scripts/install-manager-for-portable-version.bat](https://github.com/ltdrdata/ComfyUI-Manager/raw/main/scripts/install-manager-for-portable-version.bat)
+
+Then double click `install-manager-for-portable-version.bat` batch file
+
+### Comfy Image Workshop Installation
+
+1. Install this repo in your root user directory(C:\Users\%username%). Open git bash
 
 	git clone https://github.com/Jordain/Comfy_Image_Workshop.git
 
-Next, change directory to C:\Users\%username%\Comfy_Image_Workshop then crtl + shift + left click and select open with PowerShell or CMD. Then run the following two commands
+2. Go to the directory C:\Users\%username%\Comfy_Image_Workshop then crtl + shift + left click in a blank space and select open with PowerShell or CMD. Then run the following two commands
 
 	python -m venv venv
-
 	.\.venv\Scripts\activate
 
-Next, install all library requirements
+3. Install all dependencies
 
 	pip install -r requirements.txt
 
-If you want to be able to access CIW from other devices in your network, then in the ComfyUI root directory right click on run_nvidia_gpu.bat open in notepad and copy and paste this overtop of what is already there.
+4. Intialize the db using these three commands
+
+	flask db init
+	flask db migrate -m "Initial migration"
+	flask db upgrade
+
+5. To access CIW from other devices in your network, then in the ComfyUI root directory right click on run_nvidia_gpu.bat open in notepad and copy and paste this overtop of what is already there.
 
 	.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --listen
 	pause
 
-Save and close notepad. 
+6. Save and close notepad. 
 
-To run CIW. First start your ComfyUI server by clicking on run_nvidia_gpu.bat in the root directory. 
+## How to Run Comfy Image Workshop
 
-Second, open the directory where you have installed CIW and open powershell or CMD. Copy and paste this:
+1. Start your ComfyUI server by clicking on run_nvidia_gpu.bat in the `"ComfyUI_windows_portable"` directory. 
+
+2. Open the directory where you have installed CIW and open powershell or CMD. Copy and paste this:
 
 	.\.venv\Scripts\activate
-
     python run.py
 
 Note that this assumes your ComfyUI instance is using port 8188. If not, replace 8188 with the correct port number.
 
-Finally, open http://127.0.0.1:5000/ in your browser to start using CIW. If you change the port to 8188 in the URL you will be redirected to ComfyUI.
+3. Open http://127.0.0.1:5000/ in your browser to start using CIW.
 
 
-Any iamges you download you can drag into comfyUI and see the workflow.
+## Tips
 
-## How To Use
-
-Update this later
-
+- Any iamges you download you can drag into comfyUI and see the workflow.
+- If you change the port to 8188 in the URL(http://127.0.0.1:**5000**/) you will be redirected to ComfyUI.
 
 ## For other help parts
 
@@ -58,6 +76,38 @@ Next, download the [Proteus V0.3](https://huggingface.co/dataautogpt3/ProteusV0.
 
 Next, download the [SDXL LCM Lora](https://huggingface.co/latent-consistency/lcm-lora-sdxl/resolve/main/pytorch_lora_weights.safetensors?download=true) model file and place it in the ComfyUI/models/loras directory.
 
-Next, download the [ComfyUI Manger](https://github.com/ltdrdata/ComfyUI-Manager) and follow Installation"[method2]"
-
 Open up Comfyui and download the ComfyUI Essentials extension. You can install it from the Manager.
+
+## QA
+
+### Why did you make this?
+
+I completed an online course and this is my final project. I wanted to learn how to integrate ComfyUI within a web application as well as integrate components I learned throughout the course. I expanded the scope of the project to make it easier for people who want to integrate ComfyUI in there code by making the code more modular.
+
+### Who is this for?
+
+Primarily for anyone that wants to learn how to code with ComfyUI and to code their own workflows.
+
+Secondarily for the person hosting CIW to be able to share their workflows with their friends and family within their local network. On any device (computer, phone, tablet, etc)
+
+## TODOS
+
+- [x] Release Comfy Image Workshop.
+- [ ] Aligning tooltips in Dress U Up.
+- [ ] Update size of input text boxes for smaller screens.
+- [ ] Create roles in models, specifically for admin.
+- [ ] Make help page only viewable to admins.
+- [ ] Safari issue not loading images from Dress U Up on generation.
+- [ ] Safari issue with some of the text field boxes not displaying correctly (invisible for passwords instead of •).
+
+## Special Thanks
+
+- Brendan for weekly guidance on errors that I ran into
+- Matteo/[Matteo](https://www.youtube.com/watch?v=anYHG37fUg4&t=1031s) for his ComfyUI webapp interface video
+- Mut-ex/[Mut-ex](https://github.com/mut-ex/gligen-gui) for his Gligen-GUI repo that used flask and helped me undestand how I can intergate ComfyUI with my code
+- You 🙂 for viewing this repo and trying it out. 
+
+## Credit
+
+ComfyUI/[ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+ComfyUI Manager/[ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager)

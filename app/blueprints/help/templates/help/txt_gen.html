@@ -1,23 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Help{% endblock %}
-
-
+{% block title %}Text Gen SD3 - Help{% endblock %}
 {% block content %}
-<div class="flex justify-center w-screen">    
-    <div class="text-center">
-        <h1 class="text-4xl font-bold mb-5">Help</h1>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.getting_started') }}">Getting Started</a><br>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.txt_gen') }}">Text Generation</a><br>
-        <a class="btn btn-primary btn-wide mb-5" href="{{ url_for('help.fantasy_character_creator') }}">Fantasy Character Creator</a><br>
-        <a class="btn btn-primary btn-wide" href="{{ url_for('help.ip_adapter_headshot') }}">Dress U Up</a>
-    </div>
-</div>
-<div tabindex="0" class="collapse bg-base-200"> 
-    <div class="collapse-title text-xl font-medium">
-        ComfyUI Requirements:
-    </div>
-    <div class="collapse-content"> 
-        <ul><a href="https://civitai.com/api/download/models/343109">Proteus V0.3.safetensors</a></ul>
+<div class="flex">
+    <div class="mx-auto">
+        <h1 class="text-8xl lg:text-5xl font-bold mb-20 lg:mb-5 text-center">Text Gen SD3 - Requirements</h1>
+        <p class="mb-20 lg:mb-5 text-5xl lg:text-base"> To be able to use the Text Gen SD3, you need to download the model and place it in the apporpriate directory. </p>
+        <!-- Step 1 -->
+        <div class="flex mb-5 w-full">
+            <ol class="flex flex-col list-decimal list-inside text-3xl lg:text-base">
+                <li class="text-4xl lg:text-base mb-20 lg:mb-3"> Download
+                    <a class="link text-blue-500" href="https://huggingface.co/stabilityai/stable-diffusion-3-medium/blob/main/sd3_medium_incl_clips_t5xxlfp8.safetensors">
+                        sd3_medium_incl_clips_t5xxlfp8.safetensors
+                    </a>
+                </li>
+                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Place in ComfyUI_windows_portable\ComfyUI\models\checkpoints</li>
+            </ol>
+        </div>
     </div>
 </div>
 {% endblock %}
