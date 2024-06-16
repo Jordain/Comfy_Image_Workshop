@@ -13,14 +13,14 @@
 
 ## Comfy Image Workshop Installation
 
-1. Install this repo in your root user directory(C:\Users\%username%). Open git bash
+1. Install this repo in your root user directory(C:\Users\\%username%). Open git bash
 
 	git clone https://github.com/Jordain/Comfy_Image_Workshop.git
 
-2. Go to the directory C:\Users\%username%\Comfy_Image_Workshop then crtl + shift + left click in a blank space and select open with PowerShell or CMD. Then run the following two commands
+2. Go to the directory C:\Users\\%username%\\Comfy_Image_Workshop then crtl + shift + left click in a blank space and select open with PowerShell or CMD. Then run the following two commands
 
 	python -m venv venv
-	.\.venv\Scripts\activate
+	.\\.venv\Scripts\activate
 
 3. Install all dependencies
 
@@ -45,7 +45,7 @@
 
 2. Open the directory where you have installed CIW and open powershell or CMD. Copy and paste this:
 
-	.\.venv\Scripts\activate
+	.\\.venv\Scripts\activate
     python run.py
 
 Note that this assumes your ComfyUI instance is using port 8188. If not, replace 8188 with the correct port number.
@@ -55,7 +55,7 @@ Note that this assumes your ComfyUI instance is using port 8188. If not, replace
 ## Tips
 
 - Any iamges you download you can drag into comfyUI and see the workflow.
-- If you change the port to 8188 in the URL(http://127.0.0.1:__5000__/) you will be redirected to ComfyUI.
+- If you change the port from 5000 to 8188 in the URL(http://127.0.0.1:5000/) you will be redirected to ComfyUI.
 
 ## QA
 
@@ -82,8 +82,8 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 ## Special Thanks
 
 - Brendan for weekly guidance on errors that I ran into
-- Matteo/[Matteo](https://www.youtube.com/watch?v=anYHG37fUg4&t=1031s) for his ComfyUI webapp interface video
-- Mut-ex/[Mut-ex](https://github.com/mut-ex/gligen-gui) for his Gligen-GUI repo that used flask and helped me undestand how I can intergate ComfyUI with my code
+- [Matteo](https://www.youtube.com/watch?v=anYHG37fUg4&t=1031s) for his ComfyUI webapp interface video
+- [Mut-ex](https://github.com/mut-ex/gligen-gui) for his Gligen-GUI repo that used flask and helped me undestand how I can intergate ComfyUI with my code
 - You 🙂 for viewing this repo and trying it out. 
 
 ## Resources
