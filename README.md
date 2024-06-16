@@ -3,27 +3,15 @@
 ## Newest Features:
 * To fill in later
 
-## Getting Started
+## ComfyUI Installation
 
-If you don't already have ComfyUI installed then perform the following. If you have it installed then skip to Comfy Image Workshop Installation. 
+1. If you are on Windows and have an Nvidia GPU then you can just install the [portable version](https://github.com/comfyanonymous/ComfyUI/releases/download/latest/ComfyUI_windows_portable_nvidia_cu121_or_cpu.7z)
 
-### ComfyUI Installation
+2. If you already have git installed then download [scripts/install-manager-for-portable-version.bat](https://github.com/ltdrdata/ComfyUI-Manager/raw/main/scripts/install-manager-for-portable-version.bat) and place into `"ComfyUI_windows_portable"` directory:
 
-1. Install [ComfyUI](https://github.com/comfyanonymous/ComfyUI). Follow the installation instructions.
+3. Then double click `install-manager-for-portable-version.bat` batch file
 
-If you are on Windows and have an Nvidia GPU then you can just install the portable version
-
-### [Direct link to download](https://github.com/comfyanonymous/ComfyUI/releases/download/latest/ComfyUI_windows_portable_nvidia_cu121_or_cpu.7z)
-
-2. Install [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager). Follow the installation method 2 of their instructions.
-
-If you already have git installed then download and place into `"ComfyUI_windows_portable"` directory:
-
-### [scripts/install-manager-for-portable-version.bat](https://github.com/ltdrdata/ComfyUI-Manager/raw/main/scripts/install-manager-for-portable-version.bat)
-
-Then double click `install-manager-for-portable-version.bat` batch file
-
-### Comfy Image Workshop Installation
+## Comfy Image Workshop Installation
 
 1. Install this repo in your root user directory(C:\Users\%username%). Open git bash
 
@@ -64,19 +52,10 @@ Note that this assumes your ComfyUI instance is using port 8188. If not, replace
 
 3. Open http://127.0.0.1:5000/ in your browser to start using CIW.
 
-
 ## Tips
 
 - Any iamges you download you can drag into comfyUI and see the workflow.
-- If you change the port to 8188 in the URL(http://127.0.0.1:**5000**/) you will be redirected to ComfyUI.
-
-## For other help parts
-
-Next, download the [Proteus V0.3](https://huggingface.co/dataautogpt3/ProteusV0.3/resolve/main/ProteusV0.3.safetensors?download=true) model file and place it in the ComfyUI/models/checkpoints directory.
-
-Next, download the [SDXL LCM Lora](https://huggingface.co/latent-consistency/lcm-lora-sdxl/resolve/main/pytorch_lora_weights.safetensors?download=true) model file and place it in the ComfyUI/models/loras directory.
-
-Open up Comfyui and download the ComfyUI Essentials extension. You can install it from the Manager.
+- If you change the port to 8188 in the URL(http://127.0.0.1:__5000__/) you will be redirected to ComfyUI.
 
 ## QA
 
@@ -107,7 +86,7 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 - Mut-ex/[Mut-ex](https://github.com/mut-ex/gligen-gui) for his Gligen-GUI repo that used flask and helped me undestand how I can intergate ComfyUI with my code
 - You 🙂 for viewing this repo and trying it out. 
 
-## Credit
+## Resources
 
-ComfyUI/[ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-ComfyUI Manager/[ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager)
+- [ComfyUI](https://github.com/comfyanonymous/ComfyUI). Follow the installation instructions here if you require a custom installation.
+- [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager). Follow the installation instructions here if you require a custom installation.
