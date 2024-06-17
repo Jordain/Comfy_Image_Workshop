@@ -43,7 +43,6 @@ def delete_workflow(id):
     db.session.commit()
     db.session.close()
 
-
 # Getting the local ip address
 def get_local_ip():
     try:

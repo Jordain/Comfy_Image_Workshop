@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     email: Mapped[str] = mapped_column(unique=True)
     hash: Mapped[str] = mapped_column(unique=True)
     tokens: Mapped[int] = mapped_column(Integer, default=0)
+    #role: Mapped[str] = mapped_column(unique=False) 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
     Workflow = db.relationship("Workflow", backref="user", cascade='all, delete-orphan')

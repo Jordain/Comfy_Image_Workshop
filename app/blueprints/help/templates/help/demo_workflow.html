@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dress U Up - Help{% endblock %}
+{% block content %}
+<div class="flex">
+    <div class="mx-auto">
+        <h1 class="text-8xl lg:text-5xl font-bold mb-20 lg:mb-5 text-center">Dress U Up - Requirements</h1>
+        <p class="mb-20 lg:mb-5 text-5xl lg:text-base">To be able to use the Dress U up, you need to download a custom node from the ComfyUI manager, download a couple models and place it in the apporpriate directory and install FaceID dependencies.</p>
+        <div class="flex mb-5 w-full">
+                <ol class="flex flex-col list-decimal list-inside text-3xl lg:text-base">
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Install ComfyUI-IPAdapter_plus from the ComfyUI manager. The ID is 98 and author is cubiq.</li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Follow the installation instructions from the 
+                        <a class="link text-blue-500" href="https://github.com/cubiq/ComfyUI_IPAdapter_plus?tab=readme-ov-file">
+                            IPAdapter Plus
+                        </a>
+                        repo.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Follow the video instructions on installing 
+                        <a class="link text-blue-500" href="https://www.youtube.com/watch?v=vCCVxGtCyho">
+                            FaceID
+                        </a>
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">You probably have python 3.11.* installed - 
+                        <a class="link text-blue-500" href="https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp311-cp311-win_amd64.whl">
+                            download this whl
+                        </a>
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Run this command in cmd within your root ComfyUI directory:
+                        <code class="bg-black text-white dark:text-black dark:bg-white">.\python_embeded\python.exe -m pip install "C:\Users\jorda\Downloads\insightface-0.7.3-cp311-cp311-win_amd64.whl" onnxruntime</code>
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #Edit1 then update the app.config. Replace jorda with your username and replace ComfyUI_windows_portable_3 with your ComfyUI directory name.</li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://civitai.com/api/download/models/272399">
+                            realisticVisionV60B1_v60B1VAE.safetensors
+                        </a>
+                        and place it in ComfyUI_windows_portable\ComfyUI\models\checkpoints.
+                    </li>
+                </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

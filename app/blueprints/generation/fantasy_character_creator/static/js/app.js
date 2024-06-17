@@ -511,17 +511,6 @@
               );
 
             wf = null;
-
-            console.log(response);
-            if ('error' in response) {
-                IS_GENERATING = false;
-                toggleDisplay(spinner, IS_GENERATING)
-                toggleDisplay(generate_icon, !IS_GENERATING)
-                updateProgress();
-                _('#modal-message').innerHTML = response['error']['message'];
-                UIkit.modal(modal).show();
-                console.log('Error: ' + response['error']['message']);
-            }
         }
     });
 
