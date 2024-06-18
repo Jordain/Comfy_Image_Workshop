@@ -1,18 +1,16 @@
 (async (window, d, undefined) => {
     const _ = (selector, contex=d) => contex.querySelector(selector);
-
     let startTime;
     function timerStart() { startTime = new Date(); }
     function elapsedTime() { if (!startTime) return 0; return (new Date() - startTime) / 1000; }
-
     function seed () { return Math.floor(Math.random() * 9999999999); }
 
+    // Toggles Display for the loading wheel on the generate button
     function toggleDisplay(el, value=null) {
         if (value !== null) {
             el.style.display = (value === true) ? '' : 'none';
             return;
         }
-
         el.style.display = (el.style.display === 'none') ? '' : 'none';
     }
 
@@ -40,9 +38,9 @@
             let response = await fetch(wf[key]);
             wf[key] = await response.json();
         }
-
         return wf;
     }
+
     const workflows = await load_api_workflows();
 
     // Define local_ip as a global variable
@@ -114,8 +112,6 @@
 
     // Queue a prompt
     async function queue_prompt(endpoint, payload, handler) {
-        console.log("payload ", payload);
-        console.log("payload JSON ",JSON.stringify(payload));
         fetch(endpoint, {
             method: "POST",
             headers: {
@@ -129,7 +125,7 @@
             }).catch((e) => console.error(e));
     }
 
-    // Interrupt the generation
+    // Interrupt the generation. Review this later
     async function interrupt() {
         const response = await fetch('/interrupt', {
             method: 'POST',
@@ -138,7 +134,6 @@
                 'Content-Type': 'text/html'
             },
         });
-
         //return await response.json();
     }
 
@@ -150,18 +145,12 @@
 
     // HTML elements
     const generate = _('#generate');
-    const save = _('#save');
-    const delete_wf = _('#delete-wf');
-    const load_wf = _('#load-wf');
-
     const generate_icon = _('#generate-icon');
     const progressbar = _('#main-progress');
     const seed_input = _('#main-seed');
     const is_random_input = _('#is-random');
     const spinner = _('#main-spinner');
-    const modal = _('#app-modal');
     const results = _('#results');
-
     const quality_input = _('#quality-input');
     const batch_size_input = _('#batch-size-input');
     const style_input = _('#style-input');
@@ -179,12 +168,13 @@
     const atmosphere_input = _('#atmosphere-input');
     const ethnicity_input = _('#ethnicity-input');
     const custom_input = _('#custom-input');
+
+    // Need to disable user input on seed on first load
+    seed_input.disabled = true;
     
     function updateProgress(max=0, value=0) { progressbar.max = max; progressbar.value = value; }
-
-    //fetch('/generation/fantasy_character_creator/load')
     
-    // Event listeners
+    // Event listener for clicking the generate button
     generate.addEventListener('click', async (event) => {
         if (IS_GENERATING) {
             await interrupt();
@@ -195,7 +185,6 @@
             let sampler_name = 'dpmpp_2m';
             let scheduler = 'exponential';
             let CFG = 6.5;
-
             let model = style_input.options[style_input.selectedIndex].value;
             let positive = positive_template;
             let negative = negative_template;
@@ -275,7 +264,6 @@
             if ( race === 'human') { negative_race = '(elf, long pointy ears:1.2), ' }
             else if ( race === 'half-elf' || race === 'halfling' ) { race_helper = ' pointy ears.'; }
             else if ( race === 'elven' ) {
-                // have to use Elven instead of Elf to avoid Christmas contamination
                 negative_race = 'green, beard, ';
             }
             positive = positive.replace('{{RACE}}', race);
@@ -393,8 +381,6 @@
                 while ( ethnic1 === ethnic2 ) {
                     ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
                 }
-
-                console.log('Ethnicity: ' + ethnic1 + ', ' + ethnic2);
                 ethnic_bias = '(' + ethnic1 + ', ' + ethnic2 + ':0.7) ';
             }
             positive = positive.replace('{{ETHNICITY}}', ethnic_bias);
@@ -472,7 +458,6 @@
             wf['5']['inputs']['text'] = negative;
 
             timerStart();
-            // response = await queue_prompt(wf);
             await queue_prompt('/generation/txt_gen/prompt', { prompt: wf, client_id: client_id }, (endpoint, response) => {
                 if (response.error) {
                     addToast(
@@ -486,12 +471,9 @@
                       let node;
                       for (var node_id in node_errors) {
                         node = node_errors[node_id];
-                        // console.log(node);
                         let class_type = node.class_type;
                         let errors = node.errors;
                         for (var eid in errors) {
-                          // console.log(errors[eid].message);
-                          // console.log(errors[eid].details);
                           addToast(
                             `<u>Error in ${class_type}</u>`,
                             `${errors[eid].message}, ${errors[eid].details}`,
@@ -504,8 +486,6 @@
                   }
                   if (response.prompt_id) {
                     addToast("Success!", "The prompt was queued succesfully.");
-                    // globalState.promptID = response.prompt_id;
-                    // console.log("prompt_id = ", globalState.promptID);
                   }
                 }
               );
@@ -514,6 +494,7 @@
         }
     });
 
+    // Save prompt
     document.getElementById('save').addEventListener('click', async (event) => {
 
         let wf = structuredClone(workflows['basic_portrait']);
@@ -522,7 +503,6 @@
         let sampler_name = 'dpmpp_2m';
         let scheduler = 'exponential';
         let CFG = 6.5;
-
         let model = style_input.options[style_input.selectedIndex].value;
         let positive = positive_template;
         let negative = negative_template;
@@ -720,8 +700,6 @@
             while ( ethnic1 === ethnic2 ) {
                 ethnic2 = mainArea2[Math.floor(localrand()*mainArea2.length)];
             }
-
-            console.log('Ethnicity: ' + ethnic1 + ', ' + ethnic2);
             ethnic_bias = '(' + ethnic1 + ', ' + ethnic2 + ':0.7) ';
         }
         positive = positive.replace('{{ETHNICITY}}', ethnic_bias);
@@ -799,7 +777,6 @@
         wf['5']['inputs']['text'] = negative;
         
         
-
         // Organize variables into an object
         const data = {
             quality_input: quality_input.value,
@@ -822,7 +799,6 @@
         }
         // Convert object to JSON string
         const jsonData = JSON.stringify(data);
-        console.log("json" + jsonData);
         var formData = new FormData(document.getElementById('save-form'));
 
         // Add JSON data to form data
@@ -838,26 +814,23 @@
             }) 
             .then(response => response.text()) 
             .then(result => { 
-            //console.log(result); 
+                addToast("Success!", "The prompt was saved succesfully.");
+                console.log(result); 
             }) 
             .catch(error => { 
-            console.error('Error:', error); 
-            });    
+                addToast("Error!", "The prompt did not save succesfully.");
+                console.error('Error:', error); 
+            }); 
     });
 
     // Load workflow
     document.getElementById('load-wf').addEventListener('click', () => {
         try {
             var genderRadioButtons = document.getElementsByName('gender');
-
             // Fetch JSON data from the server
             const selectElement = document.getElementById('load-select');
             const selectedValue = selectElement.value;
-            
-            console.log("Selected value:", selectedValue);
-
             const dataObject = JSON.parse(selectedValue);
-            console.log("data object", dataObject);
 
             // Populate form fields with data from JSON
             document.getElementById('quality-input').value = dataObject.quality_input;
@@ -878,22 +851,23 @@
             document.getElementById('ethnicity-input').value = dataObject.ethnicity_input;
             document.getElementById('custom-input').value = dataObject.custom_input;
 
+            // Workaround to set the gender radio button to the correct value
             for (var i = 0; i < genderRadioButtons.length; i++) {
-                console.log(i);
-                console.log("outer", genderRadioButtons[i].value);
                 if (genderRadioButtons[i].value === gender_input) {
-                    console.log("inner",genderRadioButtons[i].value);
                     genderRadioButtons[i].checked = true;
-                    break; // Exit the loop once the correct radio button is found and checked
+                    break;
                 }
             }
 
+            addToast("Success!", "The workflow was loaded succesfully.");
 
         } catch (error) {
+            addToast("Error!", "Error loading JSON data:", error);
             console.error('Error loading JSON data:', error);
         }
     });
 
+    // Disable seed input if is_random is checked in Generation Parameters
     is_random_input.addEventListener('change', (event) => {
         if (is_random_input.checked) {
             seed_input.disabled = true;
@@ -908,8 +882,6 @@
         var selectedIndex = selectElement.selectedIndex;
         var selectedOption = selectElement.options[selectedIndex];
         var workflowId = selectedOption.id;
-        
-        console.log(workflowId);
         
         fetch('/generation/fantasy_character_creator/delete', {
             method: 'POST',
@@ -926,7 +898,6 @@
                 if (selectedIndex === selectElement.options.length - 1) {
                     newSelectedIndex = selectedIndex - 1;
                 }
-                
                 // Remove the option from the select element
                 selectElement.remove(selectedIndex);
                 
@@ -935,8 +906,10 @@
                     selectElement.selectedIndex = newSelectedIndex;
                 }
                 
+                addToast("Success!", "The workflow was deleted succesfully.");
                 console.log(`Workflow with ID ${workflowId} deleted successfully.`);
             } else {
+                addToast("Error!", "Failed to delete workflow.");
                 console.error('Failed to delete workflow.');
             }
         })
@@ -956,7 +929,6 @@
         const data = JSON.parse(event.data);
         
         if ( data.type === 'progress' ) {
-            //IS_GENERATING = true;
             updateProgress(data['data']['max'], data['data']['value']);
         } else if (data.type === 'executed') {
             const execution_time = elapsedTime();

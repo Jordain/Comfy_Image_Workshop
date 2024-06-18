@@ -78,6 +78,12 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 - [ ] Make help page only viewable to admins.
 - [ ] Safari issue not loading images from Dress U Up on generation.
 - [ ] Safari issue with some of the text field boxes not displaying correctly (invisible for passwords instead of •).
+- [ ] Review and update interupt functions in Dress U Up and Fantasy Character Creator.
+- [ ] Reivew and clean up app.py files.
+- [ ] Update seed class to helper class from ip_adapter_headshot app.py
+- [x] Add toasts on upload, save and load buttons for Dress U Up and Fantasy Character Creator.
+- [ ] Add loading bar on txt gen sd3 app.py
+- [x] Fix toast bg error color in toast.js
 
 ## Special Thanks
 

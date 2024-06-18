@@ -12,7 +12,6 @@ auth = Blueprint("auth", __name__, template_folder='templates')
 
 @auth.route('/')
 def index():
-    #print(current_user.username)
     return render_template('auth/index.html')
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -36,13 +35,11 @@ def login():
         # Query database for username
         user = User.query.filter_by(username = request.form.get("username")).first()
 
-        #print(user.__dict__)
         # Ensure username exists and password is correct
         if user is None or not check_password_hash(user.hash, request.form.get("password")):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        # change user to include is_active and change email to username
         login_user(user)
 
         # Redirect user to home page
@@ -67,14 +64,7 @@ def logout():
 def register():
     """Register user"""
 
-    # Query database for username
-    #what's the difference between the two lines below?
-    #users = db.session.query(User.email).all()
-    #users = User.query.all()
-
     users = User.query.with_entities(User.username).all()
-    #print(users)
-    print("test", users)
     #username is also the email
     username = request.form.get("username")
     password = request.form.get("password")

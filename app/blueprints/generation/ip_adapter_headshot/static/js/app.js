@@ -1,29 +1,17 @@
 (async (window, d, undefined) => {
     const _ = (selector, contex=d) => contex.querySelector(selector);
-
     let startTime;
     function timerStart() { startTime = new Date(); }
     function elapsedTime() { if (!startTime) return 0; return (new Date() - startTime) / 1000; }
-
     function seed () { return Math.floor(Math.random() * 9999999999); }
 
+    // Toggles Display for the loading wheel on the generate button
     function toggleDisplay(el, value=null) {
         if (value !== null) {
             el.style.display = (value === true) ? '' : 'none';
             return;
         }
-
         el.style.display = (el.style.display === 'none') ? '' : 'none';
-    }
-
-    // Seeded random number generator
-    function seededRandom(a) {
-        return function() {
-          a |= 0; a = a + 0x9e3779b9 | 0;
-          var t = a ^ a >>> 16; t = Math.imul(t, 0x21f0aaad);
-              t = t ^ t >>> 15; t = Math.imul(t, 0x735a2d97);
-          return ((t = t ^ t >>> 15) >>> 0) / 4294967296;
-        }
     }
 
     // UUID generator
@@ -47,53 +35,16 @@
 
         return wf;
     }
+
     const workflows = await load_api_workflows();
 
+    // We don't need to get the checkpoints because it's hardcoded in the json workflow. If we had more than one we would have to. Look at Fantasy Character Generator.
 
-
-    // Define local_ip as a global variable
-    const local_ip = await get_local_ip();
-
-    // Get the the installed Checkpoints    
-    async function get_checkpoints() {
-        let response = await fetch('http://' + local_ip + ':8188/object_info/CheckpointLoaderSimple', {
-            method: 'GET',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        response = await response.json();
-        let checkpoints = response['CheckpointLoaderSimple']['input']['required']['ckpt_name'][0];
-        const checkpoints_regex = {
-            // EDIT8 HERE:
-            // Update the regex to match your ckpt model. Don't need to change this unless you are selecting between different models in the UI. Otherwise the hardcoded ckpt in the json is fine.
-            'DreamShaperXLTurboV2': /.*dreamshaper.*xl.*turbo.*v2.*\.safetensors$/gi,
-            'ProteusV0.3': /.*proteus.*0\.3.*\.safetensors$/gi,
-        };
-        let available_checkpoints = {};
-    
-        for (let key in checkpoints_regex) {
-            available_checkpoints[key] = '';
-
-            checkpoints.forEach(ckpt => {
-                if (checkpoints_regex[key].test(ckpt)) {
-                    available_checkpoints[key] = ckpt;
-                }
-            });
-        }
-
-        return available_checkpoints;
-    };
-    const available_checkpoints = await get_checkpoints();
-
+    // Template of the prompt that gets sent to ComfyUI for generation
     const positive_template = "Closeup of a {{GENDER}} wearing a {{CLOTHES_DESCRIPTION}} {{PATTERN}} {{COLOR}} {{MATERIAL}} {{CLOTHES}} in a {{BACKGROUND}}. {{MOOD}}, {{TIME}}, {{SEASON}}, high quality, detailed, {{LIGHT}}";
 
     // Queue a prompt
     async function queue_prompt(endpoint, payload, handler) {
-        console.log("payload ", payload);
-        console.log("payload JSON ",JSON.stringify(payload));
         fetch(endpoint, {
             method: "POST",
             headers: {
@@ -116,7 +67,6 @@
                 'Content-Type': 'text/html'
             },
         });
-
         //return await response.json();
     }
 
@@ -128,16 +78,15 @@
 
     // Image Load
     var imageFilename = (imageFilename === '') ? '' : imageFilename;
-    // HTML elements
+
+    // getting the value from the HTML elements
     const generate = _('#generate');
     const generate_icon = _('#generate-icon');
     const progressbar = _('#main-progress');
     const seed_input = _('#main-seed');
     const is_random_input = _('#is-random');
     const spinner = _('#main-spinner');
-    const modal = _('#app-modal');
     const results = _('#results');
-
     const quality_input = _('#quality-input');
     const batch_size_input = _('#batch-size-input');
     let gender_input = document.querySelector('input[name="gender"]:checked').value;
@@ -152,10 +101,13 @@
     const season_input = _('#season-input');
     const light_input = _('#light-input');
     const custom_input = _('#custom-input');
+
+    // Need to disable user input on seed on first load
+    seed_input.disabled = true;
     
     function updateProgress(max=0, value=0) { progressbar.max = max; progressbar.value = value; }
 
-    // Event listeners
+    // Event listener for clicking the generate button
     generate.addEventListener('click', async (event) => {
         if (IS_GENERATING) {
             await interrupt();
@@ -163,10 +115,6 @@
             let wf = structuredClone(workflows['ipadapter_ideal_faceid']);
             let base_steps = 14;        // minimum number of steps
             let step_increment = 14;    // number of steps multiplied by the quality factor
-            // let sampler_name = 'dpmpp_2m';
-            // let scheduler = 'exponential';
-            // let CFG = 6.5;
-
             let positive = positive_template;
             let gender = document.querySelector('input[name="gender"]:checked').value; 
             let clothes_description = clothes_description_input.options[clothes_description_input.selectedIndex].value;
@@ -187,59 +135,27 @@
                 rndseed = seed();
                 seed_input.value = rndseed;
             }
-            let localrand = seededRandom(rndseed);
-            
-            // Gender
+
+            // Updates positive with what's selected on page
             if ( gender == '0') { gender = 'beautiful woman'; }
             else if ( gender == '1' ) { gender = 'handsome man'; }
             positive = positive.replace('{{GENDER}}', gender);    
-
-            //Clothes description
             positive = positive.replace('{{CLOTHES_DESCRIPTION}}', clothes_description);
-
-            //Pattern
             positive = positive.replace('{{PATTERN}}', pattern);
-
-            // Color
             positive = positive.replace('{{COLOR}}', color);
-
-            // Material
             positive = positive.replace('{{MATERIAL}}', material);
-
-            // Clothes
             positive = positive.replace('{{CLOTHES}}', clothes);
-
-            // Background
             positive = positive.replace('{{BACKGROUND}}', background);
-
-            //Mood
             positive = positive.replace('{{MOOD}}', mood);
-
-            //Time
             positive = positive.replace('{{TIME}}', time);
-
-            //Season
             positive = positive.replace('{{SEASON}}', season);
-
-            // Light
             positive = positive.replace('{{LIGHT}}', light);     
-
             // custom prompt
             if ( custom_prompt !== '' ) {
                 positive = custom_prompt
             }
 
-            // // update the workflow with the selected parameters
-            // wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
-            // wf['7']['inputs']["sampler_name"] = sampler_name;
-            // wf['7']['inputs']["scheduler"] = scheduler;    
-            // wf['7']['inputs']['seed'] = rndseed;
-            // wf['7']['inputs']['cfg'] = CFG;
-            // wf['5']['inputs']['text'] = negative;
-
-            console.log("image_filename:", imageFilename);
-
-            // update wf
+            // update workflow
             wf['3']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
             wf['5']['inputs']['batch_size'] = batch_size_input.value;
             wf['12']['inputs']['image'] = imageFilename;
@@ -247,7 +163,7 @@
             wf['6']['inputs']['text'] = positive;
             
             timerStart();
-            // response = await queue_prompt(wf);
+            // Generates the prompt
             await queue_prompt('/generation/ip_adapter_headshot/prompt', { prompt: wf, client_id: client_id }, (endpoint, response) => {
                 if (response.error) {
                     addToast(
@@ -261,12 +177,9 @@
                       let node;
                       for (var node_id in node_errors) {
                         node = node_errors[node_id];
-                        // console.log(node);
                         let class_type = node.class_type;
                         let errors = node.errors;
                         for (var eid in errors) {
-                          // console.log(errors[eid].message);
-                          // console.log(errors[eid].details);
                           addToast(
                             `<u>Error in ${class_type}</u>`,
                             `${errors[eid].message}, ${errors[eid].details}`,
@@ -279,8 +192,6 @@
                   }
                   if (response.prompt_id) {
                     addToast("Success!", "The prompt was queued succesfully.");
-                    // globalState.promptID = response.prompt_id;
-                    // console.log("prompt_id = ", globalState.promptID);
                   }
                 }
               );
@@ -294,13 +205,8 @@
         let wf = structuredClone(workflows['ipadapter_ideal_faceid']);
         let base_steps = 14;        // minimum number of steps
         let step_increment = 14;    // number of steps multiplied by the quality factor
-        // let sampler_name = 'dpmpp_2m';
-        // let scheduler = 'exponential';
-        // let CFG = 6.5;
-
         let positive = positive_template;
         let gender = _('#gender-input:checked').value;
-        console.log("geg" +gender);
         let clothes_description = clothes_description_input.options[clothes_description_input.selectedIndex].value;
         let pattern = pattern_input.options[pattern_input.selectedIndex].value;
         let color = color_input.options[color_input.selectedIndex].value;
@@ -319,57 +225,27 @@
             rndseed = seed();
             seed_input.value = rndseed;
         }
-        let localrand = seededRandom(rndseed);
         
-        // Gender
+        // Updates positive with what's selected on page
         if ( gender == '0') { gender = 'beautiful woman'; }
         else if ( gender == '1' ) { gender = 'handsome man'; }
         positive = positive.replace('{{GENDER}}', gender);    
-
-        //Clothes description
         positive = positive.replace('{{CLOTHES_DESCRIPTION}}', clothes_description);
-
-        //Pattern
         positive = positive.replace('{{PATTERN}}', pattern);
-
-        // Color
         positive = positive.replace('{{COLOR}}', color);
-
-        // Material
         positive = positive.replace('{{MATERIAL}}', material);
-
-        // Clothes
         positive = positive.replace('{{CLOTHES}}', clothes);
-
-        // Background
         positive = positive.replace('{{BACKGROUND}}', background);
-
-        //Mood
         positive = positive.replace('{{MOOD}}', mood);
-
-        //Time
         positive = positive.replace('{{TIME}}', time);
-
-        //Season
         positive = positive.replace('{{SEASON}}', season);
-
-        // Light
         positive = positive.replace('{{LIGHT}}', light);     
-
         // custom prompt
         if ( custom_prompt !== '' ) {
             positive = custom_prompt
         }
 
-        // // update the workflow with the selected parameters
-        // wf['1']['inputs']['ckpt_name'] = available_checkpoints[model];
-        // wf['7']['inputs']["sampler_name"] = sampler_name;
-        // wf['7']['inputs']["scheduler"] = scheduler;    
-        // wf['7']['inputs']['seed'] = rndseed;
-        // wf['7']['inputs']['cfg'] = CFG;
-        // wf['5']['inputs']['text'] = negative;
-
-        // update wf
+        // update the workflow with the selected parameters
         wf['3']['inputs']['steps'] = base_steps + Math.round(quality_input.value * step_increment);
         wf['5']['inputs']['batch_size'] = batch_size_input.value;
         wf['12']['inputs']['image'] = imageFilename;
@@ -397,7 +273,6 @@
         }
         // Convert object to JSON string
         const jsonData = JSON.stringify(data);
-        console.log("json" + jsonData);
         var formData = new FormData(document.getElementById('save-form'));
 
         // Add JSON data to form data
@@ -413,10 +288,12 @@
             }) 
             .then(response => response.text()) 
             .then(result => { 
-            //console.log(result); 
+                addToast("Success!", "The prompt was saved succesfully.");
+                console.log(result); 
             }) 
             .catch(error => { 
-            console.error('Error:', error); 
+                addToast("Error!", "The prompt did not save succesfully.");
+                console.error('Error:', error); 
             }); 
     });
 
@@ -424,15 +301,10 @@
     document.getElementById('load-wf').addEventListener('click', () => {
         try {
             var genderRadioButtons = document.getElementsByName('gender');
-
             // Fetch JSON data from the server
             const selectElement = document.getElementById('load-select');
             const selectedValue = selectElement.value;
-            
-            console.log("Selected value:", selectedValue);
-
             const dataObject = JSON.parse(selectedValue);
-            console.log("data object", dataObject);
 
             // Populate form fields with data from JSON
             document.getElementById('quality-input').value = dataObject.quality_input;
@@ -452,19 +324,28 @@
             gender_input = document.getElementsByName('gender').value = dataObject.gender_input;
             document.getElementById('custom-input').value = dataObject.custom_input;
 
+            // Workaround to set the gender radio button to the correct value
             for (var i = 0; i < genderRadioButtons.length; i++) {
-                console.log(i);
-                console.log("outer", genderRadioButtons[i].value);
                 if (genderRadioButtons[i].value === gender_input) {
-                    console.log("inner",genderRadioButtons[i].value);
                     genderRadioButtons[i].checked = true;
-                    break; // Exit the loop once the correct radio button is found and checked
+                    break;
                 }
             }
-
+            
+            addToast("Success!", "The workflow was loaded succesfully.");
 
         } catch (error) {
+            addToast("Error!", "Error loading JSON data:", error);
             console.error('Error loading JSON data:', error);
+        }
+    });
+
+    // Disable seed input if is_random is checked in Generation Parameters
+    is_random_input.addEventListener('change', (event) => {
+        if (is_random_input.checked) {
+            seed_input.disabled = true;
+        } else {
+            seed_input.disabled = false;
         }
     });
 
@@ -474,8 +355,6 @@
         var selectedIndex = selectElement.selectedIndex;
         var selectedOption = selectElement.options[selectedIndex];
         var workflowId = selectedOption.id;
-        
-        console.log(workflowId);
         
         fetch('/generation/ip_adapter_headshot/delete', {
             method: 'POST',
@@ -501,8 +380,10 @@
                     selectElement.selectedIndex = newSelectedIndex;
                 }
                 
+                addToast("Success!", "The workflow was deleted succesfully.");
                 console.log(`Workflow with ID ${workflowId} deleted successfully.`);
             } else {
+                addToast("Error!", "Failed to delete workflow.");
                 console.error('Failed to delete workflow.');
             }
         })
@@ -522,7 +403,6 @@
         const data = JSON.parse(event.data);
         
         if ( data.type === 'progress' ) {
-            //IS_GENERATING = true;
             updateProgress(data['data']['max'], data['data']['value']);
         } else if (data.type === 'executed') {
             const execution_time = elapsedTime();
@@ -553,28 +433,18 @@
         event.preventDefault();
         uploadImage();
     }
-
-    document.addEventListener("touchstart", e => {
-        console.log(e);
-    })
     
-    // Get the button element
     const uploadButton = document.getElementById('upload_image_button');
     
-    // Add event listeners for click and touch events
+    // Listens for click on upload button in Upload Face Portrait page
     uploadButton.addEventListener('click', handleUploadImage);
-    //uploadButton.addEventListener('touchend', handleUploadImage); 
 
-    
     document.getElementById('imageInput').addEventListener('change', function() {
-        console.log("imageInput changed");
         var fileInput = document.getElementById('imageInput').files[0];
         displayImage(fileInput);
-
-
     });
 
-    
+    // Uploads image to comfyUI input dir
     async function uploadImage() {
         var formData = new FormData();
         var fileInput = document.getElementById('imageInput').files[0];
@@ -587,17 +457,18 @@
             });
     
             if(!response.ok) {
+                addToast("Error!", "Error uploading image.");
                 throw new Error("Error uploading image.")
             }
-    
             const data = await response.json()
-            console.log(data.image_filename)
             imageFilename = data.image_filename
+            addToast("Success!", "The image was uploaded succesfully.");
         } catch(err) {
             console.error(reportError)
         }
     }
 
+    // Displays image in canvas
     function displayImage(file) {
         var canvas = document.getElementById('imageCanvas');
         var ctx = canvas.getContext('2d');

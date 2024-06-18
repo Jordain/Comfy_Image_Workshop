@@ -1,6 +1,6 @@
 var toast_id = 0;
 
-function addToast(header, body, is_error = false, timeout = 5000) {
+function addToast(header, body, is_error = false, timeout = 3000) {
   toast_container = document.getElementById("toast-container");
 
   let new_toast = document.createElement("div");
@@ -8,7 +8,7 @@ function addToast(header, body, is_error = false, timeout = 5000) {
   new_toast.classList.add("drop-shadow-2xl", "flex", "flex-col", "py-5", "px-5", "rounded", "text-black", "text-4xl", "bg-success", "mb-4");
 
   if (is_error) {
-    new_toast.classList.replace("bg-error", "bg-error");
+    new_toast.classList.replace("bg-success", "bg-error");
   }
 
   let toast_header_row = document.createElement("div");
