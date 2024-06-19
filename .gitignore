@@ -1,18 +1,27 @@
+# Virtual Environment
 .venv/
+
+# Byte-compiled
 __pycache__/
-node_modules/
+app/__pycache__
+app/blueprints/__pycache__
+app/blueprints/auth/__pycache__
+app/blueprints/generation/__pycache__
+app/blueprints/generation/demo_workflow/__pycache__
+app/blueprints/generation/fantasy_character_creator/__pycache__
+app/blueprints/generation/ip_adapter_headshot/__pycache__
+app/blueprints/generation/txt_gen/__pycache__
+app/blueprints/help/__pycache__
+app/blueprints/home/__pycache__
+app/blueprints/output/__pycache__
+app/blueprints/profile/__pycache__
+
+# Tailwindcss
+static/css/output.css
+
+# Local DB files
+app/migrations
 instance/project.db
-app\__pycache__
-app\blueprints\__pycache__
-app\blueprints\auth\__pycache__
-app\blueprints\generation\__pycache__
-app\blueprints\generation\demo_workflow\__pycache__
-app\blueprints\generation\fantasy_character_creator\__pycache__
-app\blueprints\generation\ip_adapter_headshot\__pycache__
-app\blueprints\generation\txt_gen\__pycache__
-app\blueprints\help\__pycache__
-app\blueprints\home\__pycache__
-app\blueprints\output\__pycache__
-app\blueprints\profile\__pycache__
-app\migrations
-static\css\output.css
+
+# Node.js
+node_modules/
