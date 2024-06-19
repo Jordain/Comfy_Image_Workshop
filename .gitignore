@@ -15,3 +15,4 @@ app\blueprints\home\__pycache__
 app\blueprints\output\__pycache__
 app\blueprints\profile\__pycache__
 app\migrations
+static\css\output.css
