@@ -1,3 +1,17 @@
 .venv/
 __pycache__/
 node_modules/
+instance/project.db
+app\__pycache__
+app\blueprints\__pycache__
+app\blueprints\auth\__pycache__
+app\blueprints\generation\__pycache__
+app\blueprints\generation\demo_workflow\__pycache__
+app\blueprints\generation\fantasy_character_creator\__pycache__
+app\blueprints\generation\ip_adapter_headshot\__pycache__
+app\blueprints\generation\txt_gen\__pycache__
+app\blueprints\help\__pycache__
+app\blueprints\home\__pycache__
+app\blueprints\output\__pycache__
+app\blueprints\profile\__pycache__
+app\migrations
