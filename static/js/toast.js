@@ -9,6 +9,7 @@ function addToast(header, body, is_error = false, timeout = 3000) {
 
   if (is_error) {
     new_toast.classList.replace("bg-success", "bg-error");
+    timeout = 3000;
   }
 
   let toast_header_row = document.createElement("div");
@@ -23,7 +24,7 @@ function addToast(header, body, is_error = false, timeout = 3000) {
   toast_close_button.addEventListener("click", (event) => {
     new_toast.style.marginBottom = `-${new_toast.offsetHeight + 24}px`;
     new_toast.style.opacity = `0`;
-    new_toast.style.transform = `translateX(512px)`;
+    new_toast.style.transform = `translateX(2000px)`;
 
     new_toast.addEventListener("transitionend", () => {
       new_toast.remove();
