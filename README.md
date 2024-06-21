@@ -14,52 +14,63 @@
 ## Comfy Image Workshop Installation
 
 1. Install this repo in your root user directory(C:\Users\\%username%). Open command prompt and run the following:
-
+```commandline
 	git clone https://github.com/Jordain/Comfy_Image_Workshop.git
+```
 
 2. Change directory to Comfy_Image_Workshop:
-
+```commandline
 	cd Comfy_Image_Workshop
+```
 
 3. Then create a virtual environment:
-
+```commandline
 	python -m venv venv
 	.\\.venv\Scripts\activate
+```
 
 4. Install all dependencies
-
+```commandline
 	pip install -r requirements.txt
+```
 
 5. Install packages:
-
+```commandline
 	npm install
+```
 
 6. If you high severity vulnerability issues, then run the following command:
-
+```commandline
 	npm audit fix
+```
 
 7. Change directory to root app directory:
-
+```commandline
 	cd app
+```
 
 8. Intialize the db using these three commands
-
+```commandline
 	flask db init
 	flask db migrate -m "Initial migration"
 	flask db upgrade
+```
 
 9. To create the tailwindcss output.css file, run the following command:
-
+```commandline
 	npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css
+```
 
 10. To run Comfy Image Workshop, run the following command:
-
+```commandline
 	python run.py
+```
 
 11. (Optional) To access CIW from other devices in your network, then in the ComfyUI root directory right click on run_nvidia_gpu.bat open in notepad and copy and paste this overtop of what is already there.
-
+```notepad
 	.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --listen
 	pause
+```
 
 12. Save and close notepad. 
 
