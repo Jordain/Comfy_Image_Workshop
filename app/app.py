@@ -12,7 +12,7 @@ def create_app():
 
     #EDIT1 HERE:
     #You will need to change the path to your comfy folder. This is for the input images you use in workflows.
-    app.config['UPLOAD_FOLDER'] = r'C:\Users\jorda\ComfyUI_windows_portable_3\ComfyUI\input'
+    app.config['UPLOAD_FOLDER'] = r'C:\Users\jorda\ComfyUI_windows_portable_CIW\ComfyUI\input'
 
     db.init_app(app)
 

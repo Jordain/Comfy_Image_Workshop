@@ -66,13 +66,27 @@
 	python run.py
 ```
 
-11. (Optional) To access CIW from other devices in your network, then in the ComfyUI root directory right click on run_nvidia_gpu.bat open in notepad and copy and paste this overtop of what is already there.
+11. (Optional) To access CIW from other devices in your network, go to your ComfyUI root directory and right click on run_nvidia_gpu.bat and open in notepad, then copy and paste this overtop of what is already there. Then Save and Close notepad. 
 ```notepad
 	.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --listen
 	pause
 ```
 
-12. Save and close notepad. 
+12. (Optional) If you plan on running a new instance of ComfyUI specifically for this repo, then you might want to pass all of your checkpoints, models, loras, etc... to the new ComfyUI instance. To do this, open up ComfyUI within the ComfyUI_windows_portable directory and make a copy of extra_model_path.yaml.example and then rename it to extra_model_path.yaml. Then look for where it says comfyUI and paste the code below to replace it. Then change the the base_path to your user profile and change the ComfyUI_windows_portable to the name of your ComfyUI_windows_portable directory that has all of your checkpoints, models, loras, etc... 
+```yaml
+	comfyui:
+     base_path: C:/Users/%USERPROFILE%/ComfyUI_windows_portable/ComfyUI/
+     checkpoints: models/checkpoints/
+     clip: models/clip/
+     clip_vision: models/clip_vision/
+     configs: models/configs/
+     controlnet: models/controlnet/
+     embeddings: models/embeddings/
+     loras: models/loras/
+     upscale_models: models/upscale_models/
+     vae: models/vae/
+     ipadapter: models/ipadapter
+```
 
 ## How to Run Comfy Image Workshop
 
