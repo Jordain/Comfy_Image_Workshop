@@ -82,18 +82,18 @@
 
 12. (Optional) If you plan on running a new instance of ComfyUI specifically for this repo, then you might want to pass all of your checkpoints, models, loras, etc... to the new ComfyUI instance. To do this, open up ComfyUI within the ComfyUI_windows_portable directory and make a copy of extra_model_path.yaml.example and then rename it to extra_model_path.yaml. Then look for where it says comfyUI and paste the code below to replace it. Then change the the base_path to your user profile and change the ComfyUI_windows_portable to the name of your ComfyUI_windows_portable directory that has all of your checkpoints, models, loras, etc... 
 ```yaml
-	comfyui:
-     base_path: C:/Users/%USERPROFILE%/ComfyUI_windows_portable/ComfyUI/
-     checkpoints: models/checkpoints/
-     clip: models/clip/
-     clip_vision: models/clip_vision/
-     configs: models/configs/
-     controlnet: models/controlnet/
-     embeddings: models/embeddings/
-     loras: models/loras/
-     upscale_models: models/upscale_models/
-     vae: models/vae/
-     ipadapter: models/ipadapter
+comfyui:
+ 	base_path: C:/Users/%USERPROFILE%/ComfyUI_windows_portable/ComfyUI/
+ 	checkpoints: models/checkpoints/
+ 	clip: models/clip/
+ 	clip_vision: models/clip_vision/
+ 	configs: models/configs/
+ 	controlnet: models/controlnet/
+ 	embeddings: models/embeddings/
+ 	loras: models/loras/
+ 	upscale_models: models/upscale_models/
+ 	vae: models/vae/
+ 	ipadapter: models/ipadapter
 ```
 
 ## How to Run Comfy Image Workshop
