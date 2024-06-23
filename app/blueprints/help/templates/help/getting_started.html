@@ -1,56 +1,56 @@
 {% extends "base.html" %}
 {% block title %}Getting Started{% endblock %}
 
-
 {% block content %}
-<div class="flex">
-    <div class="mx-auto">
-        <h1 class="text-8xl lg:text-5xl font-bold mb-20 lg:mb-5 text-center">Getting Started</h1>
-        <p class="mb-20 lg:mb-5 text-5xl lg:text-base">I'll walk you through how to code your own workflow page in Comfy Image Workshop. Watch the video below or follow the text instructions.</p>
+<div class="flex flex-col items-center px-4">
+    <div class="w-full max-w-5xl">
+        <h1 class="text-4xl lg:text-5xl font-bold mb-10 lg:mb-5 text-center">Getting Started</h1>
+        <p class="mb-10 lg:mb-5 text-xl lg:text-base text-center">I'll walk you through how to code your own workflow page in Comfy Image Workshop. Watch the video below or follow the text instructions.</p>
         
         <!-- Video Section -->
         <div class="mb-4">
-            <h2 class="text-5xl lg:text-2xl font-bold mb-4">Video Tutorial</h2>
-            <div class="video-container">
+            <h2 class="text-2xl lg:text-xl font-bold mb-4 text-center">Video Tutorial</h2>
+            <div class="video-container w-full aspect-w-16 aspect-h-9">
                 <!-- Replace with your video embed code (YouTube, Vimeo, etc.) -->
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/example_video_id" frameborder="0" allowfullscreen></iframe>
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/example_video_id" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="text-5xl lg:text-2xl font-bold mb-4">Text Instructions</div>
-            <ol class="flex flex-col list-decimal list-inside text-3xl lg:text-base">
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Go to this CIW directory Comfy_Image_Workshop\app\blueprints\generation</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Make a copy the demo_workflow directory in the same directory and give it a name apporpriate to the workflow you are creating. For the sake of this example I will use my_new_workflow</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Open \my_new_workflow\templates and rename the \demo_workflow with \my_new_workflow. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\app\blueprints\help\templates\help and make a copy of the demo_workflow.html file and rename it to my_new_workflow. This is where you will be listing all the dependencies for your workflow.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\app\ and open app.py</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT1 then update the app.config. Replace jorda with your username and replace ComfyUI_windows_portable_3 with your ComfyUI directory name.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT2 then look for the commented out import sample workflow then rename it to my_new_workflow</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT3 then look for the commented out register sample workflow then rename it to my_new_workflow</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\ and open routes.py</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT4 then follow the instructions. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT5 then follow the instructions. ID must be unique. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #EDIT6 then follow the instructions. ID must match #EDIT5 ID. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now head to ComfyUI <a href="http://127.0.0.1:8188" target="_blank" class="link text-blue-500">127.0.0.1:8188</a> and design your workflow.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Be sure to record any of the custom nodes you downloaded or the models you used in your workflow. Ex: checkpoint files, loras, controlnets, etc.. You will need to list them in the help file you created earlier.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Click on the cog icon above Queue Prompt and look for Enable Dev mode Options and enable it. This will allow you to download the JSON format of the workflow.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Once you have completed your workflow, click on save (API Format). Rename your workflow to something appropriate. For the sake of this example lets rename to json_workflow</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\static\js and move your json_workflow in this directory.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\static\js Now open app.js </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for EDIT7 and follow the instructions. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for EDIT8 and follow the instructions. This is optional, depending on your workflow. </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\templates\my_new_workflow and open index.html </li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for EDIT9 and replace my_new_workflow with the name of your workflow.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now review the code in \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\templates\my_new_workflow\index.html</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now review the code in \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\static\js\app.js</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Once you reviewed index.html and app.js and understand it, Now you can update the code to match your workflow to get it to run.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Once you have completed your workflow, now go to \Comfy_Image_Workshop\app\blueprints\generation\templates\generation and open index.html</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for EDIT10 and follow the instructions.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\app\help\templates\help and open index.html</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for EDIT11 and follow the instructions.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Now go to \Comfy_Image_Workshop\app\help\templates\help and open my_new_workflow.html</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Edit the instructions on how to install dependencies to use your workflow.</li>
-                <li class="text-4xl lg:text-base mb-20 lg:mb-3">Great job 👏 Now you have completed your workflow and you can push it the the github repo, to share your workflow with the community.</li>
-            </ol>
+
+        <div class="text-2xl lg:text-xl font-bold mb-4 text-center">Text Instructions</div>
+        <ol class="flex flex-col list-decimal list-inside text-lg lg:text-base space-y-6">
+            <li>Go to this CIW directory Comfy_Image_Workshop\app\blueprints\generation</li>
+            <li>Make a copy the demo_workflow directory in the same directory and give it a name appropriate to the workflow you are creating. For the sake of this example I will use my_new_workflow</li>
+            <li>Open \my_new_workflow\templates and rename the \demo_workflow with \my_new_workflow.</li>
+            <li>Now go to \Comfy_Image_Workshop\app\blueprints\help\templates\help and make a copy of the demo_workflow.html file and rename it to my_new_workflow. This is where you will be listing all the dependencies for your workflow.</li>
+            <li>Now go to \Comfy_Image_Workshop\app\ and open app.py</li>
+            <li>Search for #EDIT1 then update the app.config. Replace jorda with your username and replace ComfyUI_windows_portable_3 with your ComfyUI directory name.</li>
+            <li>Search for #EDIT2 then look for the commented out import sample workflow then rename it to my_new_workflow</li>
+            <li>Search for #EDIT3 then look for the commented out register sample workflow then rename it to my_new_workflow</li>
+            <li>Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\ and open routes.py</li>
+            <li>Search for #EDIT4 then follow the instructions.</li>
+            <li>Search for #EDIT5 then follow the instructions. ID must be unique.</li>
+            <li>Search for #EDIT6 then follow the instructions. ID must match #EDIT5 ID.</li>
+            <li>Now head to ComfyUI <a href="http://127.0.0.1:8188" target="_blank" class="link text-blue-500">127.0.0.1:8188</a> and design your workflow.</li>
+            <li>Be sure to record any of the custom nodes you downloaded or the models you used in your workflow. Ex: checkpoint files, loras, controlnets, etc.. You will need to list them in the help file you created earlier.</li>
+            <li>Click on the cog icon above Queue Prompt and look for Enable Dev mode Options and enable it. This will allow you to download the JSON format of the workflow.</li>
+            <li>Once you have completed your workflow, click on save (API Format). Rename your workflow to something appropriate. For the sake of this example lets rename to json_workflow</li>
+            <li>Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\static\js and move your json_workflow in this directory.</li>
+            <li>Now go to \Comfy_Image_Workshop\blueprints\generation\my_new_workflow\static\js Now open app.js</li>
+            <li>Search for EDIT7 and follow the instructions.</li>
+            <li>Search for EDIT8 and follow the instructions. This is optional, depending on your workflow.</li>
+            <li>Now go to \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\templates\my_new_workflow and open index.html</li>
+            <li>Search for EDIT9 and replace my_new_workflow with the name of your workflow.</li>
+            <li>Now review the code in \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\templates\my_new_workflow\index.html</li>
+            <li>Now review the code in \Comfy_Image_Workshop\app\blueprints\generation\my_new_workflow\static\js\app.js</li>
+            <li>Once you reviewed index.html and app.js and understand it, Now you can update the code to match your workflow to get it to run.</li>
+            <li>Once you have completed your workflow, now go to \Comfy_Image_Workshop\app\blueprints\generation\templates\generation and open index.html</li>
+            <li>Search for EDIT10 and follow the instructions.</li>
+            <li>Now go to \Comfy_Image_Workshop\app\help\templates\help and open index.html</li>
+            <li>Search for EDIT11 and follow the instructions.</li>
+            <li>Now go to \Comfy_Image_Workshop\app\help\templates\help and open my_new_workflow.html</li>
+            <li>Edit the instructions on how to install dependencies to use your workflow.</li>
+            <li>Great job 👏 Now you have completed your workflow and you can push it to the GitHub repo to share your workflow with the community.</li>
+        </ol>
     </div>
 </div>
 {% endblock %}
