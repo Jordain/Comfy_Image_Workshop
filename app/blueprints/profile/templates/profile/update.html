@@ -6,9 +6,9 @@
 <div class="flex flex-col items-center">
     <h1 class="font-bold mb-20 lg:mb-10 text-8xl lg:text-5xl">{{ msg | default('Update Password') }}</h1>
     <form action="/profile/update" method="post">
-        <input autocomplete="off" autofocus class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-8 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="oldPassword" placeholder="Old Password" type="password">
-        <input class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-8 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="password" placeholder="New Password" type="password">
-        <input class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-8 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="confirmation" placeholder="New Confirm Password" type="password">
+        <input autocomplete="off" autofocus class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-16 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="oldPassword" placeholder="Old Password" type="password">
+        <input class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-16 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="password" placeholder="New Password" type="password">
+        <input class="form-control input input-bordered mx-auto w-auto mb-20 lg:mb-5 py-16 lg:py-4 px-8 lg:px-4 text-6xl lg:text-3xl" name="confirmation" placeholder="New Confirm Password" type="password">
         <button class="btn bg-primary btn-primary rounded-lg w-full mb-20 lg:mb-5 pt-8 pb-32 lg:pb-16 text-8xl lg:text-3xl" type="submit">Change Password</button>
     </form>
 </div>

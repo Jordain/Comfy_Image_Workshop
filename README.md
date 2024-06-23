@@ -1,7 +1,15 @@
 # Comfy Image Workshop
 
-## Newest Features:
+## Description:
 * To fill in later
+
+## Video - Demo:  <WIP>
+
+## Video - Installing Comfy Image Workshop <WIP>
+
+## Video - Preparing Comfy Image Workshop to create a workflow <WIP>
+
+## Video - Coding a workflow in Comfy Image Workshop <WIP>
 
 ## ComfyUI Installation
 
@@ -105,6 +113,7 @@ Note that this assumes your ComfyUI instance is using port 8188. If not, replace
 
 - Any iamges you download you can drag into comfyUI and see the workflow.
 - If you change the port from 5000 to 8188 in the URL(http://127.0.0.1:5000/) you will be redirected to ComfyUI.
+- Download [SQLite Browser](https://sqlitebrowser.org/) to view the database.
 
 ## QA
 
@@ -122,11 +131,11 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 
 - [x] Release Comfy Image Workshop.
 - [ ] Aligning tooltips in Dress U Up.
-- [ ] Update size of input text boxes for smaller screens.
+- [x] Update size of input text boxes for smaller screens.
 - [ ] Create roles in models, specifically for admin.
 - [ ] Make help page only viewable to admins.
 - [ ] Safari issue not loading images from Dress U Up on generation.
-- [ ] Safari issue with some of the text field boxes not displaying correctly (invisible for passwords instead of •).
+- [x] Safari issue with some of the text field boxes not displaying correctly (invisible for passwords instead of •).
 - [ ] Review and update interupt functions in Dress U Up and Fantasy Character Creator.
 - [ ] Reivew and clean up app.py files.
 - [ ] Update seed class to helper class from ip_adapter_headshot app.py
@@ -145,3 +154,8 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 
 - [ComfyUI](https://github.com/comfyanonymous/ComfyUI). Follow the installation instructions here if you require a custom installation.
 - [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager). Follow the installation instructions here if you require a custom installation.
+- [Flask SqlAlchemy Quickstart](https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/)
+- [SQLite](https://www.sqlite.org/datatype3.html)
+- [Jinja Template Designer](https://jinja.palletsprojects.com/en/3.1.x/templates/)
+- [SqlAlchemy tutorial](https://docs.sqlalchemy.org/en/20/tutorial/data.html#tutorial-working-with-data)
+- [Setting up debuging in Browser](https://www.youtube.com/watch?v=68wO-sl5vXg&t=303s )
