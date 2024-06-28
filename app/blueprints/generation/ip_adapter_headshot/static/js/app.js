@@ -402,7 +402,7 @@
     socket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data);
         
-                if ( data.type === 'progress' ) {
+        if ( data.type === 'progress' ) {
             updateProgress(data['data']['max'], data['data']['value']);
         } else if (data.type === 'executed') {
             const execution_time = elapsedTime();
@@ -415,7 +415,8 @@
                     const filename = images[i]['filename']
                     const subfolder = images[i]['subfolder']
                     const rand = Math.random();
-                    results.innerHTML += '<div' + grid + '><div><a href="/generation/ip_adapter_headshot/view?filename=' + filename + '" width="1024" height="1024" alt=""></a></div></div>';
+                    console.log("results",);
+                    results.innerHTML += '<div' + grid + '><div><a href="/generation/ip_adapter_headshot/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand + '" data-type="image"><img src="/generation/ip_adapter_headshot/view?filename=' + filename + '&type=output&subfolder=' + subfolder + '&rand=' + rand + '" width="1024" height="1024" alt=""></a></div></div>';
                 }
             }
         } else if (data.type === 'execution_interrupted') {
