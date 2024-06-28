@@ -142,6 +142,7 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 - [x] Add toasts on upload, save and load buttons for Dress U Up and Fantasy Character Creator.
 - [ ] Add loading bar on txt gen sd3 app.py
 - [x] Fix toast bg error color in toast.js
+- [ ] Fix camera picture too large to load(Breaks socket connection). Need to compress camera picture before upload on newer devices.
 
 ## Special Thanks
 
