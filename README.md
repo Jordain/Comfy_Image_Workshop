@@ -1,8 +1,5 @@
 # Comfy Image Workshop
 
-## Description:
-* To fill in later
-
 ## Video - Demo:  <WIP>
 
 ## Video - Installing Comfy Image Workshop <WIP>
@@ -112,10 +109,9 @@ comfyui:
 
 1. Start your ComfyUI server by clicking on run_nvidia_gpu.bat in the `"ComfyUI_windows_portable"` directory. 
 
-2. Open the directory where you have installed CIW and open powershell or CMD. Copy and paste this:
+2. Open the directory where you have installed CIW and open CMD. Copy and paste this:
 ```commandline
 .venv\Scripts\activate
-python run.py
 ```
 ```commandline
 python run.py
