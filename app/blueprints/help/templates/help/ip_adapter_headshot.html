@@ -8,11 +8,41 @@
         <div class="flex mb-5 w-full">
                 <ol class="flex flex-col list-decimal list-inside text-3xl lg:text-base">
                     <li class="text-4xl lg:text-base mb-20 lg:mb-3">Install ComfyUI-IPAdapter_plus from the ComfyUI manager. The ID is 98 and author is cubiq.</li>
-                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Follow the installation instructions from the 
-                        <a class="link text-blue-500" href="https://github.com/cubiq/ComfyUI_IPAdapter_plus?tab=readme-ov-file">
-                            IPAdapter Plus
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://civitai.com/models/4201?modelVersionId=245598">
+                            realisticVisionV60B1_v60B1VAE.safetensors
                         </a>
-                        repo.
+                        and place it in ComfyUI_windows_portable_CIW\ComfyUI\models\checkpoints.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors">
+                            CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors
+                        </a>
+                        download and rename to CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors then place in ComfyUI_windows_portable_CIW\ComfyUI\models\clip_vision.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/image_encoder/model.safetensors">
+                            CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors
+                        </a>
+                        download and rename to CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors then place in ComfyUI_windows_portable_CIW\ComfyUI\models\clip_vision.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-full-face_sd15.safetensors">
+                            ip-adapter-full-face_sd15.safetensors
+                        </a>
+                        and place it in ComfyUI_windows_portable_CIW\ComfyUI\models\ipadapter.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sd15.bin">
+                            ip-adapter-faceid-plusv2_sd15.bin
+                        </a>
+                        and place it in ComfyUI_windows_portable_CIW\ComfyUI\models\ipadapter.
+                    </li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
+                        <a class="link text-blue-500" href="https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sd15_lora.safetensors">
+                            Ip-adapter-faceid-plusv2_sd15_lora.safetensors
+                        </a>
+                        and place it in ComfyUI_windows_portable_CIW\ComfyUI\models\loras.
                     </li>
                     <li class="text-4xl lg:text-base mb-20 lg:mb-3">Follow the video instructions on installing 
                         <a class="link text-blue-500" href="https://www.youtube.com/watch?v=vCCVxGtCyho">
@@ -29,12 +59,6 @@
                         <p><code class="bg-black text-white dark:text-black dark:bg-white">.\python_embeded\python.exe -m pip install "C:\Users\jorda\Downloads\insightface-0.7.3-cp311-cp311-win_amd64.whl" onnxruntime</code></p>
                     </li>
                     <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #Edit1 in app\app.py then update the app.config. Replace jorda with your username.</li>
-                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
-                        <a class="link text-blue-500" href="https://civitai.com/api/download/models/272399">
-                            realisticVisionV60B1_v60B1VAE.safetensors
-                        </a>
-                        and place it in ComfyUI_windows_portable\ComfyUI\models\checkpoints.
-                    </li>
                 </ol>
         </div>
     </div>

@@ -83,7 +83,7 @@ npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css
 python run.py
 ```
 
-12. To access CIW from other devices in your network, go to your ComfyUI root directory and right click on run_nvidia_gpu.bat and open in notepad, then copy and paste this overtop of what is already there. Then Save and Close notepad. 
+12. We need to allow incoming requests from the flask server and to access CIW from other devices in your network, go to your ComfyUI root directory and right click on run_nvidia_gpu.bat and open in notepad, then copy and paste this overtop of what is already there. Then Save and Close notepad. 
 ```notepad
 .\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --listen
 pause
