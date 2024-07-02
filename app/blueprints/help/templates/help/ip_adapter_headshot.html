@@ -19,15 +19,16 @@
                             FaceID
                         </a>
                     </li>
-                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">You probably have python 3.11.* installed - 
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Skip step 3 if you have python 3.11.* installed - 
                         <a class="link text-blue-500" href="https://github.com/Gourieff/Assets/raw/main/Insightface/insightface-0.7.3-cp311-cp311-win_amd64.whl">
                             download this whl
                         </a>
+                        and keep in downloads folder.
                     </li>
-                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Run this command in cmd within your root ComfyUI directory:
-                        <code class="bg-black text-white dark:text-black dark:bg-white">.\python_embeded\python.exe -m pip install "C:\Users\jorda\Downloads\insightface-0.7.3-cp311-cp311-win_amd64.whl" onnxruntime</code>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Change jorda to your username. Then run this command in cmd within your root ComfyUI directory:
+                        <p><code class="bg-black text-white dark:text-black dark:bg-white">.\python_embeded\python.exe -m pip install "C:\Users\jorda\Downloads\insightface-0.7.3-cp311-cp311-win_amd64.whl" onnxruntime</code></p>
                     </li>
-                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #Edit1 then update the app.config. Replace jorda with your username and replace ComfyUI_windows_portable_3 with your ComfyUI directory name.</li>
+                    <li class="text-4xl lg:text-base mb-20 lg:mb-3">Search for #Edit1 in app\app.py then update the app.config. Replace jorda with your username.</li>
                     <li class="text-4xl lg:text-base mb-20 lg:mb-3">Download the model
                         <a class="link text-blue-500" href="https://civitai.com/api/download/models/272399">
                             realisticVisionV60B1_v60B1VAE.safetensors

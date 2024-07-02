@@ -11,7 +11,8 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./project.db"
 
     #EDIT1 HERE:
-    #You will need to change the path to your comfy folder. This is for the input images you use in workflows.
+    #You will need to change the path to your comfy folder. This is for the input images you use in workflows. 
+    #Replace jorda with your username.
     app.config['UPLOAD_FOLDER'] = r'C:\Users\jorda\ComfyUI_windows_portable_CIW\ComfyUI\input'
 
     db.init_app(app)
