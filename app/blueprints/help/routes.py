@@ -25,3 +25,9 @@ def fantasy_character_creator():
 @help.route('/ip_adapter_headshot')
 def ip_adapter_headshot():
     return render_template('help/ip_adapter_headshot.html')
+
+#EDIT12
+# Rename to your workflow name and Uncomment the lines below.
+# @help.route('/my_new_workflow')
+# def my_new_workflow():
+#     return render_template('help/my_new_workflow.html')
