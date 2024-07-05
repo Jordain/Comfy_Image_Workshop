@@ -1,12 +1,26 @@
 # Comfy Image Workshop
 
-## Video - Demo:  <WIP>
+## Video - Demo:
 
-## Video - Installing Comfy Image Workshop <WIP>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=RaNo_8LzzCk
+" target="_blank"><img src="http://img.youtube.com/vi/RaNo_8LzzCk/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="480" height="360" border="10" /></a>
 
-## Video - Preparing Comfy Image Workshop to create a workflow <WIP>
+## Video - Installing Comfy Image Workshop
 
-## Video - Coding a workflow in Comfy Image Workshop <WIP>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=qm-JO5HaETM 
+" target="_blank"><img src="http://img.youtube.com/vi/qm-JO5HaETM/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="480" height="360" border="10" /></a>
+
+## Video - Preparing Comfy Image Workshop to create a workflow
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=na168v7YQOY
+" target="_blank"><img src="http://img.youtube.com/vi/na168v7YQOY/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="480" height="360" border="10" /></a>
+
+## Video - Coding a workflow in Comfy Image Workshop
+
+WIP
 
 ## ComfyUI Installation
 
@@ -154,6 +168,7 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 - [ ] Add loading bar on txt gen sd3 app.py
 - [x] Fix toast bg error color in toast.js
 - [ ] Fix camera picture too large to load(Breaks socket connection). Need to compress camera picture before upload on newer devices.
+- [ ] Change functionality of generating new ids for new workflows in app\app.py. 
 
 ## Special Thanks
 
