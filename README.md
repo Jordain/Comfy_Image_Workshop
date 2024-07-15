@@ -172,7 +172,7 @@ Secondarily for the person hosting CIW to be able to share their workflows with 
 
 ## Special Thanks
 
-- Brendan for weekly guidance on errors that I ran into
+- [Brendan](https://github.com/brendanclement) for weekly guidance on errors that I ran into
 - [Matteo](https://www.youtube.com/watch?v=anYHG37fUg4&t=1031s) for his ComfyUI webapp interface video
 - [Mut-ex](https://github.com/mut-ex/gligen-gui) for his Gligen-GUI repo that used flask and helped me undestand how I can intergate ComfyUI with my code
 - You 🙂 for viewing this repo and trying it out. 
